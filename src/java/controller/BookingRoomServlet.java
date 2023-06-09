@@ -7,12 +7,10 @@ package controller;
 import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.TimeUnit;
+import java.time.temporal.ChronoUnit;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -63,6 +61,7 @@ public class BookingRoomServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        //TIM CACH KHAC
         response.setContentType("text/html");
         //bookingtime
         LocalDateTime currentTime = LocalDateTime.now();
@@ -70,40 +69,72 @@ public class BookingRoomServlet extends HttpServlet {
         String formattedTime = currentTime.format(formatter);
 
         String IDAccount = request.getParameter("IDAccount");
-
         String IDRoomType = request.getParameter("IDRoomType");
 
         String adult = request.getParameter("Adult");
-
         String child = request.getParameter("Child");
 
         // get total day
-        String CheckIn = request.getParameter("CheckIn");
-        String CheckOut = request.getParameter("CheckOut");
+        String checkInDateStr = request.getParameter("checkInDate");
+        String checkOutDateStr = request.getParameter("checkOutDate");
+        LocalDate checkInDate = LocalDate.parse(checkInDateStr);
+        LocalDate checkOutDate = LocalDate.parse(checkOutDateStr);
+        int numOfDays = (int) ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+        
+        String price = request.getParameter("Price");
+        int p = Integer.parseInt(price);
+        
+        String nRooms = request.getParameter("numRooms");
+        int numRooms = Integer.parseInt(nRooms);
+        
+        int tprice = numOfDays * numRooms * p;
+        String TotalPrice = String.valueOf(tprice);
 
+        String IDDiscount = "";
+        String Note = "";
 
-    
-    String numberOfRoom = request.getParameter("NumberOfRoom");
-    int nor = Integer.parseInt(numberOfRoom);
+        UserDao udao = new UserDao();
 
-    //price
-    String price = request.getParameter("Price");
-    int p = Integer.parseInt(price);
-    double totalPrice = (double) nor * p;
-    String TotalPrice = Integer.toString((int) totalPrice);
+        udao.addBooking(IDAccount, IDDiscount, IDRoomType, adult, child, checkInDateStr, checkOutDateStr, nRooms, TotalPrice, formattedTime, Note);
 
-    String IDDiscount = "";
-    String Note = "";
+        request.setAttribute("booksuccess", "Booking Success");
+//                request.getRequestDispatcher("showBooking").forward(request, response);
 
-    UserDao udao = new UserDao();
-//        Booking b = new Booking(acc, rt, ad, ch, CheckIn, CheckOut, nor, p, bookingTime, Note);
-//        PrintWriter out = response.getWriter();
-//        out.print("<h1>" + diffInDays + "</h1>");
+        request.getRequestDispatcher("customer_room.jsp").forward(request, response);
 
-    udao.addBooking (IDAccount, IDDiscount, IDRoomType, adult, child, CheckIn, CheckOut, numberOfRoom, TotalPrice, formattedTime, Note);
-
-    request.setAttribute ("booksuccess", "Booking Success");
-    request.getRequestDispatcher ("customer_room.jsp").forward(request, response);
+        // CAI NAY OK ROI
+//        response.setContentType("text/html");
+//        //bookingtime
+//        LocalDateTime currentTime = LocalDateTime.now();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//        String formattedTime = currentTime.format(formatter);
+//
+//        String IDAccount = request.getParameter("IDAccount");
+//        
+//        String IDRoomType = request.getParameter("IDRoomType");
+//
+//        String adult = request.getParameter("Adult");
+//
+//        String child = request.getParameter("Child");
+//
+//        // get total day
+//        String CheckIn = request.getParameter("checkInDate");
+//        String CheckOut = request.getParameter("checkOutDate");
+//
+//        String numberOfRoom = request.getParameter("numRooms");
+//
+//        //price
+//        String TotalPrice = request.getParameter("totalPrice");
+//
+//        String IDDiscount = "";
+//        String Note = "";
+//
+//        UserDao udao = new UserDao();
+//
+//        udao.addBooking(IDAccount, IDDiscount, IDRoomType, adult, child, CheckIn, CheckOut, numberOfRoom, TotalPrice, formattedTime, Note);
+//
+//        request.setAttribute("booksuccess", "Booking Success");
+//        request.getRequestDispatcher("customer_room.jsp").forward(request, response);
     }
 
     /**
@@ -115,7 +146,7 @@ public class BookingRoomServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -126,7 +157,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
      * @return a String containing servlet description
      */
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

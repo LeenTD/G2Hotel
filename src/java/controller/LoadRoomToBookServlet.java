@@ -63,7 +63,7 @@ public class LoadRoomToBookServlet extends HttpServlet {
         ManagerDao rdao = new ManagerDao();
         RoomType r = rdao.getRoomTypeById(IdR);
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession();  
         session.setAttribute("r", r);
         request.getRequestDispatcher("form_test.jsp").forward(request, response);
     }

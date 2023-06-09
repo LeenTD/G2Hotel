@@ -27,6 +27,31 @@
         <link rel="stylesheet" href="css/room_bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            form {
+                width: 300px;
+                margin: 0 auto;
+            }
+
+            label {
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+            }
+
+            input[type="submit"] {
+                margin-left: 100px;
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+        </style>
 
     </head>
     <body>
@@ -36,7 +61,7 @@
             <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
             <div class="container">
                 <div class="page-cover text-center">
-                    <h2 class="page-cover-tittle">Booking Test</h2>
+                    <h2 class="page-cover-tittle">Booking Room</h2>
                     <ol class="breadcrumb">
                         <li><a href="index.html">Home</a></li>
                         <li class="active">About</li>
@@ -47,9 +72,7 @@
         <!--================Breadcrumb Area =================-->
         <br>
 
-        <h1 style="text-align: center;">Booking Room</h1>
-
-        <form action="bookingRoom" class="col-md-9 m-auto" method="get" role="form">
+        <form action="bookingRoom" id="bookingForm" class="col-md-9 m-auto" method="get" role="form">
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Name</label>  
@@ -65,29 +88,25 @@
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Phone</label>
-                    <input type="text" class="form-control mt-1" id="Phone" name="Phone" placeholder="Phone" required value="0${userA.getPhone()}">
+                    <input type="text" class="form-control mt-1" id="Phone" name="Phone" placeholder="Phone" required value="${userA.getPhone()}">
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Email</label>
                     <input type="text" class="form-control mt-1" id="Email" name="Email" placeholder="Email" required value="${userA.getEmail()}">
                 </div>
             </div>
-                
-                
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="inputname">Name Room Type:</label> 
+                    <label for="inputname">Room Type:</label> 
                     <label for="inputname"> ${r.getNameRoomType()}</label>
                     <input type="hidden" id="NameRoomType" name="NameRoomType" required value="${r.getNameRoomType()}">
                 </div>   
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Price:</label>
                     <label for="inputname"> ${r.getPrice()}$/Night</label>
-
                     <input type="hidden" id="Price" name="Price" placeholder="Price" required value="${r.getPrice()}">
                 </div>
             </div>
-
 
             <div class="row">
                 <div class="form-group col-md-6">
@@ -102,29 +121,27 @@
 
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="checkin">Check In</label>
-                    <input type="date" class="form-control mt-1" id="checkin" name="checkin" placeholder="checkin" required value="">
+                    <label for="checkInDate">Check-In:</label><br>
+                    <input type="date" id="checkInDate" name="checkInDate" required><br>
                 </div>                    
                 <div class="form-group col-md-6 mb-3">
-                    <label for="checkout">Check Out</label>
-                    <input type="date" class="form-control mt-1" id="checkout" name="checkout" placeholder="checkout" required value="">
+                    <label for="checkOutDate">Check-Out:</label><br>
+                    <input type="date" id="checkOutDate" name="checkOutDate" required><br>
                 </div>
             </div>
 
-
-
             <div class="row">
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Number Of Room Booking</label>
-                    <!--                    <input type="number" id="quantity" name="NumberOfRoom" min="0" value="0">
-                                        <p id="price">Price: ${r.getPrice()}</p>-->
-                    <input type="text" class="form-control mt-1" id="NumberOfRoom" name="NumberOfRoom" placeholder="NumberOfRoom" required value="">
-                </div>
+                <div class="form-group col-md-6">
+                    <label for="numRooms">Quantity:</label>
+                    <input type="number" id="numRooms" name="numRooms" min="1" value="1" required><br><br>
+                </div> 
                 <div class="col text-end mt-2">
                     <button type="submit" class="btn btn-success btn-lg px-3">Book Now</button>
                 </div>
             </div>
+
         </form>
+
         <br>
 
 
@@ -132,6 +149,8 @@
         <%@include file="/includes/footer.jsp" %>        
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <!--<script src="js/booking.js"></script>-->
+
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>

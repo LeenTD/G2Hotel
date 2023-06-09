@@ -49,7 +49,7 @@
 
         <h1 style="text-align: center;">Booking Room</h1>
 
-        <form action="bookingRoom" class="col-md-9 m-auto" method="get" role="form">
+        <form action="#" class="col-md-9 m-auto" method="get" role="form">
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Name</label>  
