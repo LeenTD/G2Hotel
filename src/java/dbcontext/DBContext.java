@@ -1,0 +1,62 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package dbcontext;
+
+import dao.ManagerDao;
+import dao.UserDao;
+import model.User;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+/**
+ *
+ * @author admin
+ */
+public class DBContext {
+    public static Connection getConnection() {
+        Connection connection = null;
+        String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+        String serverName = "DESKTOP-T5EHA2N\\LEEN";
+        String databaseName = "G2Hotell";
+        String port = "1433";
+        String user = "sa";
+        String password = "123456";
+        /**
+         * @param connectionString can sometime be called as URL
+         */
+        String url = "jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName + ";encrypt=true;trustServerCertificate=true;";
+        try {
+            Class.forName(driverName);
+            connection = DriverManager.getConnection(url, user, password);
+            System.out.println("Connected success.");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("ERROR");
+        }
+        return connection;
+    }
+    public static void disconnect(Connection con) throws SQLException {
+        con.close();
+    }
+
+    
+    public static void main(String[] args) {
+        DBContext db = new DBContext();
+        try {
+            System.out.println(DBContext.getConnection());
+        } catch (Exception e) {
+        }
+//        ManagerDao m = new ManagerDao();
+//        List<User> l = new ArrayList<>();
+//        l = m.getAccounts();
+//        for (User user : l) {
+//             l.toString();
+//        }
+    }
+    
+
+}
