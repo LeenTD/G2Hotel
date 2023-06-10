@@ -59,9 +59,10 @@ public class EditRoomTypeServlet extends HttpServlet {
         
         String id = request.getParameter("IDRoomType");
         String name = request.getParameter("NameRoomType");
-        String maxPerson = request.getParameter("MaxPerson");
+//        String maxPerson = request.getParameter("MaxPerson"); 
+        String maxPerson = "5";
         String numberOfBed = request.getParameter("NumberOfBed");
-        String numberOfBath = request.getParameter("numberOfBath");
+        String numberOfBath = request.getParameter("NumberOfBath");
         String price = request.getParameter("Price");
         String totalRoom = request.getParameter("TotalRoom");
         String content = request.getParameter("Content");

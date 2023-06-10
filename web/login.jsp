@@ -9,7 +9,7 @@
         <div class="container">
             <div class="Login">
                 <div class="logo-container">
-                    <img src="image/logo2.png" alt="Logo">
+                    <img style="width: 120%;" src="image/logo1_2.png" alt="Logo">
                 </div>
                 <h2>Login</h2>
 
@@ -34,7 +34,7 @@
                 </form>
             </div>
             <div class="image">
-                <img src="image/pannner3.jpg" alt="Image">
+                <img src="image/bglogin.png" alt="Image">
             </div>
         </div>
     </body>

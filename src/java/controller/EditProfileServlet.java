@@ -69,13 +69,16 @@ public class EditProfileServlet extends HttpServlet {
         String UserName = request.getParameter("UserName");
         String Pass = request.getParameter("Pass");
         int r = 1;
+        
         UserDao ud = new UserDao();
 
         ud.updateAccount(id, UserName, Pass, FullName, Gender, City, Email, Phone);
         request.setAttribute("editProfile", "Save Change Success!");
-//        HttpSession session = request.getSession();
-//        User u = new User(i, FullName, Gender, City, Email, Phone, UserName, Pass, r);
-//        session.setAttribute("userA", r);
+        HttpSession session = request.getSession();
+        User u = new User(i, FullName, Gender, City, Email, Phone, UserName, Pass, r);
+//        PrintWriter out = response.getWriter();
+//        out.print("<h1>"+ u + "</h1>");
+        session.setAttribute("userA", u);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
 
     }

@@ -37,7 +37,7 @@
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${sessionScope.userA.getUserName()}</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+                                <li class="nav-item"><a class="nav-link" href="profile.jsp">Profile</a></li>
                                 <li class="nav-item"><a class="nav-link" href="logout">Log Out</a></li>
                             </ul>
                         </li> 

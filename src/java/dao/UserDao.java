@@ -96,7 +96,7 @@ public class UserDao {
 
     // chinh sua thong tin account (Update)
     public void updateAccount(String IDAccount, String UserName, String Pass, String FullName, String Gender, String City, String Email, String Phone) {
-        String query = "update Account set UserName=?, Pass=?, FullName=?, Gender=?, City=? , Email=?, Phone=?,  where IDAccount = ?";
+        String query = "update Account set UserName=?, Pass=?, FullName=?, Gender=?, City=? , Email=?, Phone=?  where IDAccount = ?";
         try {
             conn = DBContext.getConnection();//mo ket noi
             ps = conn.prepareStatement(query);

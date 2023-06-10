@@ -105,7 +105,7 @@
                         <td>${l.getUserName()}</td>
                         <td>${l.getPass()}</td>
                         <td>${l.getIDRole()}</td>
-                        <td><a href="edit?IDAccount=${l.getIDAccount()}">Edit</a> | <a href="delete?IDAccount=${l.getIDAccount()}">Delete</a></td>
+                        <td><a href="delete?IDAccount=${l.getIDAccount()}">Delete</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

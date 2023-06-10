@@ -13,7 +13,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <a class="navbar-brand logo_h" href="jsp_customer/customer_home.jsp"><img src="image/Logo.png" alt=""></a>
+            <a style="width: 20%;" class="navbar-brand logo_h" href="jsp_customer/customer_home.jsp"><img style="width: 150%;" src="image/logo1.png" alt=""></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -28,7 +28,7 @@
                     <li class="nav-item"><a class="nav-link" href="customer_services.jsp">Services</a></li>
 
 
-                    <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="faq.jsp">FAQ</a></li>
                     <li class="nav-item"><a class="nav-link" href="customer_contact.jsp">Contact</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>-->
 

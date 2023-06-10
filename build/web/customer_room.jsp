@@ -82,7 +82,12 @@
                                     <p class="text-body mb-3">${r.getContent()}</p>
                                     <div class="d-flex justify-content-between">
                                         <a class="btn btn-sm btn-primary rounded py-2 px-4" href="customer_services.jsp">View Details</a>
+                                        <c:if test="${sessionScope.userA != null}">  
                                         <a class="btn btn-sm btn-dark rounded py-2 px-4" href="loadRoomToBook?IDRoomType=${r.getIDRoomType()}">Book Now</a>
+                                        </c:if>
+                                        <c:if test="${sessionScope.userA == null}">  
+                                        <a class="btn btn-sm btn-dark rounded py-2 px-4" href="login.jsp">Book Now(Login)</a>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div> 

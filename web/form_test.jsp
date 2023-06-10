@@ -75,26 +75,27 @@
         <form action="bookingRoom" id="bookingForm" class="col-md-9 m-auto" method="get" role="form">
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Name</label>  
+                    <label for="inputname">Name:</label>  
                     <input type="hidden" class="form-control mt-1" id="IDRoomType" name="IDRoomType" value="${r.getIDRoomType()}">
                     <input type="hidden" class="form-control mt-1" id="IDAccount" name="IDAccount" value="${userA.getIDAccount()}">
                     <input type="text" class="form-control mt-1" id="FullName" name="FullName" placeholder="Name" required value="${userA.getFullName()}">
                 </div>
                 <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Gender</label>
+                    <label for="inputname">Gender:</label>
                     <input type="text" class="form-control mt-1" id="Gender" name="Gender" placeholder="Gender" required value="${userA.getGender()}">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Phone</label>
+                    <label for="inputname">Phone:</label>
                     <input type="text" class="form-control mt-1" id="Phone" name="Phone" placeholder="Phone" required value="${userA.getPhone()}">
                 </div>
                 <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Email</label>
+                    <label for="inputname">Email:</label>
                     <input type="text" class="form-control mt-1" id="Email" name="Email" placeholder="Email" required value="${userA.getEmail()}">
                 </div>
             </div>
+                <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="inputname">Room Type:</label> 
@@ -110,11 +111,11 @@
 
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="inputname">Adult</label>
+                    <label for="inputname">Adult:</label>
                     <input type="text" class="form-control mt-1" id="Adult" name="Adult" placeholder="Adult" required value="">
                 </div>                    
                 <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Child</label>
+                    <label for="inputname">Child:</label>
                     <input type="text" class="form-control mt-1" id="Child" name="Child" placeholder="Child" required value="">
                 </div>
             </div>
@@ -132,7 +133,7 @@
 
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="numRooms">Quantity:</label>
+                    <label for="numRooms">Quantity:</label> <br>
                     <input type="number" id="numRooms" name="numRooms" min="1" value="1" required><br><br>
                 </div> 
                 <div class="col text-end mt-2">

@@ -15,7 +15,7 @@
     <div class="container">
         <div class="registration">
             <div class="logo-container">
-                <img src="image/logo2.png" alt="Logo">
+                <img src="image/logo1.png" alt="Logo">
             </div>
             <h2>Register</h2>
             <form class="registration-form" action="register" method="POST">
@@ -58,7 +58,7 @@
             </form>
         </div>
         <div class="image">
-            <img src="image/pannner3.jpg" alt="Image">
+            <img src="image/bglogin.png" alt="Image">
         </div>
     </div>
 </body>

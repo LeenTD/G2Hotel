@@ -64,21 +64,21 @@
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Bed</label>
-                    <input type="text" class="form-control mt-1" id="NumberOfBed" name="NumberOfBed" placeholder="NumberOfBed" required value="${room.getNumberOfBed()}">
+                    <input type="number" class="form-control mt-1" id="NumberOfBed" name="NumberOfBed" placeholder="NumberOfBed" required value="${room.getNumberOfBed()}">
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Bath</label>
-                    <input type="text" class="form-control mt-1" id="NumberOfBath" name="NumberOfBath" placeholder="NumberOfBath" required value="${room.getNumberOfBath()}">
+                    <input type="number" class="form-control mt-1" id="NumberOfBath" name="NumberOfBath" placeholder="NumberOfBath" required value="${room.getNumberOfBath()}">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="inputname">Price</label>
-                    <input type="text" class="form-control mt-1" id="Price" name="Price" placeholder="Price" required value="${room.getPrice()}">
+                    <input type="number" class="form-control mt-1" id="Price" name="Price" placeholder="Price" required value="${room.getPrice()}">
                 </div>                    
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Total Room</label>
-                    <input type="text" class="form-control mt-1" id="TotalRoom" name="TotalRoom" placeholder="TotalRoom" required value="${room.getTotalRoom()}">
+                    <input type="number" class="form-control mt-1" id="TotalRoom" name="TotalRoom" placeholder="TotalRoom" required value="${room.getTotalRoom()}">
                 </div>
             </div>
 
