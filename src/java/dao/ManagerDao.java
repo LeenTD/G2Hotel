@@ -204,6 +204,19 @@ public class ManagerDao {
         }
     }
 
+    public void updateTotalRoomType(String IDRoomType, String totalRoom, String RoomStatus) {
+        String query = "update RoomType set TotalRoom=? ,RoomStatus=? where IDRoomType = ?";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+            ps.setString(1, totalRoom);
+            ps.setString(2, RoomStatus);
+            ps.setString(3, IDRoomType);
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
     
     //MANAGER DISCOUNT
     public List<Discount> getDiscount() {

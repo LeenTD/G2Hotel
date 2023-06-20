@@ -5,20 +5,17 @@
             <url>src/java/controller/BookingRoomServlet.java</url>
             <bookmark id="1">
                 <name/>
-                <line>137</line>
+                <line>170</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/admin/Desktop/G2HotelTC9/web/faq.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/G2HotelTC9/src/java/dao/ManagerDao.java</file>
-            <file>file:/C:/Users/admin/Desktop/G2HotelTC9/src/java/controller/EditRoomTypeServlet.java</file>
-            <file>file:/C:/Users/admin/Desktop/G2HotelTC9/web/feedback.jsp</file>
+            <file>file:/C:/Users/admin/Desktop/G2HotelTC9/src/java/controller/CheckRoomValidServlet.java</file>
+            <file>file:/C:/Users/admin/Desktop/G2HotelTC9/web/form_test.jsp</file>
             <file>file:/C:/Users/admin/Desktop/G2HotelTC9/src/java/controller/G2HomeServlet.java</file>
-            <file>file:/C:/Users/admin/Desktop/G2HotelTC9/web/customer_about.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/G2HotelTC9/src/java/controller/DeleteServlet.java</file>
+            <file>file:/C:/Users/admin/Desktop/G2HotelTC9/src/java/controller/BookingRoomServlet.java</file>
         </group>
     </open-files>
 </project-private>

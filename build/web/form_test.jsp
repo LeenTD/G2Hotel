@@ -71,8 +71,11 @@
         </section>
         <!--================Breadcrumb Area =================-->
         <br>
+        <h2 style="color: red; text-align: center;" >${dayFail} </h2>
 
-        <form action="bookingRoom" id="bookingForm" class="col-md-9 m-auto" method="get" role="form">
+        <!--onsubmit="return validateForm()"--> 
+
+        <form action="bookingRoom" id="bookingForm" class="col-md-9 m-auto" name="myForm" method="get" role="form">
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Name:</label>  
@@ -95,7 +98,7 @@
                     <input type="text" class="form-control mt-1" id="Email" name="Email" placeholder="Email" required value="${userA.getEmail()}">
                 </div>
             </div>
-                <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+            <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="inputname">Room Type:</label> 
@@ -106,6 +109,8 @@
                     <label for="inputname">Price:</label>
                     <label for="inputname"> ${r.getPrice()}$/Night</label>
                     <input type="hidden" id="Price" name="Price" placeholder="Price" required value="${r.getPrice()}">
+                    <input type="hidden" id="ttRoom" name="ttRoom" placeholder="ttRoom" required value="${r.getTotalRoom()}">
+
                 </div>
             </div>
 
@@ -123,34 +128,112 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="checkInDate">Check-In:</label><br>
-                    <input type="date" id="checkInDate" name="checkInDate" required><br>
+                    <input type="date" class="form-control"  name="checkInDate" id="check_in" required/>
+                    <span id="checkInDate" style="color: red;"></span>
                 </div>                    
                 <div class="form-group col-md-6 mb-3">
                     <label for="checkOutDate">Check-Out:</label><br>
-                    <input type="date" id="checkOutDate" name="checkOutDate" required><br>
+                    <input type="date" class="form-control"  name="checkOutDate" id="check_out"  required/>
+                    <span id="checkOutDate" style="color: red;"></span>
                 </div>
             </div>
+
 
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="numRooms">Quantity:</label> <br>
-                    <input type="number" id="numRooms" name="numRooms" min="1" value="1" required><br><br>
-                </div> 
-                <div class="col text-end mt-2">
-                    <button type="submit" class="btn btn-success btn-lg px-3">Book Now</button>
+                    <label for="numRooms">Quantity:</label><br>
+                    <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="" min="1" required="">
+                    <!--                    <div class="input-group">
+                                            <button type="button" class="btn btn-outline-secondary" onclick="decreaseQuantity()">-</button>
+                                            <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="1" readonly>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="increaseQuantity()">+</button>
+                                        </div>-->
+                    <span id="quantityError" style="color: red;"></span>
+                </div>
+
+
+                <div class="form-group col-md-6 mb-3">
+                    <label for="inputname">Discount Code:</label>
+                    <input type="text" class="form-control mt-1" id="DiscountCode" name="DiscountCode" placeholder="DiscountCode" value="">
                 </div>
             </div>
 
+            <div class="col text-end mt-2">
+                <button type="submit" class="btn btn-success btn-lg px-3">Book Now</button>
+            </div>
         </form>
 
         <br>
 
 
-
         <%@include file="/includes/footer.jsp" %>        
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <!--<script src="js/booking.js"></script>-->
+
+        <script type="text/javascript">
+            // Lấy các phần tử HTML cần thiết
+            var checkInDateInput = document.getElementById('check_in');
+            var checkOutDateInput = document.getElementById('check_out');
+            var checkInDateError = document.getElementById('checkInDate');
+            var checkOutDateError = document.getElementById('checkOutDate');
+
+// Lắng nghe sự kiện khi ngày check-in thay đổi
+            checkInDateInput.addEventListener('change', function () {
+                var checkInDate = new Date(checkInDateInput.value);
+                var currentDate = new Date();
+
+                // Kiểm tra nếu ngày check-in nhỏ hơn ngày hiện tại
+                if (checkInDate < currentDate) {
+                    checkInDateError.innerHTML = 'Your checkin date is less than current date.';
+                    checkInDateInput.value = '';
+                } else {
+                    checkInDateError.innerHTML = '';
+                }
+
+                // Xóa thông báo lỗi ngày check-out nếu có
+                checkOutDateError.innerHTML = '';
+            });
+
+// Lắng nghe sự kiện khi ngày check-out thay đổi
+            checkOutDateInput.addEventListener('change', function () {
+                var checkInDate = new Date(checkInDateInput.value);
+                var checkOutDate = new Date(checkOutDateInput.value);
+
+                // Kiểm tra nếu ngày check-out nhỏ hơn ngày check-in
+                if (checkOutDate < checkInDate) {
+                    checkOutDateError.innerHTML = 'Your checkout date is less than checkin date.';
+                    checkOutDateInput.value = '';
+                } else {
+                    checkOutDateError.innerHTML = '';
+                }
+            });
+
+
+
+//            function decreaseQuantity() {
+//                var quantityInput = document.getElementById("numRooms");
+//                var currentQuantity = parseInt(quantityInput.value);
+//
+//                if (currentQuantity > 1) {
+//                    quantityInput.value = currentQuantity - 1;
+//                    document.getElementById("quantityError").innerHTML = "";
+//                }
+//            }
+//
+//            function increaseQuantity() {
+//                var quantityInput = document.getElementById("numRooms");
+//                var currentQuantity = parseInt(quantityInput.value);
+//
+//                if (currentQuantity < 5) {
+//                    quantityInput.value = currentQuantity + 1;
+//                    document.getElementById("quantityError").innerHTML = "";
+//                } else {
+//                    document.getElementById("quantityError").innerHTML = "Over the number of room available!";
+//                }
+//            }
+        </script>
+
+
+        <script src="js/formValidation.js" type="text/javascript"></script>
+
 
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/popper.js"></script>

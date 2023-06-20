@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.CheckRoomValid;
 /**
  *
  * @author admin
@@ -21,7 +22,7 @@ public class DBContext {
         Connection connection = null;
         String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         String serverName = "DESKTOP-T5EHA2N\\LEEN";
-        String databaseName = "G2Hotell";
+        String databaseName = "G2HotelTest";
         String port = "1433";
         String user = "sa";
         String password = "123456";
@@ -44,19 +45,23 @@ public class DBContext {
     }
 
     
-    public static void main(String[] args) {
-        DBContext db = new DBContext();
-        try {
-            System.out.println(DBContext.getConnection());
-        } catch (Exception e) {
-        }
+//    public static void main(String[] args) {
+//        DBContext db = new DBContext();
+//        try {
+//            System.out.println(DBContext.getConnection());
+//        } catch (Exception e) {
+//        }
+//        UserDao ud = new UserDao();
+//                List<CheckRoomValid> l = ud.checkRoomValid("2023-06-14", "2023-06-20");
+//                System.out.println("sfs" + l.toString());
+
 //        ManagerDao m = new ManagerDao();
 //        List<User> l = new ArrayList<>();
 //        l = m.getAccounts();
 //        for (User user : l) {
 //             l.toString();
 //        }
-    }
+//    }
     
 
 }

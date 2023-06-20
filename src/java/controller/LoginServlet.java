@@ -35,6 +35,8 @@ public class LoginServlet extends HttpServlet {
 
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
+//        String userName = "user2";
+//        String password = "pass2";
 
         UserDao userDao = new UserDao();
         User user = userDao.checkAccountValid(userName, password);

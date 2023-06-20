@@ -5,6 +5,7 @@ package controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -57,7 +58,6 @@ public class G2HomeServlet extends HttpServlet {
             throws ServletException, IOException {
         request.getRequestDispatcher("customer_home.jsp").forward(request, response);
 //        request.getRequestDispatcher("manager_home.jsp").forward(request, response);
-
 //        request.getRequestDispatcher("owner_index.jsp").forward(request, response);
     }
 

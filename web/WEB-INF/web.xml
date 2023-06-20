@@ -76,6 +76,10 @@
         <servlet-name>EditProfileServlet</servlet-name>
         <servlet-class>controller.EditProfileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckRoomValidServlet</servlet-name>
+        <servlet-class>controller.CheckRoomValidServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>G2HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -152,4 +156,11 @@
         <servlet-name>EditProfileServlet</servlet-name>
         <url-pattern>/editProfile</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckRoomValidServlet</servlet-name>
+        <url-pattern>/checkRoomValid</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>customer_home.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

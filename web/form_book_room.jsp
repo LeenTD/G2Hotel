@@ -130,9 +130,14 @@
                                         <p id="price">Price: ${r.getPrice()}</p>-->
                     <input type="text" class="form-control mt-1" id="NumberOfRoom" name="NumberOfRoom" placeholder="NumberOfRoom" required value="">
                 </div>
-                <div class="col text-end mt-2">
-                    <button type="submit" class="btn btn-success btn-lg px-3">Book Now</button>
+                <div class="form-group col-md-6 mb-3">
+                    <label for="inputname">Discount Code</label>
+                    <input type="text" class="form-control mt-1" id="DiscountCode" name="DiscountCode" placeholder="DiscountCode" value="">
                 </div>
+
+            </div>
+            <div class="col text-end mt-2">
+                <button type="submit" class="btn btn-success btn-lg px-3">Book Now</button>
             </div>
         </form>
         <br>

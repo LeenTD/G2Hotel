@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +23,7 @@ import model.CheckRoomValid;
  *
  * @author admin
  */
-public class BookingRoomServlet extends HttpServlet {
+public class CheckRoomValidServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +42,10 @@ public class BookingRoomServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BookingRoomServlet</title>");
+            out.println("<title>Servlet CheckRoomValidServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BookingRoomServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CheckRoomValidServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,8 +63,7 @@ public class BookingRoomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //TIM CACH KHAC
+        
         response.setContentType("text/html");
         //bookingtime
         LocalDateTime currentTime = LocalDateTime.now();
@@ -75,9 +73,6 @@ public class BookingRoomServlet extends HttpServlet {
         String IDAccount = request.getParameter("IDAccount");
         String IDRoomType = request.getParameter("IDRoomType");
         int idrt = Integer.parseInt(IDRoomType);
-
-        String adult = request.getParameter("Adult");
-        String child = request.getParameter("Child");
 
         // get total day
         String checkInDateStr = request.getParameter("checkInDate");
@@ -94,23 +89,15 @@ public class BookingRoomServlet extends HttpServlet {
         String nRooms = request.getParameter("numRooms");
         int numRooms = Integer.parseInt(nRooms);
 
-        // Total Price
-        int tprice = numOfDays * numRooms * p;
-        String TotalPrice = String.valueOf(tprice);
-
-        String IDDiscount = "1";
-        String Note = "";
 
         // check Room
         String ttRoom = request.getParameter("ttRoom");
         int ttR = Integer.parseInt(ttRoom);
         int checkRoom = ttR - numRooms;
-        String cRoom = String.valueOf(checkRoom);
+//        String cRoom = String.valueOf(checkRoom);
 
         UserDao udao = new UserDao();
-        ManagerDao mDao = new ManagerDao();
 
-        PrintWriter out = response.getWriter();
         List<CheckRoomValid> l = udao.checkRoomValid(checkInDateStr, checkOutDateStr);
         int cr =checkRoom;
         for (int i = 0; i < l.size(); i++) {
@@ -127,47 +114,9 @@ public class BookingRoomServlet extends HttpServlet {
         } else if (checkInDate.isBefore(currentDate) || checkOutDate.isBefore(checkInDate)) {
             request.setAttribute("dayFail", "Day Invaild!");
             request.getRequestDispatcher("form_test.jsp").forward(request, response);
-        } else {
-            udao.addBooking(IDAccount, IDDiscount, IDRoomType, adult, child, checkInDateStr, checkOutDateStr, nRooms, TotalPrice, formattedTime, Note);
-            request.setAttribute("booksuccess", "Booking Success");
-            request.getRequestDispatcher("customer_room.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("showBooking").forward(request, response);
+//        request.getRequestDispatcher("showBooking").forward(request, response);
 
-
-        // CAI NAY OK ROI
-//        response.setContentType("text/html");
-//        //bookingtime
-//        LocalDateTime currentTime = LocalDateTime.now();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//        String formattedTime = currentTime.format(formatter);
-//
-//        String IDAccount = request.getParameter("IDAccount");
-//        
-//        String IDRoomType = request.getParameter("IDRoomType");
-//
-//        String adult = request.getParameter("Adult");
-//
-//        String child = request.getParameter("Child");
-//
-//        // get total day
-//        String CheckIn = request.getParameter("checkInDate");
-//        String CheckOut = request.getParameter("checkOutDate");
-//
-//        String numberOfRoom = request.getParameter("numRooms");
-//
-//        //price
-//        String TotalPrice = request.getParameter("totalPrice");
-//
-//        String IDDiscount = "";
-//        String Note = "";
-//
-//        UserDao udao = new UserDao();
-//
-//        udao.addBooking(IDAccount, IDDiscount, IDRoomType, adult, child, CheckIn, CheckOut, numberOfRoom, TotalPrice, formattedTime, Note);
-//
-//        request.setAttribute("booksuccess", "Booking Success");
-//        request.getRequestDispatcher("customer_room.jsp").forward(request, response);
     }
 
     /**

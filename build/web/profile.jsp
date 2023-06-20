@@ -63,7 +63,7 @@
                             <div class="row mt-3">
                                 <div class="col-md-12"><input type="hidden" name="IDAccount" class="form-control"  value="${userA.getIDAccount()}"></div>
                                 <div class="col-md-12"><label class="labels">Full Name</label><input type="text" name="FullName" class="form-control"  value="${userA.getFullName()}"></div>
-                                <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" name="Phone" class="form-control"  value="0${userA.getPhone()}"></div>
+                                <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" name="Phone" class="form-control"  value="${userA.getPhone()}"></div>
                                 <div class="col-md-12"><label class="labels">Email</label><input type="text" name="Email" class="form-control"value="${userA.getEmail()}"></div>
                                 <div class="col-md-6"><label class="labels">City</label><input type="text" name="City" class="form-control" value="${userA.getCity()}"></div>
                                 <div class="col-md-6"><label class="labels">Gender</label><input type="text" name="Gender" class="form-control" value="${userA.getGender()}" ></div>

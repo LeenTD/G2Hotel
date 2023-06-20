@@ -11,7 +11,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Booking;
+import model.CheckRoomValid;
 import model.User;
 
 /**
@@ -137,7 +140,7 @@ public class UserDao {
         }
         return null;
     }
-    
+
 // chinh sua thong tin account (Update)
     public void updateBooking(String IDBooking, String Adult, String Child, String CheckIn, String CheckOut, String NumberOfRoom, String Note) {
         String query = "update Booking set Adult=?, Child=?, CheckIn=?, CheckOut=?, NumberOfRoom=? , Note=? where IDBooking = ?";
@@ -156,26 +159,25 @@ public class UserDao {
         } catch (Exception e) {
         }
     }
-    
-    
+
     public boolean isRoomAvailable(int IDRoomType, Date CheckIn, Date CheckOut) {
-        try (Connection conn = DBContext.getConnection()) {
+        try ( Connection conn = DBContext.getConnection()) {
             // Get the total number of rooms available for the specified room type
             String sql = "SELECT TotalRoom FROM NameRoomType WHERE IDRoomType = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try ( PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, IDRoomType);
-                try (ResultSet rs = stmt.executeQuery()) {
+                try ( ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         int totalRooms = rs.getInt("TotalRoom");
 
                         // Check if there are any overlapping reservations for the specified room type and date range
-                        sql = "SELECT COUNT(*) FROM reservations WHERE IDRoomType = ? " +
-                                "AND CheckIn < ? AND CheckOut > ?";
-                        try (PreparedStatement stmt2 = conn.prepareStatement(sql)) {
+                        sql = "SELECT COUNT(*) FROM reservations WHERE IDRoomType = ? "
+                                + "AND CheckIn < ? AND CheckOut > ?";
+                        try ( PreparedStatement stmt2 = conn.prepareStatement(sql)) {
                             stmt2.setInt(1, IDRoomType);
                             stmt2.setDate(2, new java.sql.Date(CheckOut.getTime()));
                             stmt2.setDate(3, new java.sql.Date(CheckIn.getTime()));
-                            try (ResultSet rs2 = stmt2.executeQuery()) {
+                            try ( ResultSet rs2 = stmt2.executeQuery()) {
                                 if (rs2.next()) {
                                     int reservedRooms = rs2.getInt(1);
                                     int availableRooms = totalRooms - reservedRooms;
@@ -190,5 +192,34 @@ public class UserDao {
             e.printStackTrace();
         }
         return false; // Return false in case of any error or exception
+    }
+
+    public List<CheckRoomValid> checkRoomValid(String checkIn, String checkOut) {
+        List<CheckRoomValid> lcr = new ArrayList<>();
+        String query = "SELECT RT.IDRoomType, RT.TotalRoom - COALESCE(SUM(B.NumberOfRooms), 0) AS AvailableRooms\n" +
+"FROM RoomType RT\n" +
+"LEFT JOIN Booking B ON RT.IDRoomType = B.IDRoomType\n" +
+"WHERE (B.Checkin >= ? AND B.Checkin <= ? ) OR\n" +
+"      (B.Checkout >= ? AND B.Checkout <= ? ) OR\n" +
+"      (B.Checkin <= ? AND B.Checkout >= ? )\n" +
+"GROUP BY RT.IDRoomType, RT.TotalRoom;";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+            ps.setString(1, checkIn);
+            ps.setString(2, checkOut);
+            ps.setString(3, checkIn);
+            ps.setString(4, checkOut);
+            ps.setString(5, checkIn);
+            ps.setString(6, checkOut);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lcr.add(new CheckRoomValid(rs.getInt(1),
+                         rs.getInt(2)));
+            }
+        } catch (Exception e) {
+        }
+        return lcr;
     }
 }
