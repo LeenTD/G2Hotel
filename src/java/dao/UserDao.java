@@ -78,8 +78,8 @@ public class UserDao {
     }
 
     // them account moi (register)
-    public User addAccount(String UserName, String Pass, String FullName, String Gender, String City, String Email, String Phone) {
-        String query = "insert into Account(UserName,Pass,FullName,Gender,City,Email,Phone,IDRole) values(?,?,?,?,?,?,?,'1')";
+    public User addAccount(String UserName, String Pass, String FullName, String Gender, String City, String Email, String Phone, String IDRole) {
+        String query = "insert into Account(UserName,Pass,FullName,Gender,City,Email,Phone,IDRole) values(?,?,?,?,?,?,?,?)";
         try {
             conn = DBContext.getConnection();//mo ket noi
             ps = conn.prepareStatement(query);
@@ -90,6 +90,7 @@ public class UserDao {
             ps.setString(5, City);
             ps.setString(6, Email);
             ps.setString(7, Phone);
+            ps.setString(8, IDRole);
 
             ps.executeUpdate();
         } catch (Exception e) {
@@ -221,5 +222,28 @@ public class UserDao {
         } catch (Exception e) {
         }
         return lcr;
+    }
+    
+    public User getAccountById(String IDAccount){
+        String query = "select * from Account where IDAccount=?";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+            ps.setString(1, IDAccount); // set bien proId vao ? thứ 1
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return(new User(rs.getInt(1)
+                        , rs.getString(2)
+                        , rs.getString(3)
+                        , rs.getString(4)
+                        , rs.getString(5)
+                        , rs.getString(6)
+                        , rs.getString(7)
+                        , rs.getString(8)
+                        , rs.getInt(9)));
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 }

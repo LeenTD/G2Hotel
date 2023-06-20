@@ -39,7 +39,7 @@ public class RegisterServlet extends HttpServlet {
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
         String passCon = request.getParameter("confirm_password");
-
+        String idrole = request.getParameter("idrole");
         UserDao dao = new UserDao();
         User acc = dao.checkAccountExist(user);
         if (acc != null) {
@@ -50,7 +50,7 @@ public class RegisterServlet extends HttpServlet {
                 request.setAttribute("mess", "Password not match!");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             } else {
-                dao.addAccount(user, pass, fName, gender, city, email, phone);
+                dao.addAccount(user, pass, fName, gender, city, email, phone,idrole);
                 request.setAttribute("loginFail", "Register success!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }

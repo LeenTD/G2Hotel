@@ -12,13 +12,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Booking;
 import model.CheckRoomValid;
+import model.RoomType;
+import model.User;
 
 /**
  *
@@ -73,12 +75,15 @@ public class BookingRoomServlet extends HttpServlet {
         String formattedTime = currentTime.format(formatter);
 
         String IDAccount = request.getParameter("IDAccount");
+        int idac = Integer.parseInt(IDAccount);
+
         String IDRoomType = request.getParameter("IDRoomType");
         int idrt = Integer.parseInt(IDRoomType);
 
         String adult = request.getParameter("Adult");
+        int na = Integer.parseInt(IDRoomType);
         String child = request.getParameter("Child");
-
+        int nc = Integer.parseInt(IDRoomType);
         // get total day
         String checkInDateStr = request.getParameter("checkInDate");
         String checkOutDateStr = request.getParameter("checkOutDate");
@@ -88,14 +93,13 @@ public class BookingRoomServlet extends HttpServlet {
         // get ngay hien tai de check Day
         LocalDate currentDate = LocalDate.now();
 
-        String price = request.getParameter("Price");
-        int p = Integer.parseInt(price);
+        String tprice = request.getParameter("TotalPrice");
+        double tp = Double.parseDouble(tprice);
 
         String nRooms = request.getParameter("numRooms");
         int numRooms = Integer.parseInt(nRooms);
 
         // Total Price
-        int tprice = numOfDays * numRooms * p;
         String TotalPrice = String.valueOf(tprice);
 
         String IDDiscount = "1";
@@ -112,9 +116,9 @@ public class BookingRoomServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         List<CheckRoomValid> l = udao.checkRoomValid(checkInDateStr, checkOutDateStr);
-        int cr =checkRoom;
+        int cr = checkRoom;
         for (int i = 0; i < l.size(); i++) {
-            if(idrt == l.get(i).getIDRoom()){
+            if (idrt == l.get(i).getIDRoom()) {
                 cr = l.get(i).getRoomValid();
             } else {
                 cr = ttR;
@@ -122,52 +126,25 @@ public class BookingRoomServlet extends HttpServlet {
         }
 
         if (cr <= 0 || cr < numRooms) {
-            request.setAttribute("dayFail","Over stock! "+ cr + " rooms available");
+            request.setAttribute("dayFail", "Over stock! " + cr + " rooms available");
             request.getRequestDispatcher("form_test.jsp").forward(request, response);
         } else if (checkInDate.isBefore(currentDate) || checkOutDate.isBefore(checkInDate)) {
             request.setAttribute("dayFail", "Day Invaild!");
             request.getRequestDispatcher("form_test.jsp").forward(request, response);
         } else {
-            udao.addBooking(IDAccount, IDDiscount, IDRoomType, adult, child, checkInDateStr, checkOutDateStr, nRooms, TotalPrice, formattedTime, Note);
-            request.setAttribute("booksuccess", "Booking Success");
-            request.getRequestDispatcher("customer_room.jsp").forward(request, response);
+            User u = udao.getAccountById(IDAccount);
+            Booking bk = new Booking(idac, idac, idac, idrt, na, nc, checkInDateStr, checkOutDateStr, numRooms, tp, formattedTime, Note);
+            request.setAttribute("bk", bk);
+            request.setAttribute("u", u);
+            request.getRequestDispatcher("form_payment.jsp").forward(request, response);
+
+//            Booking bk2 = new Booking(idrt, idac, idrt, idrt, idrt, cr, child, IDAccount, numRooms, tp, Note, Note);
+//            udao.addBooking(IDAccount, IDDiscount, IDRoomType, adult, child, checkInDateStr, checkOutDateStr, nRooms, TotalPrice, formattedTime, Note);
+//            request.setAttribute("booksuccess", "Booking Success");
+//            request.getRequestDispatcher("customer_room.jsp").forward(request, response);
         }
         request.getRequestDispatcher("showBooking").forward(request, response);
 
-
-        // CAI NAY OK ROI
-//        response.setContentType("text/html");
-//        //bookingtime
-//        LocalDateTime currentTime = LocalDateTime.now();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//        String formattedTime = currentTime.format(formatter);
-//
-//        String IDAccount = request.getParameter("IDAccount");
-//        
-//        String IDRoomType = request.getParameter("IDRoomType");
-//
-//        String adult = request.getParameter("Adult");
-//
-//        String child = request.getParameter("Child");
-//
-//        // get total day
-//        String CheckIn = request.getParameter("checkInDate");
-//        String CheckOut = request.getParameter("checkOutDate");
-//
-//        String numberOfRoom = request.getParameter("numRooms");
-//
-//        //price
-//        String TotalPrice = request.getParameter("totalPrice");
-//
-//        String IDDiscount = "";
-//        String Note = "";
-//
-//        UserDao udao = new UserDao();
-//
-//        udao.addBooking(IDAccount, IDDiscount, IDRoomType, adult, child, CheckIn, CheckOut, numberOfRoom, TotalPrice, formattedTime, Note);
-//
-//        request.setAttribute("booksuccess", "Booking Success");
-//        request.getRequestDispatcher("customer_room.jsp").forward(request, response);
     }
 
     /**

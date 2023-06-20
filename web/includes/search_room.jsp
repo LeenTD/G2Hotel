@@ -1,30 +1,11 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <%@include file="head.jsp" %>
-        <title>banner</title>
-        <style>
-            .maindiv{
-                margin: 250px;
-                padding: 25px;
-
-            }
-            body{
-                width: 100%;
-                height: 100%;
-                background-position: center;
-                background-image: url("images/Deluxe King 1.png");
-                background-repeat: no-repeat;
-                background-size: cover;
-            }
-        </style>
-    </head>
     <body class="">
 
         <form action="availableRooms.jsp" method="post" onsubmit="return validateForm()" name="myForm">
-            <div class=" row maindiv bg-secondary px-4">
+            <div class=" row maindiv bg-secondary px-4, form_day">
 
-                <div class="col-4  ">
+                <div class="col-4">
                     <div>
                         <label><b class="text-white">Check In Date</b></label>
                     </div>
@@ -47,20 +28,6 @@
         </form>
 
         <script type="text/javascript">
-            function validateForm() {
-                const currentDate = new Date();
-                var checkDate = currentDate.setDate(currentDate.getDate() - 1);
-                var arrivalDate = new Date(document.getElementById('check_in').value);
-                var depatureDate = new Date(document.getElementById('check_out').value);
-                if (depatureDate <= arrivalDate) {
-                    displayMsg("Your checkin and check out date is invalid", "checkout", "red");
-                    return false;
-                } else if (arrivalDate < checkDate) {
-                    displayMsg("Your checkin date is less than current date", "checkin", "red");
-                    return false;
-                }
-            }
-
             $(function () {
                 var dtToday = new Date();
 
@@ -77,6 +44,33 @@
                 $('#check_out').attr('min', maxDate);
             });
         </script>
-        <script src="js/formValidation.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    document.getElementById('check_in').addEventListener('change', handleDateChange);
+    document.getElementById('check_out').addEventListener('change', handleDateChange);
+
+    function handleDateChange() {
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - 1);
+        var checkInDate = new Date(document.getElementById('check_in').value);
+        var checkOutDate = new Date(document.getElementById('check_out').value);
+
+        if (checkOutDate <= checkInDate) {
+            document.getElementById('checkout').textContent = 'Your checkout date is less than checkin date.';
+            document.getElementById('check_out').value = '';
+        } else if (checkOutDate > checkInDate) {
+            document.getElementById('checkout').textContent = '';
+        } 
+        
+        if (checkInDate <= currentDate) {
+        document.getElementById('checkin').textContent = 'Your checkin date is less than current date.';
+        document.getElementById('check_in').value = '';
+    } else {
+        document.getElementById('checkin').textContent = '';
+    }
+    }
+</script>
+
+        <script src="../js/formValidation.js" type="text/javascript"></script>
     </body>
 </html>

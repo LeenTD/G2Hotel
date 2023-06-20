@@ -46,7 +46,7 @@
                 
                 <label for="confirm_password">Confirm Password</label>
                 <input type="password" id="confirm_password" name="confirm_password" required>
-                
+                <input type="hidden" id="idrole" name="idrole" value="1">
                 <input type="checkbox"> <a href="#">I agree with the hotel policy</a>
               
                 <button type="submit">Register</button>

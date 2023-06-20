@@ -111,7 +111,62 @@
             </tbody>
             <!--================DATABASE =================-->
         </table>
-        <!--Table End
+        <!--Table End--!>
+        
+        <!--================FORM ADD NEW ROOM TYPE =================-->
+
+        <h1 style="text-align: center;">Add New Receptionist Account</h1>
+
+        <form action="register" class="col-md-9 m-auto" method="get" role="form">
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="inputname">ID</label><br>
+                    <label for="inputname">Auto Generate</label>
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                    <label for="inputname">Full Name</label>
+                    <input type="text" class="form-control mt-1" id="fullname" name="fullname" placeholder="Name" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="inputname">Gender</label>
+                    <input type="text" class="form-control mt-1" id="gender" name="gender" placeholder="Gender" required>
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                    <label for="inputname">City</label>
+                    <input type="text" class="form-control mt-1" id="city" name="city" placeholder="City" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="inputname">Email</label>
+                    <input type="email" class="form-control mt-1" id="email" name="email" placeholder="Email" required>
+                </div>                    
+                <div class="form-group col-md-6 mb-3">
+                    <label for="inputname">Phone</label>
+                    <input type="text" class="form-control mt-1" id="phone" name="phone" placeholder="Phone" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="inputname">UserName</label>
+                    <input type="text" class="form-control mt-1" id="username" name="username" placeholder="UserName" required>
+                </div>                    
+                <div class="form-group col-md-6 mb-3">
+                    <label for="inputname">Password</label>
+                    <input type="text" class="form-control mt-1" id="password" name="password" placeholder="Password" required>
+                    <input type="hidden" id="idrole" name="idrole" value="2">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col text-end mt-2">
+                    <button type="submit" class="btn btn-success btn-lg px-3">Add New Account</button>
+                </div>
+            </div>
+        </form>
+        <!--================FORM ADD NEW ROOM TYPE =================-->
 
         <%@include file="/includes/footer.jsp" %>
         <!-- Optional JavaScript -->

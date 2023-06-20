@@ -559,11 +559,11 @@ button:focus {
   background: #04091e;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
   padding: 40px 50px 30px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  justify-content: center;
 }
 
 .hotel_booking_table h2 {

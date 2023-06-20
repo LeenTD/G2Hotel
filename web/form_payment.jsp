@@ -48,87 +48,46 @@
 
         <h1 style="text-align: center;">Payment Room</h1>
 
-        <form action="#" class="col-md-9 m-auto" method="get" role="form">
-            <div class="row">
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Name: </label>   
-                    <label for="inputname" >${userA.getFullName()}</label>  
-                    <input type="hidden" class="form-control mt-1" id="IDRoomType" name="IDRoomType" value="${sessionScope.booking.getIDRoomType()}">
-                    <input type="hidden" class="form-control mt-1" id="IDAccount" name="IDAccount" value="${userA.getIDAccount()}">
-                    <!--<input type="hidden" class="form-control mt-1" id="" name="FullName" placeholder="FullName" required value="${userA.getFullName()}">-->
+        <form action="#" method="get">
 
-                </div>
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Gender: </label>
-                    <label for="inputname" >${userA.getGender()}</label>
+            <div class="container rounded bg-white mt-5 mb-5">
+                <div class="row">
+                    <div class="col-md-3 border-right">
+                        <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">${userA.getFullName()}</span><span class="text-black-50"></span><span> </span></div>
+                    </div>
+                    <div class="col-md-5 border-right">
+                        <div class="p-3 py-5">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="text-right">Payment</h4>
+                            </div>
 
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Phone: </label>
-                    <label for="inputname" >0${userA.getPhone()}</label>
-                </div>
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Email: </label>                   
-                    <label for="inputname" >${userA.getEmail()}</label>
+                            <div class="row mt-3">
+                                <div class="col-md-12"><input type="hidden" name="IDAccount" class="form-control"  value="${userA.getIDAccount()}"></div>
+                                <div class="col-md-12"><label class="labels">Full Name</label><input type="text" name="FullName" class="form-control" readonly  value="${userA.getFullName()}"></div>
+                                <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" name="Phone" class="form-control" readonly value="${userA.getPhone()}"></div>
+                                <div class="col-md-12"><label class="labels">Email</label><input type="text" name="Email" class="form-control" readonly value="${userA.getEmail()}"></div>
+                                <div class="col-md-6"><label class="labels">City</label><input type="text" name="City" class="form-control" readonly value="${userA.getCity()}"></div>
+                                <div class="col-md-6"><label class="labels">Gender</label><input type="text" name="Gender" class="form-control" readonly value="${userA.getGender()}" ></div>
+                            </div>
+                            <div class="row mt-3">
 
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="inputname">Name Room Type :</label> 
-                    <label for="inputname" > ${sessionScope.booking.getNote()}</label>
-                </div>   
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Total Price: </label>
-                    <label for="inputname" > ${sessionScope.booking.totalPrice}</label>
-                    <input type="hidden" class="form-control mt-1" id="Price" name="Price" value="${sessionScope.booking.totalPrice}">
+                                <div class="col-md-12"><label class="labels">UserName</label><input type="text" name="UserName" class="form-control" value="${userA.getUserName()}"></div>                            
+                                <div class="col-md-12"><label class="labels">Password</label><input type="text" name="Pass" class="form-control"  value="${userA.getPass()}"></div>
+                            </div>
+                            <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Pay</button></div>
+                        </div>
+                    </div>
 
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="inputname">Adult: </label>  
-                    <label for="inputname" >${sessionScope.booking.getAdult()}</label>
-                    <input type="hidden" class="form-control mt-1" id="Adult" name="Adult"  value="${sessionScope.booking.getAdult()}">
-
-                </div>                    
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Child: </label>
-                    <label for="inputname">${sessionScope.booking.getChild()}</label>
-                    <input type="hidden" class="form-control mt-1" id="Child" name="Child"  value="${sessionScope.booking.getChild()}">
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="inputname">Check In: </label>  
-                    <label for="inputname">${sessionScope.booking.getCheckIn()}</label>  
-
-                    <input type="hidden" class="form-control mt-1" id="CheckIn" name="CheckIn" value="${booking.getCheckIn()}">
-                </div>                    
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Check Out: </label>
-                    <label for="inputname">${sessionScope.booking.getCheckOut()}</label>
-                    <input type="hidden" class="form-control mt-1" id="CheckOut" name="CheckOut"  value="${sessionScope.booking.getCheckOut()}">
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Number Of Room Booking: </label> 
-                    <label for="inputname" >${booking.getNumberOfRooms()}</label>
-                    <input type="hidden" class="form-control mt-1" id="NumberOfRooms" name="NumberOfRooms"  value="${booking.getNumberOfRooms()}">
-                    <input type="hidden" class="form-control mt-1" id="bookingTime" name="bookingTime"  value="${booking.getBookingTime()}">
-
-                </div>
-                <div class="col text-end mt-2">
-                    <button type="submit" class="btn btn-success btn-lg px-3">Payment</button>
+                    <div class="col-md-4">
+                        <div class="p-3 py-5">
+                            <div class="d-flex justify-content-between align-items-center experience"><span>Information Booking</span><span class="border px-3 p-1 add-experience"><a href="showRoomCustomer"><i class="fa fa-plus"></i>&nbsp;Booking</a></span></div><br>
+                            <div class="col-md-12"><label class="labels">Start Day</label><input type="text" class="form-control" placeholiêder="Start Day" readonly value="${bk.getCheckIn()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">End Day</label><input type="text" class="form-control" placeholder="End Day" readonly value="${bk.getCheckOut()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">Room Type</label><input type="text" class="form-control" placeholder="Room Type" readonly value="${bk.getIDRoomType()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">Number Of Room</label><input type="text" class="form-control" placeholder="Number Of Room" readonly value="${bk.getNumberOfRooms()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">Total Price</label><input type="text" class="form-control" placeholder="Total Price" readonly value="${bk.getTotalPrice()}"></div> <br>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>

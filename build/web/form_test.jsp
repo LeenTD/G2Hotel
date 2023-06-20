@@ -117,23 +117,23 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="inputname">Adult:</label>
-                    <input type="text" class="form-control mt-1" id="Adult" name="Adult" placeholder="Adult" required value="">
+                    <input type="number" class="form-control mt-1" id="Adult" name="Adult" min="0" placeholder="Adult" required value="">
                 </div>                    
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Child:</label>
-                    <input type="text" class="form-control mt-1" id="Child" name="Child" placeholder="Child" required value="">
+                    <input type="number" class="form-control mt-1" id="Child" name="Child" min="0" placeholder="Child" required value="">
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="checkInDate">Check-In:</label><br>
-                    <input type="date" class="form-control"  name="checkInDate" id="check_in" required/>
+                    <input type="date" class="form-control"  name="checkInDate" id="check_in" onchange="calculateTotalPrice(); validateDates();" required/>
                     <span id="checkInDate" style="color: red;"></span>
                 </div>                    
                 <div class="form-group col-md-6 mb-3">
                     <label for="checkOutDate">Check-Out:</label><br>
-                    <input type="date" class="form-control"  name="checkOutDate" id="check_out"  required/>
+                    <input type="date" class="form-control"  name="checkOutDate" id="check_out" onchange="calculateTotalPrice(); validateDates();"  required/>
                     <span id="checkOutDate" style="color: red;"></span>
                 </div>
             </div>
@@ -142,19 +142,19 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="numRooms">Quantity:</label><br>
-                    <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="" min="1" required="">
-                    <!--                    <div class="input-group">
-                                            <button type="button" class="btn btn-outline-secondary" onclick="decreaseQuantity()">-</button>
-                                            <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="1" readonly>
-                                            <button type="button" class="btn btn-outline-secondary" onclick="increaseQuantity()">+</button>
-                                        </div>-->
+                    <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="" min="1" required onchange="calculateTotalPrice(); validateDates();">
+                    <!--                                        <div class="input-group">
+                                                                <button type="button" class="btn btn-outline-secondary" onclick="decreaseQuantity()">-</button>
+                                                                <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="1" readonly>
+                                                                <button type="button" class="btn btn-outline-secondary" onclick="increaseQuantity()">+</button>
+                                                            </div>-->
                     <span id="quantityError" style="color: red;"></span>
                 </div>
 
 
                 <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Discount Code:</label>
-                    <input type="text" class="form-control mt-1" id="DiscountCode" name="DiscountCode" placeholder="DiscountCode" value="">
+                    <label for="inputname">TotalPrice</label>
+                    <input type="text" class="form-control mt-1" id="TotalPrice" name="TotalPrice" placeholder="TotalPrice" value="" readonly>
                 </div>
             </div>
 
@@ -169,45 +169,98 @@
         <%@include file="/includes/footer.jsp" %>        
 
         <script type="text/javascript">
-            // Lấy các phần tử HTML cần thiết
-            var checkInDateInput = document.getElementById('check_in');
-            var checkOutDateInput = document.getElementById('check_out');
-            var checkInDateError = document.getElementById('checkInDate');
-            var checkOutDateError = document.getElementById('checkOutDate');
 
-// Lắng nghe sự kiện khi ngày check-in thay đổi
-            checkInDateInput.addEventListener('change', function () {
-                var checkInDate = new Date(checkInDateInput.value);
+            function calculateTotalPrice() {
+                var price = parseFloat(document.getElementById("Price").value);
+                var checkInDate = new Date(document.getElementById("check_in").value);
+                var checkOutDate = new Date(document.getElementById("check_out").value);
+                var numRooms = parseInt(document.getElementById("numRooms").value);
+
+                // Kiểm tra dữ liệu hợp lệ
+                if (checkOutDate <= checkInDate) {
+                    document.getElementById("checkOutDate").textContent = "Ngày check-out phải sau ngày check-in";
+                    checkOutDateInput.value = '';
+                    return;
+                }
+
+                // Tính số ngày đặt phòng
+                var oneDay = 24 * 60 * 60 * 1000; // Số mili giây trong một ngày
+                var numDays = Math.round(Math.abs((checkOutDate - checkInDate) / oneDay));
+
+                // Tính tổng giá tiền
+                var totalPrice = price * numDays * numRooms;
+
+                // Hiển thị giá trong trường "TotalPrice"
+                document.getElementById("TotalPrice").value = totalPrice.toFixed(2); // Giá trị làm tròn đến 2 chữ số thập phân
+
+                // Xóa thông báo lỗi nếu dữ liệu hợp lệ
+                document.getElementById("checkOutDate").textContent = "";
+            }
+
+            function validateDates() {
+                var checkInDate = new Date(document.getElementById("check_in").value);
+                var checkOutDate = new Date(document.getElementById("check_out").value);
                 var currentDate = new Date();
 
-                // Kiểm tra nếu ngày check-in nhỏ hơn ngày hiện tại
+                // Kiểm tra ngày check-in không được trước ngày hiện tại
                 if (checkInDate < currentDate) {
-                    checkInDateError.innerHTML = 'Your checkin date is less than current date.';
+                    document.getElementById("checkInDate").textContent = "Your checkin date is less than current date.";
                     checkInDateInput.value = '';
-                } else {
-                    checkInDateError.innerHTML = '';
+                    return;
                 }
 
-                // Xóa thông báo lỗi ngày check-out nếu có
-                checkOutDateError.innerHTML = '';
-            });
-
-// Lắng nghe sự kiện khi ngày check-out thay đổi
-            checkOutDateInput.addEventListener('change', function () {
-                var checkInDate = new Date(checkInDateInput.value);
-                var checkOutDate = new Date(checkOutDateInput.value);
-
-                // Kiểm tra nếu ngày check-out nhỏ hơn ngày check-in
+                // Kiểm tra ngày check-out không được trước ngày check-in
                 if (checkOutDate < checkInDate) {
-                    checkOutDateError.innerHTML = 'Your checkout date is less than checkin date.';
+                    document.getElementById("checkOutDate").textContent = "Your checkout date is less than checkin date.";
                     checkOutDateInput.value = '';
-                } else {
-                    checkOutDateError.innerHTML = '';
+                    return;
                 }
-            });
 
+                // Xóa thông báo lỗi nếu dữ liệu hợp lệ
+                document.getElementById("checkInDate").textContent = "";
+                document.getElementById("checkOutDate").textContent = "";
 
+            }
 
+            // Lấy các phần tử HTML cần thiết
+//            var checkInDateInput = document.getElementById('check_in');
+//            var checkOutDateInput = document.getElementById('check_out');
+//            var checkInDateError = document.getElementById('checkInDate');
+//            var checkOutDateError = document.getElementById('checkOutDate');
+//
+//// Lắng nghe sự kiện khi ngày check-in thay đổi
+//            checkInDateInput.addEventListener('change', function () {
+//                var checkInDate = new Date(checkInDateInput.value);
+//                var currentDate = new Date();
+//
+//                // Kiểm tra nếu ngày check-in nhỏ hơn ngày hiện tại
+//                if (checkInDate <= currentDate) {
+//                    checkInDateError.innerHTML = 'Your checkin date is less than current date.';
+//                    checkInDateInput.value = '';
+//                } else {
+//                    checkInDateError.innerHTML = '';
+//                }
+//
+//                // Xóa thông báo lỗi ngày check-out nếu có
+//                checkOutDateError.innerHTML = '';
+//            });
+//
+//// Lắng nghe sự kiện khi ngày check-out thay đổi
+//            checkOutDateInput.addEventListener('change', function () {
+//                var checkInDate = new Date(checkInDateInput.value);
+//                var checkOutDate = new Date(checkOutDateInput.value);
+//
+//                // Kiểm tra nếu ngày check-out nhỏ hơn ngày check-in
+//                if (checkOutDate <= checkInDate) {
+//                    checkOutDateError.innerHTML = 'Your checkout date is less than checkin date.';
+//                    checkOutDateInput.value = '';
+//                } else {
+//                    checkOutDateError.innerHTML = '';
+//                }
+//            });
+//
+//
+//
 //            function decreaseQuantity() {
 //                var quantityInput = document.getElementById("numRooms");
 //                var currentQuantity = parseInt(quantityInput.value);
@@ -232,7 +285,7 @@
         </script>
 
 
-        <script src="js/formValidation.js" type="text/javascript"></script>
+        <!--<script src="js/formValidation.js" type="text/javascript"></script>-->
 
 
         <script src="js/jquery-3.2.1.min.js"></script>

@@ -3,14 +3,14 @@
     Created on : May 30, 2023, 11:27:29 AM
     Author     : TuaSan
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
         <meta charset="utf-8">
-        <title>DASHMIN - Bootstrap Admin Template</title>
+        <title>DASHMIN G2Hotel</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -39,6 +39,8 @@
     </head>
 
     <body>
+        
+
         <div class="container-xxl position-relative bg-white d-flex p-0">
             <!-- Spinner Start -->
             <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -65,7 +67,17 @@
                                 <i class="fa fa-chart-line fa-3x text-primary"></i>
                                 <div class="ms-3">
                                     <p class="mb-2">Today Sale</p>
-                                    <h6 class="mb-0">$1234</h6>
+                                    <c:set var="todaySaleValue" scope="request">
+                                        <sql:setDataSource url="jdbc:sqlserver://localhost:8080/G2HotelTest" driver="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+                                            user="sa" password="123456" />
+                                        <sql:query dataSource="${jdbc}" var="result">
+                                            SELECT COUNT(*) AS TotalBookings
+                                            FROM Booking
+                                            WHERE CAST(BookingTime AS date) = CAST(GETDATE() AS date);
+                                        </sql:query>
+
+                                    </c:set>
+                                    <h6 class="mb-0">$<c:out value="${saleValue}" /></h6>
                                 </div>
                             </div>
                         </div>
