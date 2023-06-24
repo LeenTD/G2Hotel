@@ -80,6 +80,19 @@
         <servlet-name>CheckRoomValidServlet</servlet-name>
         <servlet-class>controller.CheckRoomValidServlet</servlet-class>
     </servlet>
+    
+    
+     <servlet>
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>controller.ajaxServlet</servlet-class>
+    </servlet>
+    
+    
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/vnpayajax/*</url-pattern>
+    </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>G2HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>

@@ -4,7 +4,6 @@
  */
 package dbcontext;
 
-import static dbcontext.DatabaseInfor.url;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,15 +12,15 @@ import java.sql.SQLException;
  *
  * @author admin
  */
-public class DBUtil implements DatabaseInfor{
+public class DBUtil{
     private static DBUtil instance;
 
     public DBUtil() {
     }
     
     public static Connection getConnection() throws Exception{
-        Class.forName(driverName);
-        Connection con = (Connection) DriverManager.getConnection(url, user, pass);
+        Class.forName(DBConfig.driverName);
+        Connection con = (Connection) DriverManager.getConnection(DBConfig.url, DBConfig.user, DBConfig.password);
         return con;
     }
     

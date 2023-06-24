@@ -10,9 +10,6 @@ import model.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import model.CheckRoomValid;
 /**
  *
  * @author admin
@@ -20,19 +17,12 @@ import model.CheckRoomValid;
 public class DBContext {
     public static Connection getConnection() {
         Connection connection = null;
-        String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        String serverName = "DESKTOP-T5EHA2N\\LEEN";
-        String databaseName = "G2HotelTest";
-        String port = "1433";
-        String user = "sa";
-        String password = "123456";
         /**
          * @param connectionString can sometime be called as URL
          */
-        String url = "jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName + ";encrypt=true;trustServerCertificate=true;";
         try {
-            Class.forName(driverName);
-            connection = DriverManager.getConnection(url, user, password);
+            Class.forName(DBConfig.driverName);
+            connection = DriverManager.getConnection(DBConfig.url, DBConfig.user, DBConfig.password);
             System.out.println("Connected success.");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -63,5 +53,10 @@ public class DBContext {
 //        }
 //    }
     
+    
+    public static void main(String[] args){
+        System.out.println(DBContext.getConnection());
+        
+    }
 
 }
