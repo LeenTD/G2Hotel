@@ -14,7 +14,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Booking;
+import model.BookingDetails;
 import model.CheckRoomValid;
+import model.Contact;
 import model.User;
 
 /**
@@ -141,6 +143,24 @@ public class UserDao {
         }
         return null;
     }
+    
+    public BookingDetails addBookingDetails(String IDBooking, String IDAccount, String FullName,String Gender, String Email, String Phone) {
+        String query = "insert into BookingDetails(IDBooking, IDAccount, BDFullName, BDGender, BDEmail, BDPhone) values(?,?,?,?,?,?)";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+            ps.setString(1, IDBooking);
+            ps.setString(2, IDAccount);
+            ps.setString(3, FullName);
+            ps.setString(4, Gender);
+            ps.setString(5, Email);
+            ps.setString(6, Phone);
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return null;
+    }
 
 // chinh sua thong tin account (Update)
     public void updateBooking(String IDBooking, String Adult, String Child, String CheckIn, String CheckOut, String NumberOfRoom, String Note) {
@@ -229,7 +249,7 @@ public class UserDao {
         try {
             conn = DBContext.getConnection();//mo ket noi
             ps = conn.prepareStatement(query);
-            ps.setString(1, IDAccount); // set bien proId vao ? thứ 1
+            ps.setString(1, IDAccount); 
             rs = ps.executeQuery();
             while(rs.next()){
                 return(new User(rs.getInt(1)
@@ -242,6 +262,24 @@ public class UserDao {
                         , rs.getString(8)
                         , rs.getInt(9)));
             }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public Contact addContact(String IDAccount, String Name, String Email, String Phone, String Message, String Status) {
+        String query = "insert into Contact(IDAccount, ContactName,ContactEmail, ContactPhone, ContactMessage, ContactStatus) values(?,?,?,?,?,?)";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+            ps.setString(1, IDAccount);
+            ps.setString(2, Name);
+            ps.setString(3, Email);
+            ps.setString(4, Phone);
+            ps.setString(5, Message);
+            ps.setString(6, Status);
+
+            ps.executeUpdate();
         } catch (Exception e) {
         }
         return null;

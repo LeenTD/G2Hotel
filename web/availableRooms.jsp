@@ -6,7 +6,7 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="database.DatabaseConnection"%>
+<%@page import="dbcontext.DBContext"%>
 <!doctype html>
 <html lang="en">
     <head>
@@ -33,23 +33,21 @@
 
                     <div class="row">   
                         <%
-                            Connection cn = DatabaseConnection.getConnection();
+                            Connection cn = DBContext.getConnection();
                             Statement stmt = cn.createStatement();
-                            ResultSet rs = stmt.executeQuery("select distinct rooms.id,rooms.room_number, room_category.categories_name, rooms.price, rooms.details, room_category.cover_img   "
-                                    + " from rooms join room_category on rooms.category_id = room_category.id "
-                                    + " left join reservation on reservation.room_id = rooms.id   "
-                                    + " where rooms.status=1  OR  (reservation.date_out <= '" + arrival + "') OR (reservation.date_in > '" + arrival + "' AND reservation.date_in >= '" + depature + "') ");
+                            ResultSet rs = stmt.executeQuery("select RoomType.IDRoomType,RoomType.NameRoomType, RoomType.Price, RoomType.Content, room_category.cover_img from RoomType  "
+                                    + " left join reservation on reservation.room_id = RoomType.id   "
+                                    + " where RoomType.status=1  OR  (reservation.date_out <= '" + arrival + "') OR (reservation.date_in > '" + arrival + "' AND reservation.date_in >= '" + depature + "') ");
 
                             while (rs.next()) {
                         %>
                         <div class="col-md-4 ">
                             <div class="card mb-4  text-secondary  ">
                                 <%
-                                    int id = rs.getInt("rooms.id");
-                                    String room_number = rs.getString("rooms.room_number");
-                                    String Category = rs.getString("room_category.categories_name");
-                                    int price = rs.getInt("rooms.price");
-                                    String details = rs.getString("rooms.details");
+                                    int id = rs.getInt("RoomType.id");
+                                    String NameRoomType = rs.getString("RoomType.NameRoomType");
+                                    int Price = rs.getInt("RoomType.Price");
+                                    String Content = rs.getString("RoomType.Content");
 
                                     Blob image = rs.getBlob("room_category.cover_img");
                                     byte imgData[] = image.getBytes(1, (int) image.length());
@@ -64,10 +62,9 @@
                                         <input type="hidden" value="<%= depature%>" name="depature"/>
                                         <input type="hidden" value="<%= id%>" name="id" >
 
-                                        <b>Room Number:</b> <%= room_number%><br>
-                                        <b> Room Category:</b> <%= Category%><br>
-                                        <b>Price:</b> Rs.<%= price%><br>
-                                        <b>Details:</b> <P style="color: green;"><%= details%></P>
+                                        <b>Room Type:</b> <%= NameRoomType%><br>
+                                        <b>Price:</b> Rs.<%= Price%><br>
+                                        <b>Details:</b> <P style="color: green;"><%= Content%></P>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
                                                 <%if (s_name == null) {%>

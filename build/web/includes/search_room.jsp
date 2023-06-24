@@ -10,14 +10,14 @@
                         <label><b class="text-white">Check In Date</b></label>
                     </div>
                     <input type="date" class="form-control"  name="check_in" id="check_in"   required/>
-                    <span id="checkin"></span>
+                    <span id="checkin" class="error"></span>
                 </div>
                 <div class="col-4">
                     <div>
                         <label><b class="text-white">Check Out Date</b></label>
                     </div>
                     <input type="date" class="form-control " name="check_out" id="check_out"  required />
-                    <span id="checkout"></span>
+                    <span id="checkout" class="error"></span>
                 </div>
 
                 <div class="col-2 mt-3 px-5 btn">
@@ -26,7 +26,12 @@
 
             </div>
         </form>
-
+        <style>
+            .error {
+                color: darkred;
+                font-weight: bold;
+            }
+        </style>
         <script type="text/javascript">
             $(function () {
                 var dtToday = new Date();
@@ -43,6 +48,7 @@
                 $('#check_in').attr('min', maxDate);
                 $('#check_out').attr('min', maxDate);
             });
+
         </script>
 
 <script type="text/javascript">
@@ -56,7 +62,7 @@
         var checkOutDate = new Date(document.getElementById('check_out').value);
 
         if (checkOutDate <= checkInDate) {
-            document.getElementById('checkout').textContent = 'Your checkout date is less than checkin date.';
+            document.getElementById('checkout').textContent = 'Your checkout date is less than or equal checkin date.';
             document.getElementById('check_out').value = '';
         } else if (checkOutDate > checkInDate) {
             document.getElementById('checkout').textContent = '';

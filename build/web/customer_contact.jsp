@@ -26,7 +26,7 @@
     </head>
     <body>
         <%@include file="/includes/header.jsp" %>
-        
+
         <!--================Breadcrumb Area =================-->
         <section class="breadcrumb_area">
             <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
@@ -41,15 +41,16 @@
             </div>
         </section>
         <!--================Breadcrumb Area =================-->
-        
+
+        <h2 style="color: green; text-align: center;" >${sendContact} </h2>
         <!--================Contact Area =================-->
         <section class="contact_area section_gap">
             <div class="container">
                 <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
-                        <iframe class="position-relative rounded w-100 h-100"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.6562639715808!2d108.24985467575523!3d15.979317184687314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142108f00670d49%3A0x337f1710d8c78ba0!2zMjAgTmd1eeG7hW4gTWluaCBDaMOidSwgSG_DoCBI4bqjaSwgTmfFqSBIw6BuaCBTxqFuLCDEkMOgIE7hurVuZyA1NTAwMDAsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1685383290004!5m2!1svi!2s"
-                                frameborder="0" style="min-height: 720px; border:0; min-width: 1080px; margin-bottom: 50px" allowfullscreen="" aria-hidden="false"
-                                tabindex="0"></iframe>
+                    <iframe class="position-relative rounded w-100 h-100"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3835.6562639715808!2d108.24985467575523!3d15.979317184687314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3142108f00670d49%3A0x337f1710d8c78ba0!2zMjAgTmd1eeG7hW4gTWluaCBDaMOidSwgSG_DoCBI4bqjaSwgTmfFqSBIw6BuaCBTxqFuLCDEkMOgIE7hurVuZyA1NTAwMDAsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1685383290004!5m2!1svi!2s"
+                            frameborder="0" style="min-height: 720px; border:0; min-width: 1080px; margin-bottom: 50px" allowfullscreen="" aria-hidden="false"
+                            tabindex="0"></iframe>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
@@ -72,7 +73,14 @@
                         </div>
                     </div>
                     <div class="col-md-9">
-                        <form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+                        <!--id="contactForm" novalidate="novalidate"-->
+                        <form class="row contact_form" action="contact" method="get" >
+                            <c:if test="${sessionScope.userA != null}"> 
+                                <input type="hidden" name="IDAccount" class="form-control"  value="${userA.getIDAccount()}">
+                            </c:if>
+                            <c:if test="${sessionScope.userA == null}">  
+                                <input type="hidden" name="IDAccount" class="form-control"  value="0">
+                            </c:if>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
@@ -81,7 +89,7 @@
                                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject">
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -98,43 +106,43 @@
             </div>
         </section>
         <!--================Contact Area =================-->
-        
+
         <%@include file="/includes/footer.jsp" %>
-       
-       
-       <!--================Contact Success and Error message Area =================-->
-        <div id="success" class="modal modal-message fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i class="fa fa-close"></i>
-                        </button>
-                        <h2>Thank you</h2>
-                        <p>Your message is successfully sent...</p>
+
+
+        <!--       ================Contact Success and Error message Area =================
+                <div id="success" class="modal modal-message fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                                <h2>Thank you</h2>
+                                <p>Your message is successfully sent...</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Modals error -->
-
-        <div id="error" class="modal modal-message fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i class="fa fa-close"></i>
-                        </button>
-                        <h2>Sorry !</h2>
-                        <p> Something went wrong </p>
+        
+                 Modals error 
+        
+                <div id="error" class="modal modal-message fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                                <h2>Sorry !</h2>
+                                <p> Something went wrong </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div>-->
         <!--================End Contact Success and Error message Area =================-->
-        
-        
+
+
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="js/jquery-3.2.1.min.js"></script>

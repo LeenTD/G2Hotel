@@ -116,24 +116,25 @@
 
             <div class="row">
                 <div class="form-group col-md-6">
+                    <input type="hidden" class="form-control mt-1" id="NumberOfBed" name="NumberOfBed" value="${r.getNumberOfBed()}" onchange="updateQuantity()" readonly>
                     <label for="inputname">Adult:</label>
-                    <input type="number" class="form-control mt-1" id="Adult" name="Adult" min="0" placeholder="Adult" required value="">
+                    <input type="number" class="form-control mt-1" id="Adult" name="Adult" min="1" onchange="updateQuantity()" placeholder="Adult" required value="">
                 </div>                    
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Child:</label>
-                    <input type="number" class="form-control mt-1" id="Child" name="Child" min="0" placeholder="Child" required value="">
+                    <input type="number" class="form-control mt-1" id="Child" name="Child" min="0" onchange="updateQuantity()" placeholder="Child" required value="">
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="checkInDate">Check-In:</label><br>
-                    <input type="date" class="form-control"  name="checkInDate" id="check_in" onchange="calculateTotalPrice(); validateDates();" required/>
+                    <input type="date" class="form-control"  name="checkInDate" id="check_in"  onchange="validateDates(); calculateTotalPrice();" required/>
                     <span id="checkInDate" style="color: red;"></span>
                 </div>                    
                 <div class="form-group col-md-6 mb-3">
                     <label for="checkOutDate">Check-Out:</label><br>
-                    <input type="date" class="form-control"  name="checkOutDate" id="check_out" onchange="calculateTotalPrice(); validateDates();"  required/>
+                    <input type="date" class="form-control"  name="checkOutDate" id="check_out" onchange="validateDates(); calculateTotalPrice();" required/>
                     <span id="checkOutDate" style="color: red;"></span>
                 </div>
             </div>
@@ -142,7 +143,7 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="numRooms">Quantity:</label><br>
-                    <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="" min="1" required onchange="calculateTotalPrice(); validateDates();">
+                    <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="" min="1" onchange="validateDates(); calculateTotalPrice();" required >
                     <!--                                        <div class="input-group">
                                                                 <button type="button" class="btn btn-outline-secondary" onclick="decreaseQuantity()">-</button>
                                                                 <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="1" readonly>
@@ -153,7 +154,7 @@
 
 
                 <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">TotalPrice</label>
+                    <label for="inputname">Total Price</label>
                     <input type="text" class="form-control mt-1" id="TotalPrice" name="TotalPrice" placeholder="TotalPrice" value="" readonly>
                 </div>
             </div>
@@ -220,6 +221,43 @@
                 document.getElementById("checkInDate").textContent = "";
                 document.getElementById("checkOutDate").textContent = "";
 
+            }
+
+            function updateQuantity() {
+                var adultInput = document.getElementById('Adult');
+                var childInput = document.getElementById('Child');
+                var quantityInput = document.getElementById('numRooms');
+                var numberOfBedInput = document.getElementById('NumberOfBed');
+
+                var adultCount = parseInt(adultInput.value);
+                var childCount = parseInt(childInput.value);
+                var numberOfBed = parseInt(numberOfBedInput.value);
+
+                if (numberOfBed === 1) {
+                    if (adultCount < 2) {
+                        quantityInput.value = 1;
+                    } else {
+                        var quantity = Math.ceil(adultCount / 2);
+
+                        if (childCount > 2 * adultCount) {
+                            quantity++;
+                        }
+
+                        quantityInput.value = quantity;
+                    }
+                } else if (numberOfBed === 2) {
+                    if (adultCount < 4) {
+                        quantityInput.value = 1;
+                    } else {
+                        var quantity = Math.ceil(adultCount / 4);
+
+                        if (childCount > 2 * adultCount) {
+                            quantity++;
+                        }
+
+                        quantityInput.value = quantity;
+                    }
+                }
             }
 
             // Lấy các phần tử HTML cần thiết

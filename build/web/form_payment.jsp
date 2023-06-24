@@ -81,11 +81,11 @@
                     <div class="col-md-4">
                         <div class="p-3 py-5">
                             <div class="d-flex justify-content-between align-items-center experience"><span>Information Booking</span><span class="border px-3 p-1 add-experience"><a href="showRoomCustomer"><i class="fa fa-plus"></i>&nbsp;Booking</a></span></div><br>
-                            <div class="col-md-12"><label class="labels">Start Day</label><input type="text" class="form-control" placeholiêder="Start Day" readonly value="${bk.getCheckIn()}"></div> <br>
-                            <div class="col-md-12"><label class="labels">End Day</label><input type="text" class="form-control" placeholder="End Day" readonly value="${bk.getCheckOut()}"></div> <br>
-                            <div class="col-md-12"><label class="labels">Room Type</label><input type="text" class="form-control" placeholder="Room Type" readonly value="${bk.getIDRoomType()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">Start Day</label><input type="text" class="form-control" placeholiêder="Start Day" name="checkin" readonly value="${bk.getCheckIn()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">End Day</label><input type="text" class="form-control" placeholder="End Day" readonly name="checkout" value="${bk.getCheckOut()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">Room Type</label><input type="text" class="form-control" placeholder="Room Type" readonly name="idroomtype" value="${bk.getIDRoomType()}"></div> <br>
                             <div class="col-md-12"><label class="labels">Number Of Room</label><input type="text" class="form-control" placeholder="Number Of Room" readonly value="${bk.getNumberOfRooms()}"></div> <br>
-                            <div class="col-md-12"><label class="labels">Total Price</label><input type="text" class="form-control" placeholder="Total Price" readonly value="${bk.getTotalPrice()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">Total Price</label><input type="text" class="form-control" placeholder="Total Price" readonly name="totalprice" value="${bk.getTotalPrice()}"></div> <br>
                         </div>
                     </div>
                 </div>

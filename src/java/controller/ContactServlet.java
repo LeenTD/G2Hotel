@@ -11,14 +11,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.User;
+import model.Contact;
 
 /**
  *
  * @author admin
  */
-public class LoginServlet extends HttpServlet {
+public class ContactServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,25 +31,17 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
-
-        UserDao userDao = new UserDao();
-        User user = userDao.checkAccountValid(userName, password);
-
-        if (user != null) {
-            HttpSession session = request.getSession();
-            if (user.getIDRole() == 1) {
-                session.setAttribute("userA", user);
-                response.sendRedirect("customer_home.jsp");
-            } else if (user.getIDRole() == 2 || user.getIDRole() == 3) {
-                session.setAttribute("userA", user);
-                response.sendRedirect("manager_home.jsp");
-            }
-        } else {
-            request.setAttribute("loginFail", "Username or password incorrect");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ContactServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ContactServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -66,7 +57,22 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String IDAccount = request.getParameter("IDAccount");
+        String fullName = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String massage = request.getParameter("message");
+        String status = "Processing";
+        UserDao udao = new UserDao();
+        if(IDAccount == null){
+            IDAccount ="0";
+        }
+
+        udao.addContact(IDAccount, fullName, email, phone, massage, status);
+
+        request.setAttribute("sendContact", "Send success!");
+        request.getRequestDispatcher("customer_contact.jsp").forward(request, response);
     }
 
     /**

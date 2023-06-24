@@ -56,7 +56,12 @@
         </style>
     </head>
     <body>
-        <%@include file="/includes/manager_header.jsp" %>
+        <c:if test="${sessionScope.userA.IDRole == 2}">
+            <%@include file="/includes/manager_header.jsp" %>
+        </c:if>
+        <c:if test="${sessionScope.userA.IDRole == 3}">
+            <%@include file="/includes/receptionist_header.jsp" %>
+        </c:if>
         <!--================Breadcrumb Area =================-->
         <section class="breadcrumb_area">
             <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
@@ -147,7 +152,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col text-end mt-2">
                     <button type="submit" class="btn btn-success btn-lg px-3">Add New Discount</button>

@@ -21,18 +21,18 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                 <ul class="nav navbar-nav menu_nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="manager_home.jsp">Home</a></li> 
-                    <li class="nav-item"><a class="nav-link" href="showBooking">Manage bookings</a></li>
-                    <li class="nav-item"><a class="nav-link" href="showRoomType">Manage room</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
-                    <!--<li class="nav-item"><a class="nav-link" href="customer_services.jsp">Services</a></li>-->
-                    <li class="nav-item submenu dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More</a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item"><a class="nav-link" href="showDiscount">Discount</a></li>
-                            <li class="nav-item"><a class="nav-link" href="showAccount">Account</a></li>
-                        </ul>
-                    </li> 
+                        <li class="nav-item"><a class="nav-link" href="manager_home.jsp">Home</a></li> 
+                        <li class="nav-item"><a class="nav-link" href="showBooking">Manage bookings</a></li>
+                        <li class="nav-item"><a class="nav-link" href="showRoomType">Manage room</a></li>
+                        <li class="nav-item"><a class="nav-link" href="showContact">FAQ</a></li>
+                        <!--<li class="nav-item"><a class="nav-link" href="customer_services.jsp">Services</a></li>-->
+                        <li class="nav-item submenu dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More</a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a class="nav-link" href="showDiscount">Discount</a></li>
+                                <li class="nav-item"><a class="nav-link" href="showAccount">Account</a></li>
+                            </ul>
+                        </li> 
                     <c:if test="${sessionScope.userA != null}"> 
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${sessionScope.userA.getUserName()}</a>
@@ -42,9 +42,13 @@
                             </ul>
                         </li> 
                     </c:if>
+                        
                     <c:if test="${sessionScope.userA == null}">  
                         <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
-                    </c:if>
+                        </c:if>
+
+
+
                 </ul>
             </div> 
         </nav>

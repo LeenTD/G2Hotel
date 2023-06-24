@@ -43,29 +43,27 @@ public class RegisterServlet extends HttpServlet {
         UserDao dao = new UserDao();
         User acc = dao.checkAccountExist(user);
         if (acc != null) {
-            request.setAttribute("mess", "Username is exist!");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
-        } else {
-            if (!pass.equals(passCon)) {
-                request.setAttribute("mess", "Password not match!");
+            if (idrole.equals("1")) {
+                request.setAttribute("mess", "Username is exist!");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
+            } else if (idrole.equals("3")) {
+                request.setAttribute("mess", "Username is exist!");
+                request.getRequestDispatcher("manager_account.jsp").forward(request, response);
+            }
+
+        } else {
+            request.setAttribute("mess", "Password not match!");
+            if (!pass.equals(passCon)) {
+                if (idrole.equals("1")) {
+                    request.getRequestDispatcher("register.jsp").forward(request, response);
+                } else if (idrole.equals("3")) {
+                    request.getRequestDispatcher("manager_account.jsp").forward(request, response);
+                }
             } else {
-                dao.addAccount(user, pass, fName, gender, city, email, phone,idrole);
+                dao.addAccount(user, pass, fName, gender, city, email, phone, idrole);
                 request.setAttribute("loginFail", "Register success!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
-
-//        if (!pass.equals(passCon)) {
-//            request.setAttribute("mess", "Password not match!");
-//            request.getRequestDispatcher("register.jsp").forward(request, response);
-//        } else {
-//            if (acc == null) {
-//                dao.addUser(user, pass, fName, gender, city, email, phone);
-//                request.setAttribute("loginFail", "Register success!");
-//                request.getRequestDispatcher("login.jsp").forward(request, response);
-//            } else {
-//
-//            }
         }
     }
 

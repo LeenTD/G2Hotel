@@ -1,9 +1,8 @@
 <%-- 
-    Document   : manager_booking
-    Created on : Jun 1, 2023, 2:10:32 PM
+    Document   : receptionist_booking
+    Created on : Jun 23, 2023, 10:27:46 PM
     Author     : admin
 --%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -53,15 +52,32 @@
                 background-color: #FEA116;
                 color: white;
             }
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            form {
+                width: 300px;
+                margin: 0 auto;
+            }
+
+            label {
+                display: inline-block;
+                width: 100px;
+                text-align: right;
+            }
+
+            input[type="submit"] {
+                margin-left: 100px;
+            }
+
+            h1 {
+                text-align: center;
+            }
         </style>
     </head>
     <body>
-        <c:if test="${sessionScope.userA.IDRole == 2}">
-            <%@include file="/includes/manager_header.jsp" %>
-        </c:if>
-        <c:if test="${sessionScope.userA.IDRole == 3}">
-            <%@include file="/includes/receptionist_header.jsp" %>
-        </c:if>
+        <%@include file="/includes/receptionist_header.jsp" %>
         <!--================Breadcrumb Area =================-->
         <section class="breadcrumb_area">
             <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
@@ -77,15 +93,6 @@
         </section>
         <!--================Breadcrumb Area =================-->
 
-        <!--        public String IDBooking;
-            public String IDCustomer;
-            public String IDArrival;
-            public String room_id;
-            public String booking_date;
-            public String payment_status;
-            public String booking_status;
-            public String note;
-            public String total_price;-->
 
         <!--Table Start-->
         <table style="margin-top: 20px;margin-bottom: 20px;" id="booking">
@@ -101,11 +108,15 @@
                     <th>Check Out</th>
                     <th>Booking Time</th>
                     <th>Price</th>
+                    <th>View Details</th>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach items="${sessionScope.listB}" var="b">
                     <tr>
+                        <form action="loadBookingDetails">
+                        <input type="hidden" class="form-control mt-1" id="IDBooking" name="IDBooking" value="${b.getIDBooking()}">
+                        <input type="hidden" class="form-control mt-1" id="IDAccount" name="IDAccount" value="${b.getIDAccount()}">
                         <td>${b.getIDBooking()}</td>
                         <td>${b.getIDAccount()}</td>
                         <td>${b.getIDRoomType()}</td>
@@ -116,29 +127,30 @@
                         <td>${b.getCheckOut()}</td>
                         <td>${b.getBookingTime()}</td> 
                         <td>${b.getTotalPrice()}</td>
+                        <td><button>View Details</button></td>
+                </form>
+            </tr>
+        </c:forEach>
+    </tbody>
 
-                    </tr>
-                </c:forEach>
-            </tbody>
+</table>
+<!--Table End-->
 
-        </table>
-        <!--Table End-->
 
-        <%@include file="/includes/footer.jsp" %>
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-        <script src="js/jquery.ajaxchimp.min.js"></script>
-        <script src="js/mail-script.js"></script>
-        <script src="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
-        <script src="vendors/nice-select/js/jquery.nice-select.js"></script>
-        <script src="js/mail-script.js"></script>
-        <script src="js/stellar.js"></script>
-        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
-        <script src="js/custom.js"></script>
-    </body>
+<%@include file="/includes/footer.jsp" %>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/mail-script.js"></script>
+<script src="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="vendors/nice-select/js/jquery.nice-select.js"></script>
+<script src="js/mail-script.js"></script>
+<script src="js/stellar.js"></script>
+<script src="vendors/lightbox/simpleLightbox.min.js"></script>
+<script src="js/custom.js"></script>
+</body>
 </html>
-

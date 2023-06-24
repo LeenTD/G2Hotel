@@ -3,7 +3,7 @@
     Created on : Jun 1, 2023, 1:44:43 PM
     Author     : admin
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,20 +26,25 @@
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
     </head>
     <body>
-        <%@include file="/includes/manager_header.jsp" %>
-        
+        <c:if test="${sessionScope.userA.IDRole == 2}">
+            <%@include file="/includes/manager_header.jsp" %>
+        </c:if>
+        <c:if test="${sessionScope.userA.IDRole == 3}">
+            <%@include file="/includes/receptionist_header.jsp" %>
+        </c:if>
+
         <!--================Banner Area =================-->
         <section class="banner_area">
             <div class="booking_table d_flex align-items-center">
-            	<div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
-				<div class="container">
-					<div class="banner_content text-center">
-						<h6>Away from monotonous life</h6>
-						<h2>Relax Your Mind</h2>
-						<p>If you are looking at blank cassettes on the web, you may be very confused at the<br> difference in price. You may see some for as low as 300.000VNĐ each.</p>
-						<a href="#" class="btn theme_btn button_hover">Get Started</a>
-					</div>
-				</div>
+                <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
+                <div class="container">
+                    <div class="banner_content text-center">
+                        <h6>Away from monotonous life</h6>
+                        <h2>Relax Your Mind</h2>
+                        <p>If you are looking at blank cassettes on the web, you may be very confused at the<br> difference in price. You may see some for as low as 300.000VNĐ each.</p>
+                        <a href="#" class="btn theme_btn button_hover">Get Started</a>
+                    </div>
+                </div>
             </div>
             <div class="hotel_booking_area position">
                 <div class="container">
@@ -111,7 +116,7 @@
             </div>
         </section>
         <!--================Banner Area =================-->
-        
+
         <!--================ Accomodation Area  =================-->
         <section class="accomodation_area section_gap">
             <div class="container">
@@ -164,7 +169,7 @@
             </div>
         </section>
         <!--================ Accomodation Area  =================-->
-        
+
         <!--================ Facilities Area  =================-->
         <section class="facilities_area section_gap">
             <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background="">  
@@ -215,7 +220,7 @@
             </div>
         </section>
         <!--================ Facilities Area  =================-->
-        
+
         <!--================ About History Area  =================-->
         <section class="about_history_area section_gap">
             <div class="container">
@@ -234,7 +239,7 @@
             </div>
         </section>
         <!--================ About History Area  =================-->
-        
+
         <!--================ Testimonial Area  =================-->
         <section class="testimonial_area section_gap">
             <div class="container">
@@ -303,7 +308,7 @@
             </div>
         </section>
         <!--================ Testimonial Area  =================-->
-        
+
         <!--================ Latest Blog Area  =================-->
         <section class="latest_blog_area section_gap">
             <div class="container">
@@ -364,7 +369,7 @@
             </div>
         </section>
         <!--================ Recent Area  =================-->
-        
+
         <%@include file="/includes/footer.jsp" %>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

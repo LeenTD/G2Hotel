@@ -43,7 +43,7 @@ public class CheckRoomValidServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckRoomValidServlet</title>");            
+            out.println("<title>Servlet CheckRoomValidServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CheckRoomValidServlet at " + request.getContextPath() + "</h1>");
@@ -64,7 +64,7 @@ public class CheckRoomValidServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     //TIM CACH KHAC
+        //TIM CACH KHAC
         response.setContentType("text/html");
         //bookingtime
         LocalDateTime currentTime = LocalDateTime.now();
@@ -89,7 +89,7 @@ public class CheckRoomValidServlet extends HttpServlet {
         int numOfDays = (int) ChronoUnit.DAYS.between(checkInDate, checkOutDate);
         // get ngay hien tai de check Day
         LocalDate currentDate = LocalDate.now();
-
+        String tprice2 = request.getParameter("TotalPrice");
         String price = request.getParameter("Price");
         int p = Integer.parseInt(price);
 
@@ -132,7 +132,7 @@ public class CheckRoomValidServlet extends HttpServlet {
             request.getRequestDispatcher("form_test.jsp").forward(request, response);
         } else {
             Booking bk2 = new Booking(idrt, idac, idrt, idrt, idrt, cr, child, IDAccount, numRooms, tp, Note, Note);
-            udao.addBooking(IDAccount, IDDiscount, IDRoomType, adult, child, checkInDateStr, checkOutDateStr, nRooms, TotalPrice, formattedTime, Note);
+            udao.addBooking(IDAccount, IDDiscount, IDRoomType, adult, child, checkInDateStr, checkOutDateStr, nRooms, tprice2, formattedTime, Note);
             request.setAttribute("booksuccess", "Booking Success");
             request.getRequestDispatcher("customer_room.jsp").forward(request, response);
         }

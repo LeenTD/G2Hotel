@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.Booking;
+import model.Contact;
 import model.Discount;
 import model.RoomType;
 import model.User;
@@ -37,14 +38,14 @@ public class ManagerDao {
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new User(rs.getInt(1),
-                         rs.getString(2),
-                         rs.getString(3),
-                         rs.getString(4),
-                         rs.getString(5),
-                         rs.getString(6),
-                         rs.getString(7),
-                         rs.getString(8),
-                         rs.getInt(9)));
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9)));
             }
         } catch (Exception e) {
         }
@@ -63,7 +64,6 @@ public class ManagerDao {
         }
     }
 
-
     //MANAGER BOOKING
     // day thong tin all Booking ra bang quan ly booking (View)
     public List<Booking> getBooking() {
@@ -75,23 +75,53 @@ public class ManagerDao {
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Booking(rs.getInt(1),
-                         rs.getInt(2),
-                         rs.getInt(3),
-                         rs.getInt(4),
-                         rs.getInt(5),
-                         rs.getInt(6),
-                         rs.getString(7),
-                         rs.getString(8),
-                         rs.getInt(9),
-                         rs.getDouble(10),
-                         rs.getString(11),
-                         rs.getString(12)));
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getDouble(10),
+                        rs.getString(11),
+                        rs.getString(12)));
             }
         } catch (Exception e) {
         }
         return list;
     }
 
+//    public List<Booking> getBookingDT() {
+//        List<Booking> list = new ArrayList<>();
+//        String query = "select * from Booking";
+//        try {
+//            conn = DBContext.getConnection();//mo ket noi
+//            ps = conn.prepareStatement(query);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                list.add(new Booking(rs.getInt(1),
+//                        rs.getInt(2),
+//                        rs.getInt(3),
+//                        rs.getInt(4),
+//                        rs.getString(5),
+//                        rs.getString(6),
+//                        rs.getString(7),
+//                        rs.getString(8),
+//                        rs.getInt(9),
+//                        rs.getInt(10),
+//                        rs.getString(11),
+//                        rs.getString(8),
+//                        rs.getInt(9),
+//                        rs.getDouble(10),
+//                        rs.getString(11),
+//                        rs.getString(12)));
+//            }
+//        } catch (Exception e) {
+//        }
+//        return list;
+//    }
+    
     // xoa account theo ID (Delete)
     public void deleteBooking(String IDBooking) {
         String query = "delete from Booking where IDBooking = ?";
@@ -104,7 +134,6 @@ public class ManagerDao {
         }
     }
 
-
     //MANAGER ROOMTYPE
     public List<RoomType> getRoomType() {
         List<RoomType> list = new ArrayList<>();
@@ -115,21 +144,21 @@ public class ManagerDao {
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new RoomType(rs.getInt(1),
-                         rs.getString(2),
-                         rs.getInt(3),
-                         rs.getInt(4),
-                         rs.getInt(5),
-                         rs.getInt(6),
-                         rs.getInt(7),
-                         rs.getString(8),
-                         rs.getString(9)));
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getInt(7),
+                        rs.getString(8),
+                        rs.getString(9)));
             }
         } catch (Exception e) {
         }
         return list;
     }
 
-    public void addRoomType( String NameRoomType, String MaxPerson, String NumberOfBed, String NumberOfBath,String Price, String TotalRoom, String RoomStatus, String Content) {
+    public void addRoomType(String NameRoomType, String MaxPerson, String NumberOfBed, String NumberOfBath, String Price, String TotalRoom, String RoomStatus, String Content) {
         String query = "insert into RoomType(NameRoomType,MaxPerson,NumberOfBed,NumberOfBath,Price, TotalRoom,RoomStatus,Content) values (?,?,?,?,?,?,?,?)";
         try {
             conn = DBContext.getConnection();//mo ket noi
@@ -157,14 +186,14 @@ public class ManagerDao {
             rs = ps.executeQuery();
             while (rs.next()) {
                 return (new RoomType(rs.getInt(1),
-                         rs.getString(2),
-                         rs.getInt(3),
-                         rs.getInt(4),
-                         rs.getInt(5),
-                         rs.getInt(6),
-                         rs.getInt(7),
-                         rs.getString(8),
-                         rs.getString(9)));
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getInt(7),
+                        rs.getString(8),
+                        rs.getString(9)));
             }
         } catch (Exception e) {
         }
@@ -184,7 +213,7 @@ public class ManagerDao {
     }
 
 // chinh sua thong tin RoomType (Update)
-    public void updateRoomType(String IDRoomType, String NameRoomType, String MaxPerson, String NumberOfBed, String NumberOfBath,String Price, String totalRoom, String RoomStatus, String Content) {
+    public void updateRoomType(String IDRoomType, String NameRoomType, String MaxPerson, String NumberOfBed, String NumberOfBath, String Price, String totalRoom, String RoomStatus, String Content) {
         String query = "update RoomType set NameRoomType=?, MaxPerson=?, NumberOfBed=?, NumberOfBath=?,Price=?, TotalRoom=? ,RoomStatus=?, Content=? where IDRoomType = ?";
         try {
             conn = DBContext.getConnection();//mo ket noi
@@ -217,7 +246,7 @@ public class ManagerDao {
         } catch (Exception e) {
         }
     }
-    
+
     //MANAGER DISCOUNT
     public List<Discount> getDiscount() {
         List<Discount> list = new ArrayList<>();
@@ -228,16 +257,17 @@ public class ManagerDao {
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Discount(rs.getInt(1),
-                         rs.getString(2),
-                         rs.getDouble(3),
-                         rs.getString(4),
-                         rs.getString(5),
-                         rs.getString(6)));
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6)));
             }
         } catch (Exception e) {
         }
         return list;
     }
+
     public void addDiscount(String DiscountName, String DiscountValue, String StartDay, String EndDay, String Note) {
         String query = "insert into Discount(DiscountName,DiscountValue,StartDay,EndDay,Note) values (?,?,?,?,?)";
         try {
@@ -282,5 +312,52 @@ public class ManagerDao {
             ps.executeUpdate();
         } catch (Exception e) {
         }
+    }
+
+    public Booking getBookingById(String IDBooking) {
+        String query = "select * from Booking where IDBooking=?";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+            ps.setString(1, IDBooking);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return (new Booking(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getDouble(10),
+                        rs.getString(11),
+                        rs.getString(12)));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public List<Contact> getContact() {
+        List<Contact> list = new ArrayList<>();
+        String query = "select * from Contact";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Contact(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
     }
 }

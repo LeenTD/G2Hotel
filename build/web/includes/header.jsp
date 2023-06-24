@@ -7,6 +7,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <!--================Header Area =================-->
 <header class="header_area">
 
@@ -28,10 +34,24 @@
                     <li class="nav-item"><a class="nav-link" href="customer_services.jsp">Services</a></li>
 
 
-                    <li class="nav-item"><a class="nav-link" href="faq.jsp">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
                     <li class="nav-item"><a class="nav-link" href="customer_contact.jsp">Contact</a></li>
-                    <!--<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>-->
 
+                    <!-- <div class="shopping" style="position: relative;
+                    text-align: right;">
+                        <img src="image/shopping.svg" style="width: 40px;">
+                        <span class="quantity" 
+                        style="background: red;
+                        border-radius: 50%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: #fff;
+                        position: absolute;
+                        top: -5px;
+                        left: 80%;
+                        padding: 3px 10px;">0</span>
+                    </div> -->
                     <c:if test="${sessionScope.userA != null}"> 
                         <li class="nav-item submenu dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${sessionScope.userA.getUserName()}</a>

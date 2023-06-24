@@ -58,7 +58,12 @@
         </style>
     </head>
     <body>
-        <%@include file="/includes/manager_header.jsp" %>
+        <c:if test="${sessionScope.userA.IDRole == 2}">
+            <%@include file="/includes/manager_header.jsp" %>
+        </c:if>
+        <c:if test="${sessionScope.userA.IDRole == 3}">
+            <%@include file="/includes/receptionist_header.jsp" %>
+        </c:if>
         <!--================Breadcrumb Area =================-->
         <section class="breadcrumb_area">
             <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
@@ -116,7 +121,9 @@
         <!--================FORM ADD NEW ROOM TYPE =================-->
 
         <h1 style="text-align: center;">Add New Receptionist Account</h1>
-
+        <div class="alert alert-danger" role="alert">
+            <p style="color: red; text-align: center;"class="text-danger">${mess} </p>
+        </div>
         <form action="register" class="col-md-9 m-auto" method="get" role="form">
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
@@ -125,7 +132,7 @@
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Full Name</label>
-                    <input type="text" class="form-control mt-1" id="fullname" name="fullname" placeholder="Name" required>
+                    <input type="text" class="form-control mt-1" id="fullname" name="fullname" placeholder="Full Name" required>
                 </div>
             </div>
             <div class="row">
@@ -155,12 +162,16 @@
                 </div>                    
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Password</label>
-                    <input type="text" class="form-control mt-1" id="password" name="password" placeholder="Password" required>
-                    <input type="hidden" id="idrole" name="idrole" value="2">
+                    <input type="password" class="form-control mt-1" id="password" name="password" placeholder="Password" required>
+                    <input type="hidden" id="idrole" name="idrole" value="3">
                 </div>
             </div>
 
             <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="inputname">Confirm Password</label>
+                    <input type="password" class="form-control mt-1" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+                </div>
                 <div class="col text-end mt-2">
                     <button type="submit" class="btn btn-success btn-lg px-3">Add New Account</button>
                 </div>

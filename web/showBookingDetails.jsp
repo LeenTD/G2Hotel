@@ -1,6 +1,6 @@
 <%-- 
-    Document   : form_payment
-    Created on : Jun 8, 2023, 9:20:49 PM
+    Document   : showBookingDetails
+    Created on : Jun 23, 2023, 11:12:04 PM
     Author     : admin
 --%>
 
@@ -46,9 +46,9 @@
         <!--================Breadcrumb Area =================-->
         <br>
 
-        <h1 style="text-align: center;">Payment Room</h1>
+        <h1 style="text-align: center;">Booking Details</h1>
 
-        <form action="#" method="get">
+        <form action="loadBookingDetails" method="get">
 
             <div class="container rounded bg-white mt-5 mb-5">
                 <div class="row">
@@ -58,34 +58,33 @@
                     <div class="col-md-5 border-right">
                         <div class="p-3 py-5">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">Payment</h4>
+                                <h4 class="text-right">Booking Details</h4>
                             </div>
 
                             <div class="row mt-3">
-                                <div class="col-md-12"><input type="hidden" name="IDAccount" class="form-control"  value="${userA.getIDAccount()}"></div>
-                                <div class="col-md-12"><label class="labels">Full Name</label><input type="text" name="FullName" class="form-control" readonly  value="${userA.getFullName()}"></div>
-                                <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" name="Phone" class="form-control" readonly value="${userA.getPhone()}"></div>
-                                <div class="col-md-12"><label class="labels">Email</label><input type="text" name="Email" class="form-control" readonly value="${userA.getEmail()}"></div>
-                                <div class="col-md-6"><label class="labels">City</label><input type="text" name="City" class="form-control" readonly value="${userA.getCity()}"></div>
-                                <div class="col-md-6"><label class="labels">Gender</label><input type="text" name="Gender" class="form-control" readonly value="${userA.getGender()}" ></div>
+                                <div class="col-md-12"><label class="labels">Full Name</label><input type="text" name="FullName" class="form-control" readonly  value="${acc.getFullName()}"></div>
+                                <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" name="Phone" class="form-control" readonly value="${acc.getPhone()}"></div>
+                                <div class="col-md-12"><label class="labels">Email</label><input type="text" name="Email" class="form-control" readonly value="${acc.getEmail()}"></div>
+                                <div class="col-md-6"><label class="labels">City</label><input type="text" name="City" class="form-control" readonly value="${acc.getCity()}"></div>
+                                <div class="col-md-6"><label class="labels">Gender</label><input type="text" name="Gender" class="form-control" readonly value="${acc.getGender()}" ></div>
                             </div>
                             <div class="row mt-3">
 
-                                <div class="col-md-12"><label class="labels">UserName</label><input type="text" name="UserName" class="form-control" value="${userA.getUserName()}"></div>                            
-                                <div class="col-md-12"><label class="labels">Password</label><input type="text" name="Pass" class="form-control"  value="${userA.getPass()}"></div>
+                                <div class="col-md-12"><label class="labels">Payment Method</label><input type="text" name="PaymentMethod" class="form-control" value="Momo" readonly></div>                            
+                                <div class="col-md-12"><label class="labels">Status</label><input type="text" name="Status" class="form-control"  value="Done" readonly></div>
                             </div>
-                            <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Pay</button></div>
+                            <!--<div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Pay</button></div>-->
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="p-3 py-5">
-                            <div class="d-flex justify-content-between align-items-center experience"><span>Information Booking</span><span class="border px-3 p-1 add-experience"><a href="showRoomCustomer"><i class="fa fa-plus"></i>&nbsp;Booking</a></span></div><br>
-                            <div class="col-md-12"><label class="labels">Start Day</label><input type="text" class="form-control" placeholiêder="Start Day" name="checkin" readonly value="${bk.getCheckIn()}"></div> <br>
-                            <div class="col-md-12"><label class="labels">End Day</label><input type="text" class="form-control" placeholder="End Day" readonly name="checkout" value="${bk.getCheckOut()}"></div> <br>
-                            <div class="col-md-12"><label class="labels">Room Type</label><input type="text" class="form-control" placeholder="Room Type" readonly name="idroomtype" value="${bk.getIDRoomType()}"></div> <br>
-                            <div class="col-md-12"><label class="labels">Number Of Room</label><input type="text" class="form-control" placeholder="Number Of Room" readonly value="${bk.getNumberOfRooms()}"></div> <br>
-                            <div class="col-md-12"><label class="labels">Total Price</label><input type="text" class="form-control" placeholder="Total Price" readonly name="totalprice" value="${bk.getTotalPrice()}"></div> <br>
+                            <div class="d-flex justify-content-between align-items-center experience"><span>Booking Details</span><span class="border px-3 p-1 add-experience"><a href="showRoomCustomer"><i class="fa fa-plus"></i>&nbsp;Booking</a></span></div><br>
+                            <div class="col-md-12"><label class="labels">Start Day</label><input type="text" class="form-control" placeholiêder="Start Day" name="checkin" readonly value="${bdt.getCheckIn()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">End Day</label><input type="text" class="form-control" placeholder="End Day" readonly name="checkout" value="${bdt.getCheckOut()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">Room Type</label><input type="text" class="form-control" placeholder="Room Type" readonly name="idroomtype" value="${bdt.getIDRoomType()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">Number Of Room</label><input type="text" class="form-control" placeholder="Number Of Room" readonly value="${bdt.getNumberOfRooms()}"></div> <br>
+                            <div class="col-md-12"><label class="labels">Total Price</label><input type="text" class="form-control" placeholder="Total Price" readonly name="totalprice" value="${bdt.getTotalPrice()}"></div> <br>
                         </div>
                     </div>
                 </div>

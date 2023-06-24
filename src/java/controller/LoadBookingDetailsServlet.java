@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.ManagerDao;
 import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,13 +13,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Booking;
+import model.RoomType;
 import model.User;
 
 /**
  *
  * @author admin
  */
-public class LoginServlet extends HttpServlet {
+public class LoadBookingDetailsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,25 +35,17 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
-
-        UserDao userDao = new UserDao();
-        User user = userDao.checkAccountValid(userName, password);
-
-        if (user != null) {
-            HttpSession session = request.getSession();
-            if (user.getIDRole() == 1) {
-                session.setAttribute("userA", user);
-                response.sendRedirect("customer_home.jsp");
-            } else if (user.getIDRole() == 2 || user.getIDRole() == 3) {
-                session.setAttribute("userA", user);
-                response.sendRedirect("manager_home.jsp");
-            }
-        } else {
-            request.setAttribute("loginFail", "Username or password incorrect");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet LoadBookingDetailsServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet LoadBookingDetailsServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -66,7 +61,22 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String IDAcc = request.getParameter("IDAccount");
+//        PrintWriter out =response.getWriter();
+//        out.print("<h1>" + IDAcc + "</h1>");
+        String IDB = request.getParameter("IDBooking");
+        ManagerDao mdao = new ManagerDao();
+        Booking bdt = mdao.getBookingById(IDB);
+
+        UserDao udao = new UserDao();
+        User acc = udao.getAccountById(IDAcc);
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("bdt", bdt);
+        session.setAttribute("acc", acc);
+        request.getRequestDispatcher("showBookingDetails.jsp").forward(request, response);
+
     }
 
     /**

@@ -19,14 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Booking;
 import model.CheckRoomValid;
-import model.RoomType;
 import model.User;
 
 /**
  *
  * @author admin
  */
-public class BookingRoomServlet extends HttpServlet {
+public class PaymentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +44,10 @@ public class BookingRoomServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BookingRoomServlet</title>");
+            out.println("<title>Servlet PaymentServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BookingRoomServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PaymentServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,8 +65,6 @@ public class BookingRoomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //TIM CACH KHAC
         response.setContentType("text/html");
         //bookingtime
         LocalDateTime currentTime = LocalDateTime.now();
@@ -79,7 +76,6 @@ public class BookingRoomServlet extends HttpServlet {
 
         String IDRoomType = request.getParameter("IDRoomType");
         int idrt = Integer.parseInt(IDRoomType);
-        
 
         String adult = request.getParameter("Adult");
         int na = Integer.parseInt(IDRoomType);
@@ -94,15 +90,14 @@ public class BookingRoomServlet extends HttpServlet {
         // get ngay hien tai de check Day
         LocalDate currentDate = LocalDate.now();
 
+        String tprice = request.getParameter("TotalPrice");
+        double tp = Double.parseDouble(tprice);
+
         String nRooms = request.getParameter("numRooms");
         int numRooms = Integer.parseInt(nRooms);
 
-        String price = request.getParameter("Price");
-        int tpi = Integer.parseInt(price);
-//        double tp = Double.parseDouble(tprice);
         // Total Price
-        int tp = numOfDays*numRooms*tpi;
-        String TotalPrice = String.valueOf(tp);
+        String TotalPrice = String.valueOf(tprice);
 
         String IDDiscount = "1";
         String Note = "";
@@ -128,36 +123,25 @@ public class BookingRoomServlet extends HttpServlet {
         }
 
         if (cr <= 0 || cr < numRooms) {
-            request.setAttribute("dayFail", "Not enough room! " + cr + " rooms available");
+            request.setAttribute("dayFail", "Over stock! " + cr + " rooms available");
             request.getRequestDispatcher("form_test.jsp").forward(request, response);
         } else if (checkInDate.isBefore(currentDate) || checkOutDate.isBefore(checkInDate)) {
             request.setAttribute("dayFail", "Day Invaild!");
             request.getRequestDispatcher("form_test.jsp").forward(request, response);
         } else {
-            udao.addBooking(IDAccount, IDDiscount, IDRoomType, adult, child, checkInDateStr, checkOutDateStr, nRooms, TotalPrice, formattedTime, Note);
-            request.setAttribute("booksuccess", "Booking Success");
-            request.getRequestDispatcher("customer_room.jsp").forward(request, response);
-        }
+            User u = udao.getAccountById(IDAccount);
+            Booking bk = new Booking(idac, idac, idac, idrt, na, nc, checkInDateStr, checkOutDateStr, numRooms, tp, formattedTime, Note);
+            request.setAttribute("bk", bk);
+            request.setAttribute("u", u);
+            request.getRequestDispatcher("form_payment.jsp").forward(request, response);
 
-//        if (cr <= 0 || cr < numRooms) {
-//            request.setAttribute("dayFail", "Over stock! " + cr + " rooms available");
-//            request.getRequestDispatcher("form_test.jsp").forward(request, response);
-//        } else if (checkInDate.isBefore(currentDate) || checkOutDate.isBefore(checkInDate)) {
-//            request.setAttribute("dayFail", "Day Invaild!");
-//            request.getRequestDispatcher("form_test.jsp").forward(request, response);
-//        } else {
-////            User u = udao.getAccountById(IDAccount);
-////            Booking bk = new Booking(idac, idac, idac, idrt, na, nc, checkInDateStr, checkOutDateStr, numRooms, tp, formattedTime, Note);
-////            request.setAttribute("bk", bk);
-////            request.setAttribute("u", u);
-////            request.getRequestDispatcher("form_payment.jsp").forward(request, response);
-//
-////            Booking bk2 = new Booking(idrt, idac, idrt, idrt, idrt, cr, child, IDAccount, numRooms, tp, Note, Note);
+//            Booking bk2 = new Booking(idrt, idac, idrt, idrt, idrt, cr, child, IDAccount, numRooms, tp, Note, Note);
 //            udao.addBooking(IDAccount, IDDiscount, IDRoomType, adult, child, checkInDateStr, checkOutDateStr, nRooms, TotalPrice, formattedTime, Note);
 //            request.setAttribute("booksuccess", "Booking Success");
 //            request.getRequestDispatcher("customer_room.jsp").forward(request, response);
-//        }
-//        request.getRequestDispatcher("showBooking").forward(request, response);
+        }
+        request.getRequestDispatcher("showBooking").forward(request, response);
+
     }
 
     /**
