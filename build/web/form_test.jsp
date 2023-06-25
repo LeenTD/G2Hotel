@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="css/room_bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.css">
+        <script src="/vnpay_jsp/assets/jquery-1.11.3.min.js"></script>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -75,7 +76,7 @@
 
         <!--onsubmit="return validateForm()"--> 
 
-        <form action="bookingRoom" id="bookingForm" class="col-md-9 m-auto" name="myForm" method="get" role="form">
+        <form action="vnpayajax" id="bookingForm" class="col-md-9 m-auto" name="myForm" method="post" role="form">
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Name:</label>  
@@ -116,25 +117,24 @@
 
             <div class="row">
                 <div class="form-group col-md-6">
-                    <input type="hidden" class="form-control mt-1" id="NumberOfBed" name="NumberOfBed" value="${r.getNumberOfBed()}" onchange="updateQuantity()" readonly>
                     <label for="inputname">Adult:</label>
-                    <input type="number" class="form-control mt-1" id="Adult" name="Adult" min="1" onchange="updateQuantity()" placeholder="Adult" required value="">
+                    <input type="number" class="form-control mt-1" id="Adult" name="Adult" min="0" placeholder="Adult" required value="">
                 </div>                    
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Child:</label>
-                    <input type="number" class="form-control mt-1" id="Child" name="Child" min="0" onchange="updateQuantity()" placeholder="Child" required value="">
+                    <input type="number" class="form-control mt-1" id="Child" name="Child" min="0" placeholder="Child" required value="">
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="checkInDate">Check-In:</label><br>
-                    <input type="date" class="form-control"  name="checkInDate" id="check_in"  onchange="validateDates(); calculateTotalPrice();" required/>
+                    <input type="date" class="form-control"  name="checkInDate" id="check_in" onchange="calculateTotalPrice(); validateDates();" required/>
                     <span id="checkInDate" style="color: red;"></span>
                 </div>                    
                 <div class="form-group col-md-6 mb-3">
                     <label for="checkOutDate">Check-Out:</label><br>
-                    <input type="date" class="form-control"  name="checkOutDate" id="check_out" onchange="validateDates(); calculateTotalPrice();" required/>
+                    <input type="date" class="form-control"  name="checkOutDate" id="check_out" onchange="calculateTotalPrice(); validateDates();"  required/>
                     <span id="checkOutDate" style="color: red;"></span>
                 </div>
             </div>
@@ -143,7 +143,7 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="numRooms">Quantity:</label><br>
-                    <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="" min="1" onchange="validateDates(); calculateTotalPrice();" required >
+                    <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="" min="1" required onchange="calculateTotalPrice(); validateDates();">
                     <!--                                        <div class="input-group">
                                                                 <button type="button" class="btn btn-outline-secondary" onclick="decreaseQuantity()">-</button>
                                                                 <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="1" readonly>
@@ -154,14 +154,25 @@
 
 
                 <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Total Price</label>
+                    <label for="inputname">TotalPrice</label>
                     <input type="text" class="form-control mt-1" id="TotalPrice" name="TotalPrice" placeholder="TotalPrice" value="" readonly>
                 </div>
             </div>
 
-            <div class="col text-end mt-2">
-                <button type="submit" class="btn btn-success btn-lg px-3">Book Now</button>
+
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <h5>Phương thức thanh toán </h5>
+                    <input type="checkbox" id="bankCode" name="bankCode" value="NCB">
+                    <label for="bankCode">VNPAY</label><br>
+                </div>
+                <div class="col text-end mt-2">
+                    <button type="submit" class="btn btn-success btn-lg px-3">Book Now</button>
+                </div>           
+
             </div>
+
+
         </form>
 
         <br>
@@ -189,10 +200,10 @@
                 var numDays = Math.round(Math.abs((checkOutDate - checkInDate) / oneDay));
 
                 // Tính tổng giá tiền
-                var totalPrice = price * numDays * numRooms;
+                let totalPrice = price * numDays * numRooms;
 
                 // Hiển thị giá trong trường "TotalPrice"
-                document.getElementById("TotalPrice").value = totalPrice.toFixed(2); // Giá trị làm tròn đến 2 chữ số thập phân
+                document.getElementById("TotalPrice").value = totalPrice.toFixed(0); // Giá trị làm tròn đến 2 chữ số thập phân
 
                 // Xóa thông báo lỗi nếu dữ liệu hợp lệ
                 document.getElementById("checkOutDate").textContent = "";
@@ -221,43 +232,6 @@
                 document.getElementById("checkInDate").textContent = "";
                 document.getElementById("checkOutDate").textContent = "";
 
-            }
-
-            function updateQuantity() {
-                var adultInput = document.getElementById('Adult');
-                var childInput = document.getElementById('Child');
-                var quantityInput = document.getElementById('numRooms');
-                var numberOfBedInput = document.getElementById('NumberOfBed');
-
-                var adultCount = parseInt(adultInput.value);
-                var childCount = parseInt(childInput.value);
-                var numberOfBed = parseInt(numberOfBedInput.value);
-
-                if (numberOfBed === 1) {
-                    if (adultCount < 2) {
-                        quantityInput.value = 1;
-                    } else {
-                        var quantity = Math.ceil(adultCount / 2);
-
-                        if (childCount > 2 * adultCount) {
-                            quantity++;
-                        }
-
-                        quantityInput.value = quantity;
-                    }
-                } else if (numberOfBed === 2) {
-                    if (adultCount < 4) {
-                        quantityInput.value = 1;
-                    } else {
-                        var quantity = Math.ceil(adultCount / 4);
-
-                        if (childCount > 2 * adultCount) {
-                            quantity++;
-                        }
-
-                        quantityInput.value = quantity;
-                    }
-                }
             }
 
             // Lấy các phần tử HTML cần thiết
@@ -324,7 +298,35 @@
 
 
         <!--<script src="js/formValidation.js" type="text/javascript"></script>-->
-
+        <link href="https://pay.vnpay.vn/lib/vnpay/vnpay.css" rel="stylesheet" />
+        <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js"></script>
+        <script type="text/javascript">
+            $("#bookingForm").submit(function () { //thực hiện hàm khi form có id frmCreateOrder đc submit
+                //AJAX (asynchornous javascript and xml) phương thức java script cho phép gửi request http đến server bất đồng bộ và nhận phản hồi từ server mà 
+                //KHÔNG CẦN TẢI LẠI
+                var postData = $("#bookingForm").serialize(); //lấy dữ liệu từ form và biến đỏi thành định dạng phù hợp (serialize)
+                var submitUrl = $("#bookingForm").attr("action"); //lấy dữ liệu từ attribute ACTION của form. cụ thể là đường dẫn đến submit url
+                $.ajax({//yêu cầu ajax gửi đến server 
+                    type: "POST",
+                    url: submitUrl,
+                    data: postData,
+                    dataType: 'JSON',
+                    success: function (x) { //sau khi nhận phản hồi từ server. hàm callback này đc thực thi
+                        if (x.code === '00') { //phản hồi từ server. mã này xử lý dữ liệu trong hàm success
+                            if (window.vnpay) { //nếu biến vnpay đc khai báo trong phạm vi toàn cục (global scope)
+                                vnpay.open({width: 768, height: 600, url: x.data});
+                            } else {
+                                location.href = x.data;
+                            }
+                            return false;
+                        } else {
+                            alert(x.Message);
+                        }
+                    }
+                });
+                return false;
+            });
+        </script>      
 
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/popper.js"></script>

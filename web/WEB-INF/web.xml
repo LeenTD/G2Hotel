@@ -100,6 +100,18 @@
         <servlet-name>ShowContactServlet</servlet-name>
         <servlet-class>controller.ShowContactServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>controller.ajaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddTransactionInfo</servlet-name>
+        <servlet-class>controller.AddTransactionInfo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/vnpayajax/*</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>G2HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -199,6 +211,14 @@
     <servlet-mapping>
         <servlet-name>ShowContactServlet</servlet-name>
         <url-pattern>/showContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/ajaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddTransactionInfo</servlet-name>
+        <url-pattern>/AddTransactionInfo</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>customer_home.jsp</welcome-file>
