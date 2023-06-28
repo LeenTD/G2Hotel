@@ -19,11 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
-//import javax.servlet.http.HttpServletRequest;
-//import jakarta.servlet.ServletException;
-//import jakarta.servlet.http.HttpServlet;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,8 +36,9 @@ public class ajaxServlet extends HttpServlet {
         
         String vnp_Version = "2.1.0";// phiên bản api mà merchant kết nối
         String vnp_Command = "pay"; //mã API sử dụng.
-        String orderType = req.getParameter("ordertype");
-        long amount = Integer.parseInt(req.getParameter("TotalPrice"))*24000;
+//        String orderType = req.getParameter("ordertype");
+        String orderType = "other";
+        long amount = Integer.parseInt(req.getParameter("TotalPrice"))*100;
 //        String bankCode = req.getParameter("bankCode");
         
         String vnp_TxnRef = Config.getRandomNumber(8); //Mã tham chiếu của giao dịch tại hệ thống của merchant. Phân biệt các đơn hàng của merchant. Unique
@@ -60,7 +56,6 @@ public class ajaxServlet extends HttpServlet {
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_OrderInfo", "Dat phong khach san: " + roomInfo + ", Ma dat phong: "  + vnp_TxnRef);
         vnp_Params.put("vnp_OrderType", orderType);
-//
 //        String locate = req.getParameter("language");
 //        if (locate != null && !locate.isEmpty()) {
 //            vnp_Params.put("vnp_Locale", locate);
@@ -69,6 +64,8 @@ public class ajaxServlet extends HttpServlet {
                 vnp_Params.put("vnp_Locale", "vn"); //ngôn ngữ giao diện hiển thị
         vnp_Params.put("vnp_ReturnUrl", Config.vnp_Returnurl); //url của merchant để thông báo kết quả giao dịch sau khi thanh toán.
 //        vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
+
+
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -112,7 +109,6 @@ public class ajaxServlet extends HttpServlet {
         job.addProperty("data", paymentUrl);
         Gson gson = new Gson();
         resp.getWriter().write(gson.toJson(job)); //gửi về cho hàm callback  
-//        resp.sendRedirect(paymentUrl);
     }
 
 }

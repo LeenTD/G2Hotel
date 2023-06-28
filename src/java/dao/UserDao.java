@@ -4,24 +4,15 @@
  */
 package dao;
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import dbcontext.DBContext;
-//import java.io.IOException;
 import java.sql.Connection;
-//import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Booking;
-import model.BookingDetails;
 import model.CheckRoomValid;
-import model.Contact;
-import model.TransactionInfor;
 import model.User;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
  *
@@ -60,22 +51,20 @@ public class UserDao {
     }
    
     
-   public TransactionInfor addTransaction(String IDTransaction, String IDBooking, String IDPayment,String TransInfo, String TransTime, String TransStatus){
+   public void addTransaction(String IDTransaction, String IDBooking, String IDPayment,String TransInfo, String TransTime, String TransStatus){
         String query = "insert into TransactionInfor(IDTransaction,IDBooking,IDPayment,TransInfo,TransTime,TransStatus) values(?,?,?,?,?,?)";
-        
         try {
             conn = DBContext.getConnection();//mo ket noi
             ps = conn.prepareStatement(query);
             ps.setString(1, IDTransaction);
             ps.setString(2, IDBooking);
-            ps.setInt(3, 1);
+            ps.setString(3, IDPayment);
             ps.setString(4, TransInfo);
             ps.setString(5,  TransTime);
             ps.setString(6, TransStatus);
             ps.executeUpdate();
         } catch (Exception e) {
         }
-        return null;
    }
 
     public User checkAccountExist(String user) {
@@ -103,7 +92,7 @@ public class UserDao {
     }
 
     // them account moi (register)
-    public User addAccount(String UserName, String Pass, String FullName, String Gender, String City, String Email, String Phone, String IDRole) {
+    public void addAccount(String UserName, String Pass, String FullName, String Gender, String City, String Email, String Phone, String IDRole) {
         String query = "insert into Account(UserName,Pass,FullName,Gender,City,Email,Phone,IDRole) values(?,?,?,?,?,?,?,?)";
         try {
             conn = DBContext.getConnection();//mo ket noi
@@ -120,7 +109,6 @@ public class UserDao {
             ps.executeUpdate();
         } catch (Exception e) {
         }
-        return null;
     }
 
     // chinh sua thong tin account (Update)
@@ -144,7 +132,7 @@ public class UserDao {
     }
 
     // them booking moi (booking)
-    public Booking addBooking(String IDAccount, String IDDiscount, String IDRoomType, String Adult, String Child, String CheckIn, String CheckOut, String NumberOfRoom, String TotalPrice, String BookingTime, String Note) {
+    public void addBooking(String IDAccount, String IDDiscount, String IDRoomType, String Adult, String Child, String CheckIn, String CheckOut, String NumberOfRoom, String TotalPrice, String BookingTime, String Note) {
         String query = "insert into Booking(IDAccount,IDDiscount,IDRoomType,Adult,Child,Checkin,Checkout,NumberOfRooms,TotalPrice,BookingTime,Note) values(?,?,?,?,?,?,?,?,?,?,?)";
         try {
             conn = DBContext.getConnection();//mo ket noi
@@ -164,10 +152,9 @@ public class UserDao {
             ps.executeUpdate();
         } catch (Exception e) {
         }
-        return null;
     }
     
-    public BookingDetails addBookingDetails(String IDBooking, String IDAccount, String FullName,String Gender, String Email, String Phone) {
+    public void addBookingDetails(String IDBooking, String IDAccount, String FullName,String Gender, String Email, String Phone) {
         String query = "insert into BookingDetails(IDBooking, IDAccount, BDFullName, BDGender, BDEmail, BDPhone) values(?,?,?,?,?,?)";
         try {
             conn = DBContext.getConnection();//mo ket noi
@@ -182,7 +169,6 @@ public class UserDao {
             ps.executeUpdate();
         } catch (Exception e) {
         }
-        return null;
     }
 
 // chinh sua thong tin account (Update)
@@ -290,7 +276,7 @@ public class UserDao {
         return null;
     }
     
-    public Contact addContact(String IDAccount, String Name, String Email, String Phone, String Message, String Status) {
+    public void addContact(String IDAccount, String Name, String Email, String Phone, String Message, String Status) {
         String query = "insert into Contact(IDAccount, ContactName,ContactEmail, ContactPhone, ContactMessage, ContactStatus) values(?,?,?,?,?,?)";
         try {
             conn = DBContext.getConnection();//mo ket noi
@@ -305,6 +291,5 @@ public class UserDao {
             ps.executeUpdate();
         } catch (Exception e) {
         }
-        return null;
     }
 }

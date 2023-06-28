@@ -1,3 +1,6 @@
+<%@page import="model.RoomType"%>
+<%@page import="model.Account"%>
+<%@page import="dao.UserDao"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.nio.charset.StandardCharsets"%>
 <%@page import="config.Config"%>
@@ -88,25 +91,36 @@
                     <label >Payment Status:</label>
                     <label>
                         <%
+                            
+                            UserDao dao = new UserDao();
+                            String IDTransaction = request.getParameter("vnp_TxnRef");
+//                            String IDBooking = request.getParameter(name);
+                            String IDPayment = "1";
+                            String TransInfo = request.getParameter("vnp_OrderInfo");
+                            String TransTime = request.getParameter("vnp_PayDate");
+                            String TransStatus = request.getParameter("vnp_TransactionStatus");
+//                            dao.addTransaction(IDTransaction, IDBooking, IDPayment, TransInfo, TransTime, TransStatus);
+                          Account account = (Account)session.getAttribute("userA");
+                          RoomType room = (RoomType)session.getAttribute("r");
+                               
                             if (signValue.equals(vnp_SecureHash)) {
                                 if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
                                     out.print("Success");
                                 } else {
                                     out.print("Failed");
                                 }
-
+                                
+                                session.getAttribute("userA");
+                                dao.addBooking(IDAccount, IDDiscount, IDRoomType, Adult, Child, CheckIn, CheckOut, NumberOfRoom, TotalPrice, BookingTime, Note);
+                                dao.addBookingDetails(IDBooking, IDAccount, FullName, Gender, Email, Phone);
+                                dao.addTransaction(IDTransaction, IDBooking, IDPayment, TransInfo, TransTime, TransStatus);
                             } else {
                                 out.print("invalid signature");
                             }
                         %></label>
                 </div> 
             </div>
-            <p>
-                &nbsp;
-            </p>
-            <footer class="footer">
-                <p>&copy; VNPAY 2020</p>
-            </footer>
+                <a href="/customer_home.jsp">Return to homepage</a>
         </div>  
     </body>
 </html>

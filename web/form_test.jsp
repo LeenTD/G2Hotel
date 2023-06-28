@@ -80,9 +80,10 @@
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Name:</label>  
-                    <input type="hidden" class="form-control mt-1" id="IDRoomType" name="IDRoomType" value="${r.getIDRoomType()}">
+                    <input type="hidden" class="form-control mt-1" id="IDRoomType" name="IDRoomType" value="${r.getIDRoomType()}"> //r = session attribute. room type details
                     <input type="hidden" class="form-control mt-1" id="IDAccount" name="IDAccount" value="${userA.getIDAccount()}">
-                    <input type="text" class="form-control mt-1" id="FullName" name="FullName" placeholder="Name" required value="${userA.getFullName()}">
+                    <input type="text" class="form-control mt-1" id="FullName" name="FullName" placeholder="Name" required value="${userA.getFullName()}>
+">
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Gender:</label>
@@ -99,7 +100,7 @@
                     <input type="text" class="form-control mt-1" id="Email" name="Email" placeholder="Email" required value="${userA.getEmail()}">
                 </div>
             </div>
-            <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+                <hr>
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="inputname">Room Type:</label> 
@@ -138,8 +139,6 @@
                     <span id="checkOutDate" style="color: red;"></span>
                 </div>
             </div>
-
-
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="numRooms">Quantity:</label><br>
@@ -327,7 +326,6 @@
                 return false;
             });
         </script>      
-
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
