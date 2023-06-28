@@ -79,7 +79,7 @@
                                 <input type="hidden" name="IDAccount" class="form-control"  value="${userA.getIDAccount()}">
                             </c:if>
                             <c:if test="${sessionScope.userA == null}">  
-                                <input type="hidden" name="IDAccount" class="form-control"  value="0">
+                                <input type="hidden" name="IDAccount" class="form-control"  value="8">
                             </c:if>
                             <div class="col-md-6">
                                 <div class="form-group">

@@ -9,20 +9,60 @@ package model;
  * @author admin
  */
 public class BookingDetails {
+
     private int IDBooking;
     private int IDAccount;
+    private int IDDiscount;
+    private int IDRoomType;
+
     private String FullName;
     private String Gender;
-    private String Phone;
     private String Email;
+    private String Phone;
 
-    public BookingDetails(int IDBooking, int IDAccount, String FullName, String Gender, String Phone, String Email) {
+    private int Adult;
+    private int Child;
+    private String CheckIn;
+    private String CheckOut;
+    private int NumberOfRooms;
+    private double TotalPrice;
+    private String BookingTime;
+    private String Note;
+
+    public BookingDetails(int IDBooking, int IDAccount, int IDDiscount, int IDRoomType, String FullName, String Gender, String Email, String Phone, int Adult, int Child, String CheckIn, String CheckOut, int NumberOfRooms, double TotalPrice, String BookingTime, String Note) {
         this.IDBooking = IDBooking;
         this.IDAccount = IDAccount;
+        this.IDDiscount = IDDiscount;
+        this.IDRoomType = IDRoomType;
         this.FullName = FullName;
         this.Gender = Gender;
-        this.Phone = Phone;
         this.Email = Email;
+        this.Phone = Phone;
+        this.Adult = Adult;
+        this.Child = Child;
+        this.CheckIn = CheckIn;
+        this.CheckOut = CheckOut;
+        this.NumberOfRooms = NumberOfRooms;
+        this.TotalPrice = TotalPrice;
+        this.BookingTime = BookingTime;
+        this.Note = Note;
+    }
+    public BookingDetails(int IDAccount, int IDDiscount, int IDRoomType, String FullName, String Gender, String Email, String Phone, int Adult, int Child, String CheckIn, String CheckOut, int NumberOfRooms, double TotalPrice, String BookingTime, String Note) {        
+        this.IDAccount = IDAccount;
+        this.IDDiscount = IDDiscount;
+        this.IDRoomType = IDRoomType;
+        this.FullName = FullName;
+        this.Gender = Gender;
+        this.Email = Email;
+        this.Phone = Phone;
+        this.Adult = Adult;
+        this.Child = Child;
+        this.CheckIn = CheckIn;
+        this.CheckOut = CheckOut;
+        this.NumberOfRooms = NumberOfRooms;
+        this.TotalPrice = TotalPrice;
+        this.BookingTime = BookingTime;
+        this.Note = Note;
     }
 
     public int getIDBooking() {
@@ -41,6 +81,22 @@ public class BookingDetails {
         this.IDAccount = IDAccount;
     }
 
+    public int getIDDiscount() {
+        return IDDiscount;
+    }
+
+    public void setIDDiscount(int IDDiscount) {
+        this.IDDiscount = IDDiscount;
+    }
+
+    public int getIDRoomType() {
+        return IDRoomType;
+    }
+
+    public void setIDRoomType(int IDRoomType) {
+        this.IDRoomType = IDRoomType;
+    }
+
     public String getFullName() {
         return FullName;
     }
@@ -57,14 +113,6 @@ public class BookingDetails {
         this.Gender = Gender;
     }
 
-    public String getPhone() {
-        return Phone;
-    }
-
-    public void setPhone(String Phone) {
-        this.Phone = Phone;
-    }
-
     public String getEmail() {
         return Email;
     }
@@ -73,9 +121,80 @@ public class BookingDetails {
         this.Email = Email;
     }
 
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String Phone) {
+        this.Phone = Phone;
+    }
+
+    public int getAdult() {
+        return Adult;
+    }
+
+    public void setAdult(int Adult) {
+        this.Adult = Adult;
+    }
+
+    public int getChild() {
+        return Child;
+    }
+
+    public void setChild(int Child) {
+        this.Child = Child;
+    }
+
+    public String getCheckIn() {
+        return CheckIn;
+    }
+
+    public void setCheckIn(String CheckIn) {
+        this.CheckIn = CheckIn;
+    }
+
+    public String getCheckOut() {
+        return CheckOut;
+    }
+
+    public void setCheckOut(String CheckOut) {
+        this.CheckOut = CheckOut;
+    }
+
+    public int getNumberOfRooms() {
+        return NumberOfRooms;
+    }
+
+    public void setNumberOfRooms(int NumberOfRooms) {
+        this.NumberOfRooms = NumberOfRooms;
+    }
+
+    public double getTotalPrice() {
+        return TotalPrice;
+    }
+
+    public void setTotalPrice(double TotalPrice) {
+        this.TotalPrice = TotalPrice;
+    }
+
+    public String getBookingTime() {
+        return BookingTime;
+    }
+
+    public void setBookingTime(String BookingTime) {
+        this.BookingTime = BookingTime;
+    }
+
+    public String getNote() {
+        return Note;
+    }
+
+    public void setNote(String Note) {
+        this.Note = Note;
+    }
+
     @Override
     public String toString() {
-        return "BookingDetails{" + "IDBooking=" + IDBooking + ", IDAccount=" + IDAccount + ", FullName=" + FullName + ", Gender=" + Gender + ", Phone=" + Phone + ", Email=" + Email + '}';
+        return "Booking{" + "IDBooking=" + IDBooking + ", IDAccount=" + IDAccount + ", IDDiscount=" + IDDiscount + ", IDRoomType=" + IDRoomType + ", FullName=" + FullName + ", Gender=" + Gender + ", Email=" + Email + ", Phone=" + Phone + ", Adult=" + Adult + ", Child=" + Child + ", CheckIn=" + CheckIn + ", CheckOut=" + CheckOut + ", NumberOfRooms=" + NumberOfRooms + ", TotalPrice=" + TotalPrice + ", BookingTime=" + BookingTime + ", Note=" + Note + '}';
     }
-    
 }

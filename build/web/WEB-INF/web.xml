@@ -100,6 +100,38 @@
         <servlet-name>ShowContactServlet</servlet-name>
         <servlet-class>controller.ShowContactServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateContactServlet</servlet-name>
+        <servlet-class>controller.UpdateContactServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchBookingServlet</servlet-name>
+        <servlet-class>controller.SearchBookingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateBookingStatusServlet</servlet-name>
+        <servlet-class>controller.UpdateBookingStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowBookingCustomerServlet</servlet-name>
+        <servlet-class>controller.ShowBookingCustomerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FeedbackServlet</servlet-name>
+        <servlet-class>controller.FeedbackServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchFeedback</servlet-name>
+        <servlet-class>controller.SearchFeedback</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FilterFeedback</servlet-name>
+        <servlet-class>controller.FilterFeedback</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReplyFeedbackServlet</servlet-name>
+        <servlet-class>controller.ReplyFeedbackServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>G2HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -199,6 +231,38 @@
     <servlet-mapping>
         <servlet-name>ShowContactServlet</servlet-name>
         <url-pattern>/showContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateContactServlet</servlet-name>
+        <url-pattern>/updateContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchBookingServlet</servlet-name>
+        <url-pattern>/searchBooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateBookingStatusServlet</servlet-name>
+        <url-pattern>/updateBookingStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowBookingCustomerServlet</servlet-name>
+        <url-pattern>/showBookingCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FeedbackServlet</servlet-name>
+        <url-pattern>/feedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchFeedback</servlet-name>
+        <url-pattern>/searchFeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterFeedback</servlet-name>
+        <url-pattern>/filterFeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReplyFeedbackServlet</servlet-name>
+        <url-pattern>/ReplyFeedback</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>customer_home.jsp</welcome-file>

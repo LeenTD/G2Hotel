@@ -68,7 +68,7 @@ public class ShowRoomTypeServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.setAttribute("listR", roomTypeList);
-            request.getRequestDispatcher("manager_room.jsp").forward(request, response);
+        request.getRequestDispatcher("manager_room.jsp").forward(request, response);
 
     }
 

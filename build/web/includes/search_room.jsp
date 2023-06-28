@@ -52,6 +52,14 @@
         </script>
 
 <script type="text/javascript">
+
+                                // check validation time min
+                            var checkOutDate = document.getElementById("check_out");
+                            var date = new Date();
+                            var dateCrr = date.toISOString().split("T")[0];
+                            checkOutDate.setAttribute("min", dateCrr);
+                            var checkInDate = document.getElementById("check_in");
+                            checkInDate.setAttribute("min", dateCrr);
     document.getElementById('check_in').addEventListener('change', handleDateChange);
     document.getElementById('check_out').addEventListener('change', handleDateChange);
 
@@ -64,9 +72,13 @@
         if (checkOutDate <= checkInDate) {
             document.getElementById('checkout').textContent = 'Your checkout date is less than or equal checkin date.';
             document.getElementById('check_out').value = '';
-        } else if (checkOutDate > checkInDate) {
+        }  else if (checkOutDate <= currentDate){
+            document.getElementById('checkout').textContent = 'Your checkout date is less than or equal currentDate.';
+            document.getElementById('check_out').value = '';
+        }
+        else {
             document.getElementById('checkout').textContent = '';
-        } 
+        }
         
         if (checkInDate <= currentDate) {
         document.getElementById('checkin').textContent = 'Your checkin date is less than current date.';

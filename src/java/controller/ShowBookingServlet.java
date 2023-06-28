@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Booking;
+import model.BookingDetails;
 
 /**
  *
@@ -61,12 +61,11 @@ public class ShowBookingServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         ManagerDao managerDao = new ManagerDao();
-        List<Booking> bookingList = managerDao.getBooking();
+        List<BookingDetails> bookingList = managerDao.getBookingDetails();
 //        PrintWriter out = response.getWriter();
-//        out.print("<h1>"+ bookingList + "</h1>");
+//        out.print("<h1>"+ bookingList.toString() + "</h1>");
 
-        HttpSession session = request.getSession();
-        session.setAttribute("listB", bookingList);
+        request.setAttribute("listB", bookingList);
         request.getRequestDispatcher("manager_booking.jsp").forward(request, response);
     }
 

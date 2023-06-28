@@ -1,13 +1,10 @@
-<%-- 
-    Document   : form_book_room
-    Created on : Jun 8, 2023, 1:13:09 AM
-    Author     : admin
---%>
+<%-- Document : form_book_room Created on : Jun 8, 2023, 1:13:09 AM Author : admin --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -19,7 +16,8 @@
         <link rel="stylesheet" type="text/css" href="vendors/linericon/style.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="vendors/owl-carousel/owl.carousel.min.css">
-        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" type="text/css"
+              href="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
         <link rel="stylesheet" type="text/css" href="vendors/nice-select/css/nice-select.css">
         <link rel="stylesheet" type="text/css" href="vendors/owl-carousel/owl.carousel.min.css">
 
@@ -50,15 +48,17 @@
             h1 {
                 text-align: center;
             }
-
         </style>
 
     </head>
+
     <body>
         <%@include file="/includes/header.jsp" %>
+
         <!--================Breadcrumb Area =================-->
         <section class="breadcrumb_area">
-            <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+            <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0"
+                 data-background=""></div>
             <div class="container">
                 <div class="page-cover text-center">
                     <h2 class="page-cover-tittle">Booking Room</h2>
@@ -71,71 +71,87 @@
         </section>
         <!--================Breadcrumb Area =================-->
         <br>
-        <h2 style="color: red; text-align: center;" >${dayFail} </h2>
+        <h2 style="color: red; text-align: center;">${dayFail} </h2>
 
-        <!--onsubmit="return validateForm()"--> 
+        <!--onsubmit="return validateForm()"-->
 
-        <form action="bookingRoom" id="bookingForm" class="col-md-9 m-auto" name="myForm" method="get" role="form">
+        <form action="bookingRoom" id="bookingForm" class="col-md-9 m-auto" name="myForm" method="get"
+              role="form">
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Name:</label>  
-                    <input type="hidden" class="form-control mt-1" id="IDRoomType" name="IDRoomType" value="${r.getIDRoomType()}">
-                    <input type="hidden" class="form-control mt-1" id="IDAccount" name="IDAccount" value="${userA.getIDAccount()}">
-                    <input type="text" class="form-control mt-1" id="FullName" name="FullName" placeholder="Name" required value="${userA.getFullName()}">
+                    <label for="inputname">Name:</label>
+                    <input type="hidden" class="form-control mt-1" id="IDRoomType" name="IDRoomType"
+                           value="${r.getIDRoomType()}">
+                    <input type="hidden" class="form-control mt-1" id="IDAccount" name="IDAccount"
+                           value="${userA.getIDAccount()}">
+                    <input type="text" class="form-control mt-1" id="FullName" name="FullName"
+                           placeholder="Name" required value="${userA.getFullName()}">
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Gender:</label>
-                    <input type="text" class="form-control mt-1" id="Gender" name="Gender" placeholder="Gender" required value="${userA.getGender()}">
+                    <input type="text" class="form-control mt-1" id="Gender" name="Gender"
+                           placeholder="Gender" required value="${userA.getGender()}">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Phone:</label>
-                    <input type="text" class="form-control mt-1" id="Phone" name="Phone" placeholder="Phone" required value="${userA.getPhone()}">
+                    <input type="text" class="form-control mt-1" id="Phone" name="Phone" placeholder="Phone"
+                           required value="${userA.getPhone()}">
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Email:</label>
-                    <input type="text" class="form-control mt-1" id="Email" name="Email" placeholder="Email" required value="${userA.getEmail()}">
+                    <input type="text" class="form-control mt-1" id="Email" name="Email" placeholder="Email"
+                           required value="${userA.getEmail()}">
                 </div>
             </div>
-            <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+            <p>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            </p>
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="inputname">Room Type:</label> 
+                    <label for="inputname">Room Type:</label>
                     <label for="inputname"> ${r.getNameRoomType()}</label>
-                    <input type="hidden" id="NameRoomType" name="NameRoomType" required value="${r.getNameRoomType()}">
-                </div>   
+                    <input type="hidden" id="NameRoomType" name="NameRoomType" required
+                           value="${r.getNameRoomType()}">
+                </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Price:</label>
                     <label for="inputname"> ${r.getPrice()}$/Night</label>
-                    <input type="hidden" id="Price" name="Price" placeholder="Price" required value="${r.getPrice()}">
-                    <input type="hidden" id="ttRoom" name="ttRoom" placeholder="ttRoom" required value="${r.getTotalRoom()}">
+                    <input type="hidden" id="Price" name="Price" placeholder="Price" required
+                           value="${r.getPrice()}">
+                    <input type="hidden" id="ttRoom" name="ttRoom" placeholder="ttRoom" required
+                           value="${r.getTotalRoom()}">
 
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-6">
-                    <input type="hidden" class="form-control mt-1" id="NumberOfBed" name="NumberOfBed" value="${r.getNumberOfBed()}" onchange="updateQuantity()" readonly>
-                    <label for="inputname">Adult:</label>
-                    <input type="number" class="form-control mt-1" id="Adult" name="Adult" min="1" onchange="updateQuantity()" placeholder="Adult" required value="">
-                </div>                    
+                    <input type="hidden" class="form-control mt-1" id="NumberOfBed" name="NumberOfBed"
+                           value="${r.getNumberOfBed()}" onchange="updateQuantity()" readonly>
+                    <label for="inputname">Adult: (Old 13+)</label>
+                    <input type="number" class="form-control mt-1" id="Adult" name="Adult" min="1"
+                           onchange="updateQuantity()" placeholder="Adult" required value="">
+                </div>
                 <div class="form-group col-md-6 mb-3">
-                    <label for="inputname">Child:</label>
-                    <input type="number" class="form-control mt-1" id="Child" name="Child" min="0" onchange="updateQuantity()" placeholder="Child" required value="">
+                    <label for="inputname">Child:Old 5-13</label>
+                    <input type="number" class="form-control mt-1" id="Child" name="Child" min="0"
+                           onchange="updateQuantity()" placeholder="Child" required value="0">
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="checkInDate">Check-In:</label><br>
-                    <input type="date" class="form-control"  name="checkInDate" id="check_in"  onchange="validateDates(); calculateTotalPrice();" required/>
-                    <span id="checkInDate" style="color: red;"></span>
-                </div>                    
+                    <input type="date" class="form-control" name="checkInDate" id="check_in"
+                           onchange="validateDates(); calculateTotalPrice();" required />
+                    <span id="checkInDate" style="color: red;" class="error"></span>
+                </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="checkOutDate">Check-Out:</label><br>
-                    <input type="date" class="form-control"  name="checkOutDate" id="check_out" onchange="validateDates(); calculateTotalPrice();" required/>
-                    <span id="checkOutDate" style="color: red;"></span>
+                    <input type="date" class="form-control" name="checkOutDate" id="check_out"
+                           onchange="validateDates(); calculateTotalPrice();" required />
+                    <span id="checkOutDate" style="color: red;" class="error"></span>
                 </div>
             </div>
 
@@ -143,19 +159,21 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="numRooms">Quantity:</label><br>
-                    <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="" min="1" onchange="validateDates(); calculateTotalPrice();" required >
+                    <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value=""
+                           min="1" onchange="validateDates(); calculateTotalPrice();" required>
                     <!--                                        <div class="input-group">
-                                                                <button type="button" class="btn btn-outline-secondary" onclick="decreaseQuantity()">-</button>
-                                                                <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="1" readonly>
-                                                                <button type="button" class="btn btn-outline-secondary" onclick="increaseQuantity()">+</button>
-                                                            </div>-->
+                                                    <button type="button" class="btn btn-outline-secondary" onclick="decreaseQuantity()">-</button>
+                                                    <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="1" readonly>
+                                                    <button type="button" class="btn btn-outline-secondary" onclick="increaseQuantity()">+</button>
+                                                </div>-->
                     <span id="quantityError" style="color: red;"></span>
                 </div>
 
 
                 <div class="form-group col-md-6 mb-3">
                     <label for="inputname">Total Price</label>
-                    <input type="text" class="form-control mt-1" id="TotalPrice" name="TotalPrice" placeholder="TotalPrice" value="" readonly>
+                    <input type="text" class="form-control mt-1" id="TotalPrice" name="TotalPrice"
+                           placeholder="TotalPrice" value="" readonly>
                 </div>
             </div>
 
@@ -167,9 +185,16 @@
         <br>
 
 
-        <%@include file="/includes/footer.jsp" %>        
+        <%@include file="/includes/footer.jsp" %>
 
         <script type="text/javascript">
+            // check validation time min
+            var checkOutDate = document.getElementById("check_out");
+            var date = new Date();
+            var dateCrr = date.toISOString().split("T")[0];
+            checkOutDate.setAttribute("min", dateCrr);
+            var checkInDate = document.getElementById("check_in");
+            checkInDate.setAttribute("min", dateCrr);
 
             function calculateTotalPrice() {
                 var price = parseFloat(document.getElementById("Price").value);
@@ -201,25 +226,28 @@
             function validateDates() {
                 var checkInDate = new Date(document.getElementById("check_in").value);
                 var checkOutDate = new Date(document.getElementById("check_out").value);
-                var currentDate = new Date();
-
-                // Kiểm tra ngày check-in không được trước ngày hiện tại
-                if (checkInDate < currentDate) {
-                    document.getElementById("checkInDate").textContent = "Your checkin date is less than current date.";
-                    checkInDateInput.value = '';
-                    return;
-                }
+                const currentDate = new Date();
+                currentDate.setDate(currentDate.getDate() - 1);
 
                 // Kiểm tra ngày check-out không được trước ngày check-in
-                if (checkOutDate < checkInDate) {
-                    document.getElementById("checkOutDate").textContent = "Your checkout date is less than checkin date.";
-                    checkOutDateInput.value = '';
-                    return;
+                if (checkOutDate <= checkInDate) {
+                    document.getElementById('checkOutDate').textContent = 'Your checkout date is less than or equal checkin date.';
+                    document.getElementById('check_out').value = '';
+                } else if (checkOutDate <= currentDate) {
+                    document.getElementById('checkOutDate').textContent = 'Your checkout date is less than or equal currentDate.';
+                    document.getElementById('check_out').value = '';
+                } else {
+                    document.getElementById('checkOutDate').textContent = '';
                 }
 
-                // Xóa thông báo lỗi nếu dữ liệu hợp lệ
-                document.getElementById("checkInDate").textContent = "";
-                document.getElementById("checkOutDate").textContent = "";
+                if (checkInDate <= currentDate) {
+                    document.getElementById('checkInDate').textContent = 'Your checkin date is less than current date.';
+                    document.getElementById('check_in').value = '';
+                } else {
+                    document.getElementById('checkInDate').textContent = '';
+                }
+
+                calculateTotalPrice();
 
             }
 
@@ -234,44 +262,51 @@
                 var numberOfBed = parseInt(numberOfBedInput.value);
 
                 if (numberOfBed === 1) {
-                    if (adultCount < 2) {
+                    var maxAdultCount = 2;
+                    var maxTotalCount = 3;
+                    if (adultCount <= maxAdultCount && (adultCount + childCount) <= maxTotalCount) {
                         quantityInput.value = 1;
                     } else {
-                        var quantity = Math.ceil(adultCount / 2);
+                        var totalPeopleCount = adultCount + childCount;
+                        var quantity = Math.ceil(totalPeopleCount / maxTotalCount);
 
-                        if (childCount > 2 * adultCount) {
+                        while (adultCount > maxAdultCount * quantity) {
                             quantity++;
                         }
 
                         quantityInput.value = quantity;
                     }
                 } else if (numberOfBed === 2) {
-                    if (adultCount < 4) {
+                    var maxAdultCount = 4;
+                    var maxTotalCount = 6;
+
+                    if (adultCount <= maxAdultCount && (adultCount + childCount) <= maxTotalCount) {
                         quantityInput.value = 1;
                     } else {
-                        var quantity = Math.ceil(adultCount / 4);
-
-                        if (childCount > 2 * adultCount) {
+                        var totalPeopleCount = adultCount + childCount;
+                        var quantity = Math.ceil(totalPeopleCount / maxTotalCount);
+                        while (adultCount > maxAdultCount * quantity) {
                             quantity++;
                         }
-
                         quantityInput.value = quantity;
                     }
                 }
+                calculateTotalPrice();
+
             }
 
-            // Lấy các phần tử HTML cần thiết
+// Lấy các phần tử HTML cần thiết
 //            var checkInDateInput = document.getElementById('check_in');
 //            var checkOutDateInput = document.getElementById('check_out');
 //            var checkInDateError = document.getElementById('checkInDate');
-//            var checkOutDateError = document.getElementById('checkOutDate');
+//            var checkOutDateErroate = new Date(checkInDateInput.value);
+//                var currentDate = new Date();
+//
+//                // Kiểm tra nếu r = document.getElementById('checkOutDate');
 //
 //// Lắng nghe sự kiện khi ngày check-in thay đổi
 //            checkInDateInput.addEventListener('change', function () {
-//                var checkInDate = new Date(checkInDateInput.value);
-//                var currentDate = new Date();
-//
-//                // Kiểm tra nếu ngày check-in nhỏ hơn ngày hiện tại
+//                var checkInDngày check-in nhỏ hơn ngày hiện tại
 //                if (checkInDate <= currentDate) {
 //                    checkInDateError.innerHTML = 'Your checkin date is less than current date.';
 //                    checkInDateInput.value = '';
@@ -339,4 +374,5 @@
         <script src="vendors/lightbox/simpleLightbox.min.js"></script>
         <script src="js/custom.js"></script>
     </body>
+
 </html>

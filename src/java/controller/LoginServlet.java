@@ -4,14 +4,16 @@
  */
 package controller;
 
+import dao.FeedbackDAO;
 import dao.UserDao;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Feedback;
 import model.User;
 
 /**
@@ -37,14 +39,21 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         UserDao userDao = new UserDao();
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
         User user = userDao.checkAccountValid(userName, password);
 
         if (user != null) {
             HttpSession session = request.getSession();
             if (user.getIDRole() == 1) {
+                List<Feedback> listFeedback = feedbackDAO.getLastFiveFeedback();
+                session.setAttribute("LIST_EXIST_FEEDBACK", listFeedback);
+                
                 session.setAttribute("userA", user);
                 response.sendRedirect("customer_home.jsp");
             } else if (user.getIDRole() == 2 || user.getIDRole() == 3) {
+                List<Feedback> listFeedback = feedbackDAO.getAllFeedback();
+                session.setAttribute("LIST_ADMIN_FFEDBACK", listFeedback);
+                
                 session.setAttribute("userA", user);
                 response.sendRedirect("manager_home.jsp");
             }

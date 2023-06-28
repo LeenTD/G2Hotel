@@ -4,17 +4,23 @@
  */
 package controller;
 
+import com.sun.tools.javac.util.JCDiagnostic.Note;
+import dao.ManagerDao;
+import dao.UserDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Booking;
+import model.BookingDetails;
+import model.CheckRoomValid;
+import model.Discount;
 
 /**
  *
@@ -61,60 +67,116 @@ public class ConfirmInformationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String IDAccount = request.getParameter("IDAccount");
-        int idA = Integer.parseInt(IDAccount);
-        String IDRoomType = request.getParameter("IDRoomType");
-        int idRT = Integer.parseInt(IDRoomType);
+        response.setContentType("text/html");
+        //bookingtime
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedTime = currentTime.format(formatter);
 
-//        String FullName = request.getParameter("FullName");
-//        String Gender = request.getParameter("Gender");
-//        String Phone = request.getParameter("Phone");
-//        String Email = request.getParameter("Email");
-        String NameRoomType = request.getParameter("NameRoomType");
+        String IDAccount = request.getParameter("IDAccount");
+        int idac = Integer.parseInt(IDAccount);
+
+        String IDRoomType = request.getParameter("IDRoomType");
+        int idrt = Integer.parseInt(IDRoomType);
+
+        String nameRoomType = request.getParameter("NameRoomType");
+
+        String FullName = request.getParameter("FullName");
+        String Gender = request.getParameter("Gender");
+        String Email = request.getParameter("Email");
+        String Phone = request.getParameter("Phone");
 
         String adult = request.getParameter("Adult");
-        int ad = Integer.parseInt(adult);
-
+        int na = Integer.parseInt(adult);
         String child = request.getParameter("Child");
-        int ch = Integer.parseInt(child);
+        int nc = Integer.parseInt(child);
+        // get total day
+        String checkInDateStr = request.getParameter("checkInDate");
+        String checkOutDateStr = request.getParameter("checkOutDate");
+        LocalDate checkInDate = LocalDate.parse(checkInDateStr);
+        LocalDate checkOutDate = LocalDate.parse(checkOutDateStr);
+        int numOfDays = (int) ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+        // get ngay hien tai de check Day
+        LocalDate currentDate = LocalDate.now();
 
-        String CheckIn = request.getParameter("CheckIn");
-        String CheckOut = request.getParameter("CheckOut");
+        String nRooms = request.getParameter("numRooms");
+        int numRooms = Integer.parseInt(nRooms);
+        ManagerDao mdao = new ManagerDao();
 
-        String numberOfRoom = request.getParameter("NumberOfRoom");
-        int nor = Integer.parseInt(numberOfRoom);
-
+//        PrintWriter out = response.getWriter();
+//        ManagerDao mdao = new ManagerDao();
+//        double value = 0;
+//        int idDiscount = 0;
+//        String Code = "a";
+//        String DiscountCode = request.getParameter("DiscountCode");
+//        if (!DiscountCode.isBlank()) {
+//            List<Discount> listDiscount = mdao.getDiscount();
+//            for (Discount discount : listDiscount) {
+//                String note = discount.getNote();
+//                out.print("<h1>" + note + "</h1>");
+////                if (note.equals(DiscountCode)) {
+////                    idDiscount = discount.getIDDiscount();
+////                    value = discount.getDiscountValue();
+////                }
+//            }
+//        } else{
+//            idDiscount=5;
+//        }
         String price = request.getParameter("Price");
+        int tpi = Integer.parseInt(price);
+//        double tp = Double.parseDouble(tprice);
+        // Total Price
+//        double tp = (numOfDays * numRooms * tpi) * (1 - value);
+        double tp = (numOfDays * numRooms * tpi);
 
-        //price total
-//        int p = Integer.parseInt(price);
-//        double totalPrice = nor * p;
-//        String TotalPrice = Integer.toString(totalPrice);
+        String TotalPrice = String.valueOf(tp);
+        int idDiscount = 1;
+        String IDDiscount ="1";
+        String Note = "Not Yet";
 
-        // Lấy thời gian hiện tại
-        LocalDateTime currentTime = LocalDateTime.now();
+        // check Room
+        String ttRoom = request.getParameter("ttRoom");
+        int ttR = Integer.parseInt(ttRoom);
+        int checkRoom = ttR - numRooms;
+        String cRoom = String.valueOf(checkRoom);
 
-        // Định dạng thời gian theo ý muốn
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        UserDao udao = new UserDao();
 
-        // Ép kiểu thành chuỗi
-        String currentTimeString = currentTime.format(formatter);
+        List<CheckRoomValid> l = udao.checkRoomValid(checkInDateStr, checkOutDateStr);
+        int cr = checkRoom;
+        for (int i = 0; i < l.size(); i++) {
+            if (idrt == l.get(i).getIDRoom()) {
+                cr = l.get(i).getRoomValid();
+            } else {
+                cr = ttR;
+            }
+        }
 
-        // Gửi thời gian hiện tại dưới dạng chuỗi đến trình duyệt
-//        response.getWriter().println("Thời gian hiện tại: " + currentTimeString);
+        if (cr <= 0 || cr < numRooms) {
+            request.setAttribute("dayFail", "Not enough room! " + cr + " rooms available");
+            request.getRequestDispatcher("form_test.jsp").forward(request, response);
+        } else if (checkInDate.isBefore(currentDate) || checkOutDate.isBefore(checkInDate)) {
+            request.setAttribute("dayFail", "Day Invaild!");
+            request.getRequestDispatcher("form_test.jsp").forward(request, response);
+        } else {
+            udao.addBookingDetails(IDAccount, IDDiscount, IDRoomType, FullName, Gender, Email, Phone, adult, child, checkInDateStr, checkOutDateStr, nRooms, TotalPrice, formattedTime, Note);
+            request.setAttribute("booksuccess", "Booking Success");
+            request.getRequestDispatcher("customer_room.jsp").forward(request, response);
+        }
 
-
-
-        int IDDiscount = 1;
-        String Note = "";
-
-//        Booking b = new Booking(IDDiscount,idA, IDDiscount, idRT, ad, ch, CheckIn, CheckOut, nor, totalPrice, currentTimeString, NameRoomType);
-
-//        HttpSession session = request.getSession();
-//        session.setAttribute("booking", b);
-//        response.sendRedirect("form_payment.jsp");
-
-//        request.getRequestDispatcher("loadPayment").forward(request, response);
+//        if (cr <= 0 || cr < numRooms) {
+//            request.setAttribute("dayFail", "Not enough room! " + cr + " rooms available");
+//            request.getRequestDispatcher("form_test.jsp").forward(request, response);
+//        } else if (checkInDate.isBefore(currentDate) || checkOutDate.isBefore(checkInDate)) {
+//            request.setAttribute("dayFail", "Day Invaild!");
+//            request.getRequestDispatcher("form_test.jsp").forward(request, response);
+//        } else {
+//            BookingDetails bkdt = new BookingDetails(idac, idDiscount, idrt, FullName, Gender, Email, Phone, na, nc, checkInDateStr, checkOutDateStr, numRooms, tp, formattedTime, Note);
+//            request.setAttribute("roomName", nameRoomType);
+//            request.setAttribute("price", price);
+//            request.setAttribute("booking", bkdt);
+//            request.getRequestDispatcher("form_payment.jsp").forward(request, response);
+//        }
     }
 
     /**

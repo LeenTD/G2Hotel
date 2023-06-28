@@ -15,7 +15,8 @@
                 <link rel="stylesheet" type="text/css" href="vendors/linericon/style.css">
                 <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
                 <link rel="stylesheet" type="text/css" href="vendors/owl-carousel/owl.carousel.min.css">
-                <link rel="stylesheet" type="text/css" href="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+                <link rel="stylesheet" type="text/css"
+                    href="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
                 <link rel="stylesheet" type="text/css" href="vendors/nice-select/css/nice-select.css">
                 <link rel="stylesheet" type="text/css" href="vendors/owl-carousel/owl.carousel.min.css">
                 <!-- main css -->
@@ -51,7 +52,7 @@
                     <!--================Banner Area =================-->
 
                     <!--================ Accomodation Area  =================-->
-                    <section class="accomodation_area section_gap">
+                    <!-- <section class="accomodation_area section_gap">
                         <div class="container">
                             <div class="section_title text-center">
                                 <h2 class="title_color">Our Room Type</h2>
@@ -59,60 +60,29 @@
                                     extremely fast, </p>
                             </div>
                             <div class="row mb_30">
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="accomodation_item text-center">
-                                        <div class="hotel_img">
-                                            <img src="image/room1.jpg" alt="">
-                                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                                <c:forEach items="${sessionScope.listRoom}" var="r">
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="accomodation_item text-center">
+                                            <div class="hotel_img">
+                                                <img src="image/room1.jpg" alt="">
+                                                <c:if test="${sessionScope.userA != null}">
+                                                    <a class="btn theme_btn button_hover"
+                                                        href="loadRoomToBook?IDRoomType=${r.getIDRoomType()}">Book Now</a>
+                                                </c:if>
+                                                <c:if test="${sessionScope.userA == null}">
+                                                    <a class="btn theme_btn button_hover" href="login.jsp">Book Now</a>
+                                                </c:if>
+                                            </div>
+                                            <a href="#">
+                                                <h4 class="sec_h4">${r.getNameRoomType()}</h4>
+                                            </a>
+                                            <h5>${r.getPrice()}$<small>/night</small></h5>
                                         </div>
-                                        <a href="#">
-                                            <h4 class="sec_h4">Double Deluxe Room</h4>
-                                        </a>
-                                        <h5>${r.getPrice()}$/Night<small>/night</small></h5>
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="accomodation_item text-center">
-                                        <div class="hotel_img">
-                                            <img src="image/room2.jpg" alt="">
-                                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                                        </div>
-                                        <a href="#">
-                                            <h4 class="sec_h4">Single Deluxe Room</h4>
-                                        </a>
-                                        <h5>${r.getPrice()}$/Night<small>/night</small></h5>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="accomodation_item text-center">
-                                        <div class="hotel_img">
-                                            <img src="image/room3.jpg" alt="">
-                                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                                        </div>
-                                        <a href="#">
-                                            <h4 class="sec_h4">Standard Single Room</h4>
-                                        </a>
-                                        <h5>${r.getPrice()}$/Night<small>/night</small></h5>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="accomodation_item text-center">
-                                        <div class="hotel_img">
-                                            <img src="image/room4.jpg" alt="">
-                                            <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                                        </div>
-                                        <a href="#">
-                                            <h4 class="sec_h4">Standard Double Room</h4>
-                                        </a>
-                                        <h5>${r.getPrice()}$/Night<small>/night</small></h5>
-                                    </div>
-                                </div>
-
-
-
+                                </c:forEach>
                             </div>
                         </div>
-                    </section>
+                    </section> -->
                     <!--================ Accomodation Area  =================-->
 
                     <!--================ Facilities Area  =================-->

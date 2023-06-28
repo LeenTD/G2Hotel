@@ -57,7 +57,7 @@ public class ContactServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         String IDAccount = request.getParameter("IDAccount");
         String fullName = request.getParameter("name");
         String email = request.getParameter("email");
@@ -65,12 +65,10 @@ public class ContactServlet extends HttpServlet {
         String massage = request.getParameter("message");
         String status = "Processing";
         UserDao udao = new UserDao();
-        if(IDAccount == null){
-            IDAccount ="0";
-        }
 
-        udao.addContact(IDAccount, fullName, email, phone, massage, status);
-
+        Contact ct = udao.addContact(IDAccount, fullName, email, phone, massage, status);
+        
+        
         request.setAttribute("sendContact", "Send success!");
         request.getRequestDispatcher("customer_contact.jsp").forward(request, response);
     }

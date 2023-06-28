@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.Booking;
+import model.BookingDetails;
 import model.Contact;
 import model.Discount;
 import model.RoomType;
@@ -92,36 +93,147 @@ public class ManagerDao {
         return list;
     }
 
-//    public List<Booking> getBookingDT() {
-//        List<Booking> list = new ArrayList<>();
-//        String query = "select * from Booking";
-//        try {
-//            conn = DBContext.getConnection();//mo ket noi
-//            ps = conn.prepareStatement(query);
-//            rs = ps.executeQuery();
-//            while (rs.next()) {
-//                list.add(new Booking(rs.getInt(1),
-//                        rs.getInt(2),
-//                        rs.getInt(3),
-//                        rs.getInt(4),
-//                        rs.getString(5),
-//                        rs.getString(6),
-//                        rs.getString(7),
-//                        rs.getString(8),
-//                        rs.getInt(9),
-//                        rs.getInt(10),
-//                        rs.getString(11),
-//                        rs.getString(8),
-//                        rs.getInt(9),
-//                        rs.getDouble(10),
-//                        rs.getString(11),
-//                        rs.getString(12)));
-//            }
-//        } catch (Exception e) {
-//        }
-//        return list;
-//    }
-    
+    // get list booking
+    public List<BookingDetails> getBookingDetails() {
+        List<BookingDetails> list = new ArrayList<>();
+        String query = "select * from BookingDetails";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new BookingDetails(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getInt(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getInt(13),
+                        rs.getDouble(14),
+                        rs.getString(15),
+                        rs.getString(16)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<BookingDetails> getBookingDetailsByReceptionist() {
+        List<BookingDetails> list = new ArrayList<>();
+        String query = "SELECT bd.*\n"
+                + "FROM BookingDetails bd\n"
+                + "JOIN Account a ON bd.IDAccount = a.IDAccount\n"
+                + "WHERE a.IDRole = 2 or a.IDRole =3;";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new BookingDetails(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getInt(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getInt(13),
+                        rs.getDouble(14),
+                        rs.getString(15),
+                        rs.getString(16)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    public List<BookingDetails> getBookingDetailsByCustomer() {
+        List<BookingDetails> list = new ArrayList<>();
+        String query = "SELECT bd.*\n"
+                + "FROM BookingDetails bd\n"
+                + "JOIN Account a ON bd.IDAccount = a.IDAccount\n"
+                + "WHERE a.IDRole = 1;";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new BookingDetails(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getInt(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getInt(13),
+                        rs.getDouble(14),
+                        rs.getString(15),
+                        rs.getString(16)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public List<BookingDetails> searchBookingDetails(String Phone) {
+        List<BookingDetails> list = new ArrayList<>();
+        String query = "select * from BookingDetails where Phone = ?";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+            ps.setString(1, Phone);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new BookingDetails(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getInt(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getInt(13),
+                        rs.getDouble(14),
+                        rs.getString(15),
+                        rs.getString(16)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    public void updateBookingStatus(String IDBooking, String BookingStatus) {
+        String query = "update BookingDetails set Note = ? where IDBooking = ?";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+
+            ps.setString(1, BookingStatus);
+            ps.setString(2, IDBooking);
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     // xoa account theo ID (Delete)
     public void deleteBooking(String IDBooking) {
         String query = "delete from Booking where IDBooking = ?";
@@ -340,6 +452,7 @@ public class ManagerDao {
         return null;
     }
 
+    // CONTACT
     public List<Contact> getContact() {
         List<Contact> list = new ArrayList<>();
         String query = "select * from Contact";
@@ -360,4 +473,19 @@ public class ManagerDao {
         }
         return list;
     }
+
+    public void updateContact(String IDContact, String ContactStatus) {
+        String query = "update Contact set ContactStatus = ? where IDContact = ?";
+        try {
+            conn = DBContext.getConnection();//mo ket noi
+            ps = conn.prepareStatement(query);
+
+            ps.setString(1, ContactStatus);
+            ps.setString(2, IDContact);
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
 }

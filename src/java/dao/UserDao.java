@@ -144,17 +144,28 @@ public class UserDao {
         return null;
     }
     
-    public BookingDetails addBookingDetails(String IDBooking, String IDAccount, String FullName,String Gender, String Email, String Phone) {
-        String query = "insert into BookingDetails(IDBooking, IDAccount, BDFullName, BDGender, BDEmail, BDPhone) values(?,?,?,?,?,?)";
+    
+    
+    public BookingDetails addBookingDetails( String IDAccount, String IDDiscount,String IDRoomType, String FullName,String Gender, String Email, String Phone,String Adult, String Child, String CheckIn, String CheckOut, String NumberOfRoom, String TotalPrice, String BookingTime, String Note) {
+        String query = "insert into BookingDetails( IDAccount,  IDDiscount, IDRoomType,  FullName, Gender,  Email,  Phone, Adult,  Child,  Checkin,  Checkout,  NumberOfRooms,  TotalPrice,  BookingTime,  Note) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             conn = DBContext.getConnection();//mo ket noi
             ps = conn.prepareStatement(query);
-            ps.setString(1, IDBooking);
-            ps.setString(2, IDAccount);
-            ps.setString(3, FullName);
-            ps.setString(4, Gender);
-            ps.setString(5, Email);
-            ps.setString(6, Phone);
+            ps.setString(1, IDAccount);
+            ps.setString(2, IDDiscount);
+            ps.setString(3, IDRoomType);
+            ps.setString(4, FullName);
+            ps.setString(5, Gender);
+            ps.setString(6, Email);
+            ps.setString(7, Phone);
+            ps.setString(8, Adult);
+            ps.setString(9, Child);
+            ps.setString(10, CheckIn);
+            ps.setString(11, CheckOut);
+            ps.setString(12, NumberOfRoom);
+            ps.setString(13, TotalPrice);
+            ps.setString(14, BookingTime);
+            ps.setString(15, Note);
 
             ps.executeUpdate();
         } catch (Exception e) {
@@ -219,7 +230,7 @@ public class UserDao {
         List<CheckRoomValid> lcr = new ArrayList<>();
         String query = "SELECT RT.IDRoomType, RT.TotalRoom - COALESCE(SUM(B.NumberOfRooms), 0) AS AvailableRooms\n" +
 "FROM RoomType RT\n" +
-"LEFT JOIN Booking B ON RT.IDRoomType = B.IDRoomType\n" +
+"LEFT JOIN BookingDetails B ON RT.IDRoomType = B.IDRoomType\n" +
 "WHERE (B.Checkin >= ? AND B.Checkin <= ? ) OR\n" +
 "      (B.Checkout >= ? AND B.Checkout <= ? ) OR\n" +
 "      (B.Checkin <= ? AND B.Checkout >= ? )\n" +

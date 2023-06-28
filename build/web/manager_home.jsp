@@ -129,7 +129,29 @@
                         <div class="accomodation_item text-center">
                             <div class="hotel_img">
                                 <img src="image/room1.jpg" alt="">
+                          <h5>$200<small>/night</small></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="accomodation_item text-center">
+                            <div class="hotel_img">
+                                <img src="image/room3.jpg" alt="">
                                 <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                            </div>
+                            <a href="#"><h4 class="sec_h4">Standard Single Room</h4></a>
+                            <h5>$750<small>/night</small></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="accomodation_item text-center">
+                            <div class="hotel_img">
+                                <img src="image/room4.jpg" alt="">
+                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                            </div>
+                            <a href="#"><h4 class="sec_h4">Standard Double Room</h4></a>
+                            <h5>$200<small>/night</small></h5>
+                        </div>
+                    </div>      <a href="#" class="btn theme_btn button_hover">Book Now</a>
                             </div>
                             <a href="#"><h4 class="sec_h4">Double Deluxe Room</h4></a>
                             <h5>$250<small>/night</small></h5>

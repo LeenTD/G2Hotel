@@ -93,6 +93,24 @@
         </section>
         <!--================Breadcrumb Area =================-->
 
+        <!--================Booking Tabel Area =================-->
+        <form action="searchBooking">
+            <div class="container">
+                <div class="row hotel_booking_table">
+                    <div class="col-md-3">
+                        <h2>Search<br> Booking</h2>
+                    </div>
+                    <div class="col-md-9">
+                        <input class="col-md-12" type="text" id="Phone" name="Phone" placeholder="Phone">
+                        <!--<input class="col-md-4" type="text" id="BookingCode" name="BookingCode" placeholder="BookingCode">-->
+                        <div style="margin-top: 5px;">
+                            <input class="book_now_btn button_hover" type="submit" value="Find">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--================Booking Tabel Area  =================-->
 
         <!--Table Start-->
         <table style="margin-top: 20px;margin-bottom: 20px;" id="booking">
@@ -101,40 +119,54 @@
                     <th>ID Booking</th>
                     <th>ID Account</th>
                     <th>ID Room</th>
+
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+
                     <th>Adult</th>
                     <th>Child</th>
                     <th>Number of room</th>
                     <th>Check In</th>
                     <th>Check Out</th>
                     <th>Booking Time</th>
-                    <th>Price</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
                     <th>View Details</th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${sessionScope.listB}" var="b">
+                <c:forEach items="${requestScope.listB}" var="b">
                     <tr>
-                        <form action="loadBookingDetails">
-                        <input type="hidden" class="form-control mt-1" id="IDBooking" name="IDBooking" value="${b.getIDBooking()}">
-                        <input type="hidden" class="form-control mt-1" id="IDAccount" name="IDAccount" value="${b.getIDAccount()}">
-                        <td>${b.getIDBooking()}</td>
-                        <td>${b.getIDAccount()}</td>
-                        <td>${b.getIDRoomType()}</td>
-                        <td>${b.getAdult()}</td>
-                        <td>${b.getChild()}</td>
-                        <td>${b.getNumberOfRooms()}</td>
-                        <td>${b.getCheckIn()}</td>
-                        <td>${b.getCheckOut()}</td>
-                        <td>${b.getBookingTime()}</td> 
-                        <td>${b.getTotalPrice()}</td>
-                        <td><button>View Details</button></td>
+                <form action="loadBookingDetails">
+                    <input type="hidden" class="form-control mt-1" id="IDBooking" name="IDBooking" value="${b.getIDBooking()}">
+                    <input type="hidden" class="form-control mt-1" id="IDAccount" name="IDAccount" value="${b.getIDAccount()}">
+                    <td>${b.getIDBooking()}</td>
+                    <td>${b.getIDAccount()}</td>
+                    <td>${b.getIDRoomType()}</td>
+
+                    <td>${b.getFullName()}</td>
+                    <td>${b.getGender()}</td>
+                    <td>${b.getEmail()}</td>
+                    <td>${b.getPhone()}</td>
+
+                    <td>${b.getAdult()}</td>
+                    <td>${b.getChild()}</td>
+                    <td>${b.getNumberOfRooms()}</td>
+                    <td>${b.getCheckIn()}</td>
+                    <td>${b.getCheckOut()}</td>
+                    <td>${b.getBookingTime()}</td> 
+                    <td>${b.getTotalPrice()}</td>
+                    <td>${b.getNote()}</td>
+                    <td><button>View Details</button></td>
                 </form>
             </tr>
         </c:forEach>
     </tbody>
 
 </table>
-<!--Table End-->
+        <!--Table End-->
 
 
 <%@include file="/includes/footer.jsp" %>

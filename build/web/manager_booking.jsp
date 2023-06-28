@@ -77,15 +77,39 @@
         </section>
         <!--================Breadcrumb Area =================-->
 
-        <!--        public String IDBooking;
-            public String IDCustomer;
-            public String IDArrival;
-            public String room_id;
-            public String booking_date;
-            public String payment_status;
-            public String booking_status;
-            public String note;
-            public String total_price;-->
+        <!--================Search Tabel Area =================-->
+
+        <h2 style="color: green; text-align: center;" >${bookingStatusMess} </h2>
+        <h2 style="color: red; text-align: center;" >${searchMess} </h2>
+        <form action="searchBooking" method="get">
+            <div class="container">
+                <div class="row hotel_booking_table">
+                    <div class="col-md-3">
+                        <h2 style="color: black;">Search<br> Booking</h2>
+                    </div>
+                    <div class="col-md-9">
+                        <input class="col-md-12" type="text" id="Phone" name="Phone" placeholder="Phone">
+                        <!--<input class="col-md-4" type="text" id="BookingCode" name="BookingCode" placeholder="BookingCode">-->
+                        <div style="margin-top: 5px;">
+                            <input class="book_now_btn button_hover" type="submit" value="Find">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--================Search Booking Area  =================-->
+
+<!--================Filter Area  =================-->
+        <div class="container">
+            <div class="page-cover text-center">
+                <h2 class="page-cover-tittle" style="color: black;">Booking By</h2>
+                <ol class="breadcrumb" >
+                    <li><a href="showBookingRepceptionist" style="color: black;">Receptionist</a></li>
+                    <li><a href="showBookingCustomer" style="color: black;">Customer</a></li>
+                </ol>
+            </div>
+        </div>
+<!--================Filter Tabel Area  =================-->
 
         <!--Table Start-->
         <table style="margin-top: 20px;margin-bottom: 20px;" id="booking">
@@ -94,51 +118,72 @@
                     <th>ID Booking</th>
                     <th>ID Account</th>
                     <th>ID Room</th>
+
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+
                     <th>Adult</th>
                     <th>Child</th>
                     <th>Number of room</th>
                     <th>Check In</th>
                     <th>Check Out</th>
                     <th>Booking Time</th>
-                    <th>Price</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <!--<th>View Details</th>-->
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${sessionScope.listB}" var="b">
+                <c:forEach items="${requestScope.listB}" var="b">
                     <tr>
-                        <td>${b.getIDBooking()}</td>
-                        <td>${b.getIDAccount()}</td>
-                        <td>${b.getIDRoomType()}</td>
-                        <td>${b.getAdult()}</td>
-                        <td>${b.getChild()}</td>
-                        <td>${b.getNumberOfRooms()}</td>
-                        <td>${b.getCheckIn()}</td>
-                        <td>${b.getCheckOut()}</td>
-                        <td>${b.getBookingTime()}</td> 
-                        <td>${b.getTotalPrice()}</td>
+                <form action="updateBookingStatus" method="get">
+                    <input type="hidden" class="form-control mt-1" id="IDBooking" name="IDBooking" value="${b.getIDBooking()}">
+                    <input type="hidden" class="form-control mt-1" id="IDAccount" name="IDAccount" value="${b.getIDAccount()}">
+                    <input type="hidden" class="form-control mt-1" id="Status" name="Status" value="Susscess">
+                    <td>${b.getIDBooking()}</td>
+                    <td>${b.getIDAccount()}</td>
+                    <td>${b.getIDRoomType()}</td>
 
-                    </tr>
-                </c:forEach>
-            </tbody>
+                    <td>${b.getFullName()}</td>
+                    <td>${b.getGender()}</td>
+                    <td>${b.getEmail()}</td>
+                    <td>${b.getPhone()}</td>
 
-        </table>
-        <!--Table End-->
+                    <td>${b.getAdult()}</td>
+                    <td>${b.getChild()}</td>
+                    <td>${b.getNumberOfRooms()}</td>
+                    <td>${b.getCheckIn()}</td>
+                    <td>${b.getCheckOut()}</td>
+                    <td>${b.getBookingTime()}</td> 
+                    <td>${b.getTotalPrice()}</td>
+                    <td><input type="submit" value="${b.getNote()}"></a></td>
+                    <!--</form>-->
+                    <!--<td><button>View Details</button></td>-->
+                </form>
+            </tr>
+        </c:forEach>
+    </tbody>
 
-        <%@include file="/includes/footer.jsp" %>
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-        <script src="js/jquery.ajaxchimp.min.js"></script>
-        <script src="js/mail-script.js"></script>
-        <script src="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
-        <script src="vendors/nice-select/js/jquery.nice-select.js"></script>
-        <script src="js/mail-script.js"></script>
-        <script src="js/stellar.js"></script>
-        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
-        <script src="js/custom.js"></script>
-    </body>
+</table>
+<!--Table End-->
+
+<%@include file="/includes/footer.jsp" %>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/mail-script.js"></script>
+<script src="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="vendors/nice-select/js/jquery.nice-select.js"></script>
+<script src="js/mail-script.js"></script>
+<script src="js/stellar.js"></script>
+<script src="vendors/lightbox/simpleLightbox.min.js"></script>
+<script src="js/custom.js"></script>
+</body>
 </html>
 

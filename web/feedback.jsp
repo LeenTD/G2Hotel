@@ -1,23 +1,31 @@
-<%-- 
-    Document   : feedback
-    Created on : Jun 10, 2023, 11:25:12 AM
-    Author     : admin
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Đánh giá và phản hồi</title>
+        <link rel="icon" href="image/favicon.png" type="image/png">
+        <title>G2 Hotel</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css">
+        
+        
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="vendors/linericon/style.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css">
+        <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+        <!-- main css -->
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/responsive.css">
         <style>
             body {
                 background-color: #f8f9fa;
             }
 
-            .container {
+            .containerfb {
                 max-width: 500px;
                 margin: 0 auto;
                 padding: 20px;
@@ -85,7 +93,6 @@
             }
 
             .comment {
-                display: flex;
                 align-items: flex-start;
                 margin-bottom: 10px;
             }
@@ -109,6 +116,7 @@
                 border: 1px solid #ccc;
                 padding: 10px;
                 border-radius: 5px;
+                display: flex;
             }
 
             .comment-name {
@@ -123,13 +131,52 @@
             .comment-text {
                 margin-bottom: 0;
             }
+
+            .comment-reply {
+                display: flex;
+                margin-top: 10px;
+                padding-left: 70px;
+            }
+
+            .comment-reply-content {
+                background-color: #f5f5f5;
+                padding: 15px;
+                border-radius: 15px;
+                width: 380px;
+            }
+
+            .comment-reply-content .comment-name {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            .reply-text {
+                margin: 0;
+            }
+
         </style>
     </head>
     <body>
-        <div class="container">
+                <%@include file="/includes/header.jsp" %>
+        <!--================Breadcrumb Area =================-->
+        <section class="breadcrumb_area">
+            <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+            <div class="container">
+                <div class="page-cover text-center">
+                    <h2 class="page-cover-tittle">Feedback</h2>
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active">Contact Us</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        <!--================Breadcrumb Area =================-->
+        <div class="containerfb">
             <h1>Đánh giá và phản hồi</h1>
 
-            <form>
+            <form action="feedback" method="POST" id="feedback-form">
+
                 <div class="mb-3">
                     <label for="rating" class="form-label">Đánh giá:</label>
                     <div class="rating">
@@ -143,37 +190,41 @@
 
                 <div class="mb-3">
                     <label for="feedback" class="form-label">Feedback</label>
-                    <textarea class="form-control" id="feedback" rows="5"></textarea>
+                    <textarea class="form-control" id="feedback" rows="5" name="content"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Send</button>
+                <button type="submit" class="btn btn-primary" id="submit-btn">Send</button>
             </form>
 
             <div class="comments">
                 <h2>Các đánh giá khác:</h2>
-                <div class="comment">
-                    <div class="comment-avatar">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA9jyeynlFwVGBRreQHauSuqrkhoKGk7ytIw8OpgZbNA&s" alt="Avatar">
-                    </div>
-                    <div class="comment-content">
-                        <div class="comment-name">Người dùng 1</div>
-                        <div class="comment-rating">
-                            <span class="badge bg-primary">4 sao</span>
+                <c:forEach var="feedback" items="${sessionScope.LIST_EXIST_FEEDBACK}">
+                    <div class="comment">
+
+                        <div class="comment-content">
+                            <div class="comment-avatar">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA9jyeynlFwVGBRreQHauSuqrkhoKGk7ytIw8OpgZbNA&s" alt="Avatar">
+                            </div>
+                            <div>
+                                <div class="comment-name">${feedback.accountName}</div>
+                                <div class="comment-rating">
+                                    <span class="badge bg-primary">${feedback.rating} sao</span>
+                                </div>
+                                <p class="comment-text">${feedback.content}</p>
+                            </div>
                         </div>
-                        <p class="comment-text">Dịch vụ rất tốt, tôi rất hài lòng.</p>
+                        <!-- Show reply comment if it exists -->
+                       
+                        <c:if test="${feedback.replyComment != null}">
+                            <div class="comment-reply">
+                                <div class="comment-reply-content">
+                                    <div class="comment-name">Admin</div>
+                                    <p class="reply-text">${feedback.replyComment}</p>
+                                </div>
+                            </div>
+                        </c:if>
                     </div>
-                </div>
-                <div class="comment">
-                    <div class="comment-avatar">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA9jyeynlFwVGBRreQHauSuqrkhoKGk7ytIw8OpgZbNA&s" alt="Avatar">
-                    </div>
-                    <div class="comment-content">
-                        <div class="comment-name">Người dùng 2</div>
-                        <div class="comment-rating">
-                            <span class="badge bg-primary">5 sao</span>
-                        </div>
-                        <p class="comment-text">Dịch vụ chất lượng, nhân viên thân thiện.</p>
-                    </div>
-                </div>
+                </c:forEach>
+
             </div>
         </div>               
         <a href="faq.jsp"><input type="button" id="fb" name="fb" value="Back"></a>
@@ -181,6 +232,21 @@
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+        <script>
+            document.getElementById("submit-btn").addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent the form from submitting immediately
+
+                var selectedRating = document.querySelector('input[name="rating"]:checked');
+                if (selectedRating) {
+                    var ratingValue = selectedRating.value;
+                    // You can perform further actions with the rating value, such as sending it to the servlet via AJAX or modifying the form data before submission.
+                    console.log("Selected Rating:", ratingValue);
+                    document.getElementById("feedback-form").submit(); // Submit the form after capturing the rating value
+                } else {
+                    // Handle the case where no rating is selected
+                    console.log("Please select a rating.");
+                }
+            });
+        </script>
     </body>
 </html>
-
