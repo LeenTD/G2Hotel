@@ -93,6 +93,7 @@
         </section>
         <!--================Breadcrumb Area =================-->
 
+<<<<<<< HEAD
         <!--================Booking Tabel Area =================-->
         <form action="searchBooking">
             <div class="container">
@@ -111,6 +112,8 @@
             </div>
         </form>
         <!--================Booking Tabel Area  =================-->
+=======
+>>>>>>> haidang
 
         <!--Table Start-->
         <table style="margin-top: 20px;margin-bottom: 20px;" id="booking">
@@ -119,24 +122,32 @@
                     <th>ID Booking</th>
                     <th>ID Account</th>
                     <th>ID Room</th>
+<<<<<<< HEAD
 
                     <th>Full Name</th>
                     <th>Gender</th>
                     <th>Phone</th>
                     <th>Email</th>
 
+=======
+>>>>>>> haidang
                     <th>Adult</th>
                     <th>Child</th>
                     <th>Number of room</th>
                     <th>Check In</th>
                     <th>Check Out</th>
                     <th>Booking Time</th>
+<<<<<<< HEAD
                     <th>Total Price</th>
                     <th>Status</th>
+=======
+                    <th>Price</th>
+>>>>>>> haidang
                     <th>View Details</th>
                 </tr>
             </thead>
             <tbody>
+<<<<<<< HEAD
                 <c:forEach items="${requestScope.listB}" var="b">
                     <tr>
                 <form action="loadBookingDetails">
@@ -160,13 +171,35 @@
                     <td>${b.getTotalPrice()}</td>
                     <td>${b.getNote()}</td>
                     <td><button>View Details</button></td>
+=======
+                <c:forEach items="${sessionScope.listB}" var="b">
+                    <tr>
+                        <form action="loadBookingDetails">
+                        <input type="hidden" class="form-control mt-1" id="IDBooking" name="IDBooking" value="${b.getIDBooking()}">
+                        <input type="hidden" class="form-control mt-1" id="IDAccount" name="IDAccount" value="${b.getIDAccount()}">
+                        <td>${b.getIDBooking()}</td>
+                        <td>${b.getIDAccount()}</td>
+                        <td>${b.getIDRoomType()}</td>
+                        <td>${b.getAdult()}</td>
+                        <td>${b.getChild()}</td>
+                        <td>${b.getNumberOfRooms()}</td>
+                        <td>${b.getCheckIn()}</td>
+                        <td>${b.getCheckOut()}</td>
+                        <td>${b.getBookingTime()}</td> 
+                        <td>${b.getTotalPrice()}</td>
+                        <td><button>View Details</button></td>
+>>>>>>> haidang
                 </form>
             </tr>
         </c:forEach>
     </tbody>
 
 </table>
+<<<<<<< HEAD
         <!--Table End-->
+=======
+<!--Table End-->
+>>>>>>> haidang
 
 
 <%@include file="/includes/footer.jsp" %>

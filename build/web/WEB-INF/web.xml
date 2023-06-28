@@ -101,6 +101,7 @@
         <servlet-class>controller.ShowContactServlet</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
         <servlet-name>UpdateContactServlet</servlet-name>
         <servlet-class>controller.UpdateContactServlet</servlet-class>
     </servlet>
@@ -132,6 +133,19 @@
         <servlet-name>ReplyFeedbackServlet</servlet-name>
         <servlet-class>controller.ReplyFeedbackServlet</servlet-class>
     </servlet>
+=======
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>controller.ajaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddTransactionInfo</servlet-name>
+        <servlet-class>controller.AddTransactionInfo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/vnpayajax/*</url-pattern>
+    </servlet-mapping>
+>>>>>>> haidang
     <servlet-mapping>
         <servlet-name>G2HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -233,6 +247,7 @@
         <url-pattern>/showContact</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< HEAD
         <servlet-name>UpdateContactServlet</servlet-name>
         <url-pattern>/updateContact</url-pattern>
     </servlet-mapping>
@@ -263,6 +278,14 @@
     <servlet-mapping>
         <servlet-name>ReplyFeedbackServlet</servlet-name>
         <url-pattern>/ReplyFeedback</url-pattern>
+=======
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/ajaxServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddTransactionInfo</servlet-name>
+        <url-pattern>/AddTransactionInfo</url-pattern>
+>>>>>>> haidang
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>customer_home.jsp</welcome-file>

@@ -46,6 +46,7 @@
         <!--================Breadcrumb Area =================-->
 
         <!--================Contact Area =================-->
+<<<<<<< HEAD
         <h2 style="color: green; text-align: center;" >${contactMess} </h2>
         
         <section class="contact_area section_gap">
@@ -57,6 +58,16 @@
                             <form class="row contact_form" action="updateContact" method="get" >
                                 <input type="hidden" id="IDContact" name="IDContact" value="${listContact.getIDContact()}">
                                 <input type="hidden" id="ContactStatus" name="ContactStatus" value="Done">
+=======
+        <section class="contact_area section_gap">
+            <div class="container"><h2>List Contact</h2>
+                <div class="row">
+                    
+                    <c:forEach items="${requestScope.listC}" var="listContact">
+
+                        <div class="col-md-12">
+                            <form class="row contact_form" action="#" method="get" >
+>>>>>>> haidang
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="name" name="name" value="${listContact.getFullName()}" readonly>

@@ -22,7 +22,11 @@
             <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                 <ul class="nav navbar-nav menu_nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="manager_home.jsp">Home</a></li> 
+<<<<<<< HEAD
                     <li class="nav-item"><a class="nav-link" href="showBooking">Manage bookings</a></li>
+=======
+                    <li class="nav-item"><a class="nav-link" href="showBookingRepceptionist">Manage bookings</a></li>
+>>>>>>> haidang
                     <li class="nav-item"><a class="nav-link" href="showRoomCustomer">Room</a></li>
                     <li class="nav-item"><a class="nav-link" href="showContact">FAQ</a></li>
                     <c:if test="${sessionScope.userA != null}"> 
