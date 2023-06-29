@@ -34,7 +34,7 @@
                     <li class="nav-item"><a class="nav-link" href="customer_services.jsp">Services</a></li>
 
 
-                    <li class="nav-item"><a class="nav-link" href="feedback.jsp">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="loadFeedback">FAQ</a></li>
                     <li class="nav-item"><a class="nav-link" href="customer_contact.jsp">Contact</a></li>
 
                     <!-- <div class="shopping" style="position: relative;

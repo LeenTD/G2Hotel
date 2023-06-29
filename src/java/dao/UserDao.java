@@ -4,11 +4,10 @@
  */
 package dao;
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import dbcontext.DBContext;
 //import java.io.IOException;
 import java.sql.Connection;
-//import java.sql.Date;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,11 +17,8 @@ import model.Booking;
 import model.BookingDetails;
 import model.CheckRoomValid;
 import model.Contact;
-import model.TransactionInfor;
 import model.User;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 /**
  *
  * @author admin
@@ -58,25 +54,6 @@ public class UserDao {
         }
         return null;
     }
-   
-    
-   public TransactionInfor addTransaction(String IDTransaction, String IDBooking, String IDPayment,String TransInfo, String TransTime, String TransStatus){
-        String query = "insert into TransactionInfor(IDTransaction,IDBooking,IDPayment,TransInfo,TransTime,TransStatus) values(?,?,?,?,?,?)";
-        
-        try {
-            conn = DBContext.getConnection();//mo ket noi
-            ps = conn.prepareStatement(query);
-            ps.setString(1, IDTransaction);
-            ps.setString(2, IDBooking);
-            ps.setInt(3, 1);
-            ps.setString(4, TransInfo);
-            ps.setString(5,  TransTime);
-            ps.setString(6, TransStatus);
-            ps.executeUpdate();
-        } catch (Exception e) {
-        }
-        return null;
-   }
 
     public User checkAccountExist(String user) {
         String query = "select * from Account where UserName = ?";
@@ -143,33 +120,33 @@ public class UserDao {
         }
     }
 
-    // them booking moi (booking)
-    public Booking addBooking(String IDAccount, String IDDiscount, String IDRoomType, String Adult, String Child, String CheckIn, String CheckOut, String NumberOfRoom, String TotalPrice, String BookingTime, String Note) {
-        String query = "insert into Booking(IDAccount,IDDiscount,IDRoomType,Adult,Child,Checkin,Checkout,NumberOfRooms,TotalPrice,BookingTime,Note) values(?,?,?,?,?,?,?,?,?,?,?)";
-        try {
-            conn = DBContext.getConnection();//mo ket noi
-            ps = conn.prepareStatement(query);
-            ps.setString(1, IDAccount);
-            ps.setString(2, IDDiscount);
-            ps.setString(3, IDRoomType);
-            ps.setString(4, Adult);
-            ps.setString(5, Child);
-            ps.setString(6, CheckIn);
-            ps.setString(7, CheckOut);
-            ps.setString(8, NumberOfRoom);
-            ps.setString(9, TotalPrice);
-            ps.setString(10, BookingTime);
-            ps.setString(11, Note);
-
-            ps.executeUpdate();
-        } catch (Exception e) {
-        }
-        return null;
-    }
+//    // them booking moi (booking)
+//    public Booking addBooking(String IDAccount, String IDDiscount, String IDRoomType, String Adult, String Child, String CheckIn, String CheckOut, String NumberOfRoom, String TotalPrice, String BookingTime, String Note) {
+//        String query = "insert into Booking(IDAccount,IDDiscount,IDRoomType,Adult,Child,Checkin,Checkout,NumberOfRooms,TotalPrice,BookingTime,Note) values(?,?,?,?,?,?,?,?,?,?,?)";
+//        try {
+//            conn = DBContext.getConnection();//mo ket noi
+//            ps = conn.prepareStatement(query);
+//            ps.setString(1, IDAccount);
+//            ps.setString(2, IDDiscount);
+//            ps.setString(3, IDRoomType);
+//            ps.setString(4, Adult);
+//            ps.setString(5, Child);
+//            ps.setString(6, CheckIn);
+//            ps.setString(7, CheckOut);
+//            ps.setString(8, NumberOfRoom);
+//            ps.setString(9, TotalPrice);
+//            ps.setString(10, BookingTime);
+//            ps.setString(11, Note);
+//
+//            ps.executeUpdate();
+//        } catch (Exception e) {
+//        }
+//        return null;
+//    }
+//    
     
     
-    
-    public BookingDetails addBookingDetails( String IDAccount, String IDDiscount,String IDRoomType, String FullName,String Gender, String Email, String Phone,String Adult, String Child, String CheckIn, String CheckOut, String NumberOfRoom, String TotalPrice, String BookingTime, String Note) {
+    public BookingDetails addBookingDetails(String IDAccount, String IDDiscount,String IDRoomType, String FullName,String Gender, String Email, String Phone,String Adult, String Child, String CheckIn, String CheckOut, String NumberOfRoom, String TotalPrice, String BookingTime, String Note) {
         String query = "insert into BookingDetails( IDAccount,  IDDiscount, IDRoomType,  FullName, Gender,  Email,  Phone, Adult,  Child,  Checkin,  Checkout,  NumberOfRooms,  TotalPrice,  BookingTime,  Note) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
             conn = DBContext.getConnection();//mo ket noi
@@ -196,24 +173,24 @@ public class UserDao {
         return null;
     }
 
-// chinh sua thong tin account (Update)
-    public void updateBooking(String IDBooking, String Adult, String Child, String CheckIn, String CheckOut, String NumberOfRoom, String Note) {
-        String query = "update Booking set Adult=?, Child=?, CheckIn=?, CheckOut=?, NumberOfRoom=? , Note=? where IDBooking = ?";
-        try {
-            conn = DBContext.getConnection();//mo ket noi
-            ps = conn.prepareStatement(query);
-            ps.setString(1, Adult);
-            ps.setString(2, Child);
-            ps.setString(3, CheckIn);
-            ps.setString(4, CheckOut);
-            ps.setString(5, NumberOfRoom);
-            ps.setString(6, Note);
-            ps.setString(7, IDBooking);
-
-            ps.executeUpdate();
-        } catch (Exception e) {
-        }
-    }
+//// chinh sua thong tin account (Update)
+//    public void updateBooking(String IDBooking, String Adult, String Child, String CheckIn, String CheckOut, String NumberOfRoom, String Note) {
+//        String query = "update Booking set Adult=?, Child=?, CheckIn=?, CheckOut=?, NumberOfRoom=? , Note=? where IDBooking = ?";
+//        try {
+//            conn = DBContext.getConnection();//mo ket noi
+//            ps = conn.prepareStatement(query);
+//            ps.setString(1, Adult);
+//            ps.setString(2, Child);
+//            ps.setString(3, CheckIn);
+//            ps.setString(4, CheckOut);
+//            ps.setString(5, NumberOfRoom);
+//            ps.setString(6, Note);
+//            ps.setString(7, IDBooking);
+//
+//            ps.executeUpdate();
+//        } catch (Exception e) {
+//        }
+//    }
 
     public boolean isRoomAvailable(int IDRoomType, Date CheckIn, Date CheckOut) {
         try ( Connection conn = DBContext.getConnection()) {

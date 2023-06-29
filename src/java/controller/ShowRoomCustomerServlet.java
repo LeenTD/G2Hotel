@@ -67,8 +67,8 @@ public class ShowRoomCustomerServlet extends HttpServlet {
         ManagerDao managerDao = new ManagerDao();
         List<RoomType> roomTypeList = managerDao.getRoomType();
 
-        HttpSession session = request.getSession();
-        session.setAttribute("listRoom", roomTypeList);
+//        HttpSession session = request.getSession();
+        request.setAttribute("listRoom", roomTypeList);
         request.getRequestDispatcher("customer_room.jsp").forward(request, response);
 
     }

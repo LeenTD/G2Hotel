@@ -65,7 +65,7 @@
                 
                 <div class="row g-4">
                     <!--================Database (Khi nao co database thi dung)=================-->  
-                    <c:forEach items="${sessionScope.listRoom}" var="r">
+                    <c:forEach items="${requestScope.listRoom}" var="r">
 
                         <div class="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.1s">
                             <div class="room-item shadow rounded overflow-hidden">

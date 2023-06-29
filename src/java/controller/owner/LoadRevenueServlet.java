@@ -2,20 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.owner;
 
+import dao.OwnerDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.BookingByDate;
 
 /**
  *
- * @author ACER
+ * @author admin
  */
-public class AddTransactionInfo extends HttpServlet {
+public class LoadRevenueServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,19 +31,27 @@ public class AddTransactionInfo extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddTransactionInfo</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddTransactionInfo at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        PrintWriter out = response.getWriter();
+
+        OwnerDao odao = new OwnerDao();
+        int totalRevenue = odao.getTotalRevenue();
+        int todayRevenue = odao.getTodayRevenue();
+        int numberBooking = odao.getNumberOfBooking();
+        int numberOfUser = odao.getNumberOfUser();
+        String topNameRoomType = odao.getTopNameRoomType();
+        int numberOfEmployee = odao.getNumberOfEmployee();
+        
+        List<BookingByDate> listBookingByDate = odao.getTopBookingByDay();
+        
+        request.setAttribute("listBookingByDate", listBookingByDate);
+        request.setAttribute("numberOfEmployee", numberOfEmployee);
+        request.setAttribute("topNameRoomType", topNameRoomType);
+        request.setAttribute("numberOfUser", numberOfUser);
+        request.setAttribute("numberBooking", numberBooking);
+        request.setAttribute("todayRevenue", todayRevenue);
+        request.setAttribute("totalRevenue", totalRevenue);
+        request.getRequestDispatcher("owner_index.jsp").forward(request, response);
+//        out.print("<h1>" + listBookingByDate.toString()+"</h1>");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

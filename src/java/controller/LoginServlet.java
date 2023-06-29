@@ -45,9 +45,6 @@ public class LoginServlet extends HttpServlet {
         if (user != null) {
             HttpSession session = request.getSession();
             if (user.getIDRole() == 1) {
-                List<Feedback> listFeedback = feedbackDAO.getLastFiveFeedback();
-                session.setAttribute("LIST_EXIST_FEEDBACK", listFeedback);
-                
                 session.setAttribute("userA", user);
                 response.sendRedirect("customer_home.jsp");
             } else if (user.getIDRole() == 2 || user.getIDRole() == 3) {
@@ -56,6 +53,9 @@ public class LoginServlet extends HttpServlet {
                 
                 session.setAttribute("userA", user);
                 response.sendRedirect("manager_home.jsp");
+            } else if(user.getIDRole() == 4) {
+                session.setAttribute("userA", user);
+                request.getRequestDispatcher("loadRevenue").forward(request, response);
             }
         } else {
             request.setAttribute("loginFail", "Username or password incorrect");

@@ -29,11 +29,7 @@
 
     </head>
     <body>
-<<<<<<< HEAD
         <%@include file="/includes/receptionist_header.jsp" %>
-=======
-        <%@include file="/includes/header.jsp" %>
->>>>>>> haidang
         <!--================Breadcrumb Area =================-->
         <section class="breadcrumb_area">
             <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>

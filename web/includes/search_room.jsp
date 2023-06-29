@@ -2,7 +2,7 @@
 <html lang="en">
     <body class="">
 
-        <form action="availableRooms.jsp" method="post" onsubmit="return validateForm()" name="myForm">
+        <form action="checkRoomValid" method="get" onsubmit="return validateForm()" name="myForm">
             <div class=" row maindiv bg-secondary px-4, form_day">
 
                 <div class="col-4">

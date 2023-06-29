@@ -4,27 +4,21 @@
  */
 package controller;
 
-import dao.ManagerDao;
-import dao.UserDao;
+import dao.FeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.BookingDetails;
-import model.CheckRoomValid;
+import model.Feedback;
 
 /**
  *
  * @author admin
  */
-public class BookingRoomServlet extends HttpServlet {
+public class LoadFeedbackServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +37,10 @@ public class BookingRoomServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BookingRoomServlet</title>");
+            out.println("<title>Servlet LoadFeedbackServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BookingRoomServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LoadFeedbackServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,41 +58,10 @@ public class BookingRoomServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        UserDao udao = new UserDao();
-        response.setContentType("text/html");
-        //bookingtime
-        LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String formattedTime = currentTime.format(formatter);
-
-        String IDAccount = request.getParameter("IDAccount");
-        String IDRoomType = request.getParameter("IDRoomType");
-        String IDDiscount = request.getParameter("IDDiscount");
-
-        String FullName = request.getParameter("FullName");
-        String Gender = request.getParameter("Gender");
-        String Email = request.getParameter("Email");
-        String Phone = request.getParameter("Phone");
-
-        String adult = request.getParameter("Adult");
-        String child = request.getParameter("Child");
-        // get total day
-        String checkInDateStr = request.getParameter("checkInDate");
-        String checkOutDateStr = request.getParameter("checkOutDate");
-
-        String nRooms = request.getParameter("numRooms");
-
-        String TotalPrice = request.getParameter("TotalPrice");
-        double totalPrice = Double.parseDouble(TotalPrice);
-        int roundedTp = (int) Math.ceil(totalPrice);
-        String roundedTpString = Integer.toString(roundedTp);
-        
-        String Note = "Not Yet";
-
-        udao.addBookingDetails(IDAccount, IDDiscount, IDRoomType, FullName, Gender, Email, Phone, adult, child, checkInDateStr, checkOutDateStr, nRooms, roundedTpString, formattedTime, Note);
-        request.setAttribute("booksuccess", "Booking Success");
-        request.getRequestDispatcher("showRoomCustomer").forward(request, response);
+        FeedbackDAO fbDao = new FeedbackDAO();
+        List<Feedback> listFB = fbDao.getAllFeedback();
+        request.setAttribute("LIST_EXIST_FEEDBACK", listFB);
+        request.getRequestDispatcher("feedback.jsp").forward(request, response);
     }
 
     /**
