@@ -2,30 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.owner;
 
-import dao.ManagerDao;
-import dao.UserDao;
+import dao.OwnerDao;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Booking;
-import model.CheckRoomValid;
-import model.RoomType;
+import model.BookingByDate;
 
 /**
  *
  * @author admin
  */
-public class CheckRoomValidServlet extends HttpServlet {
+public class LoadRevenueServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,19 +31,27 @@ public class CheckRoomValidServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CheckRoomValidServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CheckRoomValidServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        PrintWriter out = response.getWriter();
+
+        OwnerDao odao = new OwnerDao();
+        int totalRevenue = odao.getTotalRevenue();
+        int todayRevenue = odao.getTodayRevenue();
+        int numberBooking = odao.getNumberOfBooking();
+        int numberOfUser = odao.getNumberOfUser();
+        String topNameRoomType = odao.getTopNameRoomType();
+        int numberOfEmployee = odao.getNumberOfEmployee();
+        
+        List<BookingByDate> listBookingByDate = odao.getTopBookingByDay();
+        
+        request.setAttribute("listBookingByDate", listBookingByDate);
+        request.setAttribute("numberOfEmployee", numberOfEmployee);
+        request.setAttribute("topNameRoomType", topNameRoomType);
+        request.setAttribute("numberOfUser", numberOfUser);
+        request.setAttribute("numberBooking", numberBooking);
+        request.setAttribute("todayRevenue", todayRevenue);
+        request.setAttribute("totalRevenue", totalRevenue);
+        request.getRequestDispatcher("owner_index.jsp").forward(request, response);
+//        out.print("<h1>" + listBookingByDate.toString()+"</h1>");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -65,27 +66,7 @@ public class CheckRoomValidServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        response.setContentType("text/html");
-        String checkInDateStr = request.getParameter("check_in");
-        String checkOutDateStr = request.getParameter("check_out");
-
-        UserDao udao = new UserDao();
-        ManagerDao mDao = new ManagerDao();
-        
-        List<CheckRoomValid> l = udao.checkRoomValid(checkInDateStr, checkOutDateStr);
-        List<RoomType> listSearchRoomType = mDao.getRoomType();
-        
-
-        for (int i = 0; i < l.size(); i++) {
-            if (l.get(i).getRoomValid() == 0) {
-                listSearchRoomType.remove(i);
-            }
-        }
-       
-        request.setAttribute("listRoom", listSearchRoomType);
-        request.getRequestDispatcher("customer_room.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**

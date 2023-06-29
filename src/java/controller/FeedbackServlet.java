@@ -37,7 +37,7 @@ public class FeedbackServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+                
         String rating = request.getParameter("rating");
         String content = request.getParameter("content");
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -53,7 +53,7 @@ public class FeedbackServlet extends HttpServlet {
             if (result) {
                 url = "feedback.jsp";
                 List<Feedback> listFeedback = feedbackDAO.getLastFiveFeedback();
-                session.setAttribute("LIST_EXIST_FEEDBACK", listFeedback);
+                request.setAttribute("LIST_EXIST_FEEDBACK", listFeedback);
             }
         } catch (Exception e) {
             e.printStackTrace();

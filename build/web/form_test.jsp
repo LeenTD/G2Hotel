@@ -71,11 +71,11 @@
         </section>
         <!--================Breadcrumb Area =================-->
         <br>
-        <h2 style="color: red; text-align: center;">${dayFail} </h2>
+        <h2 style="color: red; text-align: center;">${messFail} </h2>
 
         <!--onsubmit="return validateForm()"-->
 
-        <form action="bookingRoom" id="bookingForm" class="col-md-9 m-auto" name="myForm" method="get"
+        <form action="confirmInformation" id="bookingForm" class="col-md-9 m-auto" name="myForm" method="get"
               role="form">
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
@@ -161,11 +161,6 @@
                     <label for="numRooms">Quantity:</label><br>
                     <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value=""
                            min="1" onchange="validateDates(); calculateTotalPrice();" required>
-                    <!--                                        <div class="input-group">
-                                                    <button type="button" class="btn btn-outline-secondary" onclick="decreaseQuantity()">-</button>
-                                                    <input type="text" class="form-control mt-1" id="numRooms" name="numRooms" value="1" readonly>
-                                                    <button type="button" class="btn btn-outline-secondary" onclick="increaseQuantity()">+</button>
-                                                </div>-->
                     <span id="quantityError" style="color: red;"></span>
                 </div>
 
@@ -177,6 +172,13 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="inputname">Discount</label>
+                    <input type="text" class="form-control mt-1" id="DiscountCode" name="DiscountCode" placeholder="DiscountCode" value="">
+                </div>
+            </div>
+                    
             <div class="col text-end mt-2">
                 <button type="submit" class="btn btn-success btn-lg px-3">Book Now</button>
             </div>

@@ -197,7 +197,7 @@
 
             <div class="comments">
                 <h2>Các đánh giá khác:</h2>
-                <c:forEach var="feedback" items="${sessionScope.LIST_EXIST_FEEDBACK}">
+                <c:forEach var="feedback" items="${requestScope.LIST_EXIST_FEEDBACK}">
                     <div class="comment">
 
                         <div class="comment-content">

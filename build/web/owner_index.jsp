@@ -39,7 +39,7 @@
     </head>
 
     <body>
-        
+
 
         <div class="container-xxl position-relative bg-white d-flex p-0">
             <!-- Spinner Start -->
@@ -52,8 +52,6 @@
 
 
             <%@include file="includes/owner_menu.jsp" %>
-
-
             <!-- Content Start -->
             <div class="content">
                 <%@include file="includes/owner_header.jsp" %>
@@ -66,18 +64,8 @@
                             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                                 <i class="fa fa-chart-line fa-3x text-primary"></i>
                                 <div class="ms-3">
-                                    <p class="mb-2">Today Sale</p>
-                                    <c:set var="todaySaleValue" scope="request">
-                                        <sql:setDataSource url="jdbc:sqlserver://localhost:8080/G2HotelTest" driver="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-                                            user="sa" password="123456" />
-                                        <sql:query dataSource="${jdbc}" var="result">
-                                            SELECT COUNT(*) AS TotalBookings
-                                            FROM Booking
-                                            WHERE CAST(BookingTime AS date) = CAST(GETDATE() AS date);
-                                        </sql:query>
-
-                                    </c:set>
-                                    <h6 class="mb-0">$<c:out value="${saleValue}" /></h6>
+                                    <p class="mb-2">User</p>
+                                    <h6 class="mb-0">${requestScope.numberOfUser}</h6>
                                 </div>
                             </div>
                         </div>
@@ -85,8 +73,8 @@
                             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                                 <i class="fa fa-chart-bar fa-3x text-primary"></i>
                                 <div class="ms-3">
-                                    <p class="mb-2">Total Sale</p>
-                                    <h6 class="mb-0">$1234</h6>
+                                    <p class="mb-2">Total Booking</p>
+                                    <h6 class="mb-0">${requestScope.numberBooking}</h6>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +83,7 @@
                                 <i class="fa fa-chart-area fa-3x text-primary"></i>
                                 <div class="ms-3">
                                     <p class="mb-2">Today Revenue</p>
-                                    <h6 class="mb-0">$1234</h6>
+                                    <h6 class="mb-0">${requestScope.todayRevenue}$</h6>
                                 </div>
                             </div>
                         </div>
@@ -104,7 +92,46 @@
                                 <i class="fa fa-chart-pie fa-3x text-primary"></i>
                                 <div class="ms-3">
                                     <p class="mb-2">Total Revenue</p>
-                                    <h6 class="mb-0">$1234</h6>
+                                    <h6 class="mb-0">${requestScope.totalRevenue}$</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                <br>
+                    <div class="row g-4">
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                                <div class="ms-3">
+                                    <p class="mb-2">Best Booking</p>
+                                    <h6 class="mb-0">${requestScope.topNameRoomType}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                                <div class="ms-3">
+                                    <p class="mb-2">Employee</p>
+                                    <h6 class="mb-0">${requestScope.numberOfEmployee}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                                <div class="ms-3">
+                                    <p class="mb-2">Best Booking</p>
+                                    <h6 class="mb-0">${requestScope.topNameRoomType}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                                <div class="ms-3">
+                                    <p class="mb-2">Best Booking</p>
+                                    <h6 class="mb-0">${requestScope.topNameRoomType}</h6>
                                 </div>
                             </div>
                         </div>
@@ -112,6 +139,47 @@
                 </div>
                 <!-- Sale & Revenue End -->
 
+
+
+
+                <!-- Recent Sales Start -->
+                <div class="container-fluid pt-4 px-4">
+                    <div class="bg-light text-center rounded p-4">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <h6 class="mb-0">Recent Salse</h6>
+                            <a href="">Show All</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table text-start align-middle table-bordered table-hover mb-0">
+                                <thead>
+                                    <tr class="text-dark">
+                                        <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Number Booking</th>
+                                        <th scope="col">Total Room</th>
+                                        <th scope="col">Total Price</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${requestScope.listBookingByDate}" var="listBookingByDate">
+                                    <tr>
+                                        <td><input class="form-check-input" type="checkbox"></td>
+                                        <td>${listBookingByDate.getDateTop5()}</td>
+                                        <td>${listBookingByDate.getNumberOfBooking()}</td>
+                                        <td>${listBookingByDate.getTotalOfRoom()}</td>
+                                        <td>${listBookingByDate.getTotalPrice()}$</td>
+                                        <td>Paid</td>
+                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                    </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Recent Sales End -->
 
                 <!-- Sales Chart Start -->
                 <div class="container-fluid pt-4 px-4">
@@ -137,81 +205,6 @@
                     </div>
                 </div>
                 <!-- Sales Chart End -->
-
-
-                <!-- Recent Sales Start -->
-                <div class="container-fluid pt-4 px-4">
-                    <div class="bg-light text-center rounded p-4">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Recent Salse</h6>
-                            <a href="">Show All</a>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                                <thead>
-                                    <tr class="text-dark">
-                                        <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Invoice</th>
-                                        <th scope="col">Customer</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>01 Jan 2045</td>
-                                        <td>INV-0123</td>
-                                        <td>Jhon Doe</td>
-                                        <td>$123</td>
-                                        <td>Paid</td>
-                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>01 Jan 2045</td>
-                                        <td>INV-0123</td>
-                                        <td>Jhon Doe</td>
-                                        <td>$123</td>
-                                        <td>Paid</td>
-                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>01 Jan 2045</td>
-                                        <td>INV-0123</td>
-                                        <td>Jhon Doe</td>
-                                        <td>$123</td>
-                                        <td>Paid</td>
-                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>01 Jan 2045</td>
-                                        <td>INV-0123</td>
-                                        <td>Jhon Doe</td>
-                                        <td>$123</td>
-                                        <td>Paid</td>
-                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>01 Jan 2045</td>
-                                        <td>INV-0123</td>
-                                        <td>Jhon Doe</td>
-                                        <td>$123</td>
-                                        <td>Paid</td>
-                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- Recent Sales End -->
-
 
                 <!-- Widgets Start -->
                 <div class="container-fluid pt-4 px-4">

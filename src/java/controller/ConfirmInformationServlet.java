@@ -4,7 +4,7 @@
  */
 package controller;
 
-import com.sun.tools.javac.util.JCDiagnostic.Note;
+//import com.sun.tools.javac.util.JCDiagnostic.Note;
 import dao.ManagerDao;
 import dao.UserDao;
 import java.io.IOException;
@@ -68,6 +68,10 @@ public class ConfirmInformationServlet extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        UserDao udao = new UserDao();
+        ManagerDao mDao = new ManagerDao();
+
         //bookingtime
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -79,12 +83,11 @@ public class ConfirmInformationServlet extends HttpServlet {
         String IDRoomType = request.getParameter("IDRoomType");
         int idrt = Integer.parseInt(IDRoomType);
 
-        String nameRoomType = request.getParameter("NameRoomType");
-
         String FullName = request.getParameter("FullName");
         String Gender = request.getParameter("Gender");
         String Email = request.getParameter("Email");
         String Phone = request.getParameter("Phone");
+        String NameRoomType = request.getParameter("NameRoomType");
 
         String adult = request.getParameter("Adult");
         int na = Integer.parseInt(adult);
@@ -101,37 +104,43 @@ public class ConfirmInformationServlet extends HttpServlet {
 
         String nRooms = request.getParameter("numRooms");
         int numRooms = Integer.parseInt(nRooms);
-        ManagerDao mdao = new ManagerDao();
 
-//        PrintWriter out = response.getWriter();
-//        ManagerDao mdao = new ManagerDao();
-//        double value = 0;
-//        int idDiscount = 0;
-//        String Code = "a";
-//        String DiscountCode = request.getParameter("DiscountCode");
-//        if (!DiscountCode.isBlank()) {
-//            List<Discount> listDiscount = mdao.getDiscount();
-//            for (Discount discount : listDiscount) {
-//                String note = discount.getNote();
-//                out.print("<h1>" + note + "</h1>");
-////                if (note.equals(DiscountCode)) {
-////                    idDiscount = discount.getIDDiscount();
-////                    value = discount.getDiscountValue();
-////                }
-//            }
-//        } else{
-//            idDiscount=5;
-//        }
         String price = request.getParameter("Price");
         int tpi = Integer.parseInt(price);
 //        double tp = Double.parseDouble(tprice);
         // Total Price
-//        double tp = (numOfDays * numRooms * tpi) * (1 - value);
-        double tp = (numOfDays * numRooms * tpi);
+        double tp = numOfDays * numRooms * tpi;
+        int idDiscount = 5;
 
-        String TotalPrice = String.valueOf(tp);
-        int idDiscount = 1;
-        String IDDiscount ="1";
+        String DiscountCode = request.getParameter("DiscountCode");
+        String mess = "Fail";
+        int fail = 0;
+
+        if (DiscountCode == null) {
+            tp = numOfDays * numRooms * tpi;
+        } else {
+            boolean discountMatch = false;
+            List<Discount> listDiscount = mDao.getDiscount();
+            for (int i = 0; i < listDiscount.size(); i++) {
+                String codeDis = listDiscount.get(i).getNote();
+
+                if (DiscountCode.equalsIgnoreCase(codeDis)) {
+                    idDiscount = listDiscount.get(i).getIDDiscount();
+                    double value = listDiscount.get(i).getDiscountValue();
+                    tp = (numOfDays * numRooms * tpi) * (1 - value);
+                    discountMatch = true;
+                    break;
+                }
+            }
+
+            if (!discountMatch && DiscountCode.trim().length() > 0) {
+                fail = 1;
+                mess = "Discount code invalid";
+            }
+        }
+
+//        out.print("<h1>" + fail + "</h1>");
+
         String Note = "Not Yet";
 
         // check Room
@@ -140,43 +149,33 @@ public class ConfirmInformationServlet extends HttpServlet {
         int checkRoom = ttR - numRooms;
         String cRoom = String.valueOf(checkRoom);
 
-        UserDao udao = new UserDao();
-
         List<CheckRoomValid> l = udao.checkRoomValid(checkInDateStr, checkOutDateStr);
         int cr = checkRoom;
         for (int i = 0; i < l.size(); i++) {
             if (idrt == l.get(i).getIDRoom()) {
                 cr = l.get(i).getRoomValid();
+
             } else {
                 cr = ttR;
             }
         }
 
         if (cr <= 0 || cr < numRooms) {
-            request.setAttribute("dayFail", "Not enough room! " + cr + " rooms available");
+            request.setAttribute("messFail", "Not enough room! " + cr + " rooms available");
             request.getRequestDispatcher("form_test.jsp").forward(request, response);
         } else if (checkInDate.isBefore(currentDate) || checkOutDate.isBefore(checkInDate)) {
-            request.setAttribute("dayFail", "Day Invaild!");
+            request.setAttribute("messFail", "Day Invaild!");
+            request.getRequestDispatcher("form_test.jsp").forward(request, response);
+        } else if (fail == 1) {
+            request.setAttribute("messFail", mess);
             request.getRequestDispatcher("form_test.jsp").forward(request, response);
         } else {
-            udao.addBookingDetails(IDAccount, IDDiscount, IDRoomType, FullName, Gender, Email, Phone, adult, child, checkInDateStr, checkOutDateStr, nRooms, TotalPrice, formattedTime, Note);
-            request.setAttribute("booksuccess", "Booking Success");
-            request.getRequestDispatcher("customer_room.jsp").forward(request, response);
+            BookingDetails bookingDt = new BookingDetails(idac, idDiscount, idrt, FullName, Gender, Email, Phone, na, nc, checkInDateStr, checkOutDateStr, numRooms, tp, formattedTime, Note);
+            request.setAttribute("roomName", NameRoomType);
+            request.setAttribute("price", price);
+            request.setAttribute("booking", bookingDt);
+            request.getRequestDispatcher("form_payment.jsp").forward(request, response);
         }
-
-//        if (cr <= 0 || cr < numRooms) {
-//            request.setAttribute("dayFail", "Not enough room! " + cr + " rooms available");
-//            request.getRequestDispatcher("form_test.jsp").forward(request, response);
-//        } else if (checkInDate.isBefore(currentDate) || checkOutDate.isBefore(checkInDate)) {
-//            request.setAttribute("dayFail", "Day Invaild!");
-//            request.getRequestDispatcher("form_test.jsp").forward(request, response);
-//        } else {
-//            BookingDetails bkdt = new BookingDetails(idac, idDiscount, idrt, FullName, Gender, Email, Phone, na, nc, checkInDateStr, checkOutDateStr, numRooms, tp, formattedTime, Note);
-//            request.setAttribute("roomName", nameRoomType);
-//            request.setAttribute("price", price);
-//            request.setAttribute("booking", bkdt);
-//            request.getRequestDispatcher("form_payment.jsp").forward(request, response);
-//        }
     }
 
     /**
